@@ -1,0 +1,52 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sky-grad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#292725" />
+        <stop offset="70%" stop-color="#46433e" />
+        <stop offset="100%" stop-color="#d1ccc0" />
+      </linearGradient>
+      <linearGradient id="ground-grad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#141312" />
+        <stop offset="100%" stop-color="#0a0a09" />
+      </linearGradient>
+      <linearGradient id="glass-reflection" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#fff" stop-opacity="0.4" />
+        <stop offset="50%" stop-color="#988d7f" stop-opacity="0.1" />
+        <stop offset="100%" stop-color="#000" stop-opacity="0.6" />
+      </linearGradient>
+    </defs>
+    <!-- Sky -->
+    <rect width="1600" height="700" fill="url(#sky-grad)" />
+    <!-- Ground / Reflective Terrace -->
+    <rect y="680" width="1600" height="320" fill="url(#ground-grad)" />
+    <!-- Distant tree line -->
+    <path d="M 0 680 Q 200 650 400 680 T 800 660 T 1200 680 L 1600 680 L 1600 700 L 0 700 Z" fill="#141312" opacity="0.8" />
+    
+    <!-- Main architectural cantilevered volume -->
+    <polygon points="250,280 1150,220 1250,580 300,640" fill="#292725" />
+    <!-- Timber slatted upper facade -->
+    <polygon points="250,280 850,240 850,480 280,510" fill="#988d7f" opacity="0.9" />
+    <!-- Slat lines -->
+    <g stroke="#141312" stroke-width="2" opacity="0.4">
+      <line x1="260" y1="275" x2="285" y2="505" /><line x1="283" y1="275" x2="308" y2="505" /><line x1="306" y1="275" x2="331" y2="505" /><line x1="329" y1="275" x2="354" y2="505" /><line x1="352" y1="275" x2="377" y2="505" /><line x1="375" y1="275" x2="400" y2="505" /><line x1="398" y1="275" x2="423" y2="505" /><line x1="421" y1="275" x2="446" y2="505" /><line x1="444" y1="275" x2="469" y2="505" /><line x1="467" y1="275" x2="492" y2="505" /><line x1="490" y1="275" x2="515" y2="505" /><line x1="513" y1="275" x2="538" y2="505" /><line x1="536" y1="275" x2="561" y2="505" /><line x1="559" y1="275" x2="584" y2="505" /><line x1="582" y1="275" x2="607" y2="505" /><line x1="605" y1="275" x2="630" y2="505" /><line x1="628" y1="275" x2="653" y2="505" /><line x1="651" y1="275" x2="676" y2="505" /><line x1="674" y1="275" x2="699" y2="505" /><line x1="697" y1="275" x2="722" y2="505" /><line x1="720" y1="275" x2="745" y2="505" /><line x1="743" y1="275" x2="768" y2="505" /><line x1="766" y1="275" x2="791" y2="505" /><line x1="789" y1="275" x2="814" y2="505" /><line x1="812" y1="275" x2="837" y2="505" />
+    </g>
+    <!-- Floor-to-ceiling recessed glass lower pavilion -->
+    <polygon points="300,510 1200,450 1220,740 320,770" fill="#14181a" />
+    <polygon points="300,510 1200,450 1220,740 320,770" fill="url(#glass-reflection)" />
+    <!-- Steel framing mullions -->
+    <g stroke="#222" stroke-width="5">
+      <line x1="500" y1="495" x2="510" y2="760" />
+      <line x1="720" y1="480" x2="730" y2="755" />
+      <line x1="940" y1="465" x2="950" y2="750" />
+    </g>
+    <!-- Warm interior glow through glazing -->
+    <rect x="520" y="520" width="180" height="200" fill="#ffd8a8" opacity="0.35" filter="blur(20px)" />
+    <rect x="740" y="510" width="180" height="210" fill="#ffe3bd" opacity="0.25" filter="blur(25px)" />
+    <!-- Concrete base plinth -->
+    <polygon points="220,760 1280,730 1340,810 180,840" fill="#46433e" />
+    <!-- Architectural pool / reflecting water -->
+    <polygon points="200,840 1300,810 1480,950 40,980" fill="#141312" />
+    <line x1="200" y1="840" x2="1300" y2="810" stroke="#faf8f5" stroke-width="1.5" opacity="0.4" />
+    <!-- Geometric Title Stamp -->
+    <text x="60" y="940" fill="#faf8f5" opacity="0.3" font-family="monospace" font-size="14" letter-spacing="4">THE ROLE OF MATERIAL HONESTY IN RESIDENTIAL ARCHITECTURE</text>
+  </svg>

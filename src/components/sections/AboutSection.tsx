@@ -1,0 +1,48 @@
+import { TextReveal } from "@/components/motion/TextReveal";
+import { Reveal } from "@/components/motion/Reveal";
+import { Typography } from "@/components/ui/Typography";
+import { TeamStrip } from "@/components/sections/TeamStrip";
+import { TEAM } from "@/content/team";
+
+/**
+ * Condensed About section for the single-page homepage. The brand-story
+ * copy (30+ years combined experience, JCT contracts, Solihull/London/
+ * Nottingham offices) is kept in FULL per 02-CONTEXT.md — adapted verbatim
+ * from the original `/about` page's approved narrative (02-04) rather than
+ * rewritten. Followed by the condensed `TeamStrip`.
+ */
+export function AboutSection() {
+  return (
+    <div className="flex flex-col gap-10">
+      <TextReveal as="h2" className="font-display text-display-md text-ink">
+        About Stoneage Properties
+      </TextReveal>
+
+      <div className="flex flex-col gap-6">
+        <Reveal className="max-w-prose">
+          <Typography variant="body-lg">
+            Stoneage Properties was built on a simple premise: specialist
+            building work — new builds, renovations, extensions, and
+            conversions — delivered with the transparency and rigour larger
+            clients expect, and the personal attention smaller clients
+            deserve. Across our Solihull, London, and Nottingham offices, our
+            team brings over 30 years of combined experience to every
+            project, backed by JCT contract administration and structural
+            warranties from first enquiry to handover.
+          </Typography>
+        </Reveal>
+
+        <Reveal className="max-w-prose">
+          <Typography variant="body-lg">
+            That experience shows up in three things clients consistently
+            tell us matter most: value for money on every quote, quick
+            communication throughout the build, and professional expertise
+            at every stage — from planning through to the final finish.
+          </Typography>
+        </Reveal>
+      </div>
+
+      <TeamStrip members={TEAM} />
+    </div>
+  );
+}
