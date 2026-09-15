@@ -8,15 +8,10 @@ export function StarIcon({ className = "", size = "w-4 h-4", bold = false }: Sta
   return (
     <div className={`relative inline-flex items-center justify-center shrink-0 ${size} ${className}`} aria-hidden="true">
       <div className="relative w-full h-full group-hover:rotate-90 transition-transform duration-500 ease-out">
-        {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
-          <div
-            key={deg}
-            className={`absolute top-0 left-1/2 -translate-x-1/2 origin-bottom h-1/2 ${bold ? "w-[26%]" : "w-[15%]"}`}
-            style={{ transform: `rotate(${deg}deg)` }}
-          >
-            <div className={`w-full bg-current rounded-full ${bold ? "h-1/2" : "h-2/5"}`} />
-          </div>
-        ))}
+        <svg viewBox="0 0 40 100" className="w-full h-full" fill="currentColor">
+          <polygon points={bold ? "2,0 40,0 2,50" : "4,0 40,0 4,46"} />
+          <polygon points={bold ? "24,46 2,100 40,100" : "28,50 4,100 40,100"} />
+        </svg>
       </div>
     </div>
   );

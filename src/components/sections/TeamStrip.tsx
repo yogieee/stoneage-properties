@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Typography } from "@/components/ui/Typography";
-import type { TeamMember } from "@/content/team";
+import type { TeamMember } from "@/sanity/queries";
+import { urlFor } from "@/sanity/image";
 
 function initialsFor(name: string): string {
   return name
@@ -38,7 +39,7 @@ export function TeamStrip({ members }: TeamStripProps) {
           {member.photo ? (
             <div className="border-line relative aspect-square w-full overflow-hidden rounded-xl border">
               <Image
-                src={member.photo}
+                src={urlFor(member.photo).width(320).height(320).url()}
                 alt={member.name}
                 fill
                 sizes="160px"

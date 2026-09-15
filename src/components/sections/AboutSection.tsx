@@ -2,7 +2,7 @@ import { TextReveal } from "@/components/motion/TextReveal";
 import { Reveal } from "@/components/motion/Reveal";
 import { Typography } from "@/components/ui/Typography";
 import { TeamStrip } from "@/components/sections/TeamStrip";
-import { TEAM } from "@/content/team";
+import { getTeam } from "@/sanity/queries";
 
 /**
  * Condensed About section for the single-page homepage. The brand-story
@@ -11,7 +11,9 @@ import { TEAM } from "@/content/team";
  * from the original `/about` page's approved narrative (02-04) rather than
  * rewritten. Followed by the condensed `TeamStrip`.
  */
-export function AboutSection() {
+export async function AboutSection() {
+  const team = await getTeam();
+
   return (
     <div className="flex flex-col gap-10">
       <TextReveal as="h2" className="font-display text-display-md text-ink">
@@ -42,7 +44,7 @@ export function AboutSection() {
         </Reveal>
       </div>
 
-      <TeamStrip members={TEAM} />
+      <TeamStrip members={team} />
     </div>
   );
 }

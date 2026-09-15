@@ -1,35 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { StarIcon } from "@/components/decorative/StarIcon";
+import { getJournalArticles } from "@/sanity/queries";
+import { urlFor } from "@/sanity/image";
 
-const ARTICLES = [
-  {
-    title: "Designing for Long-Term Living Rather Than Trends",
-    image: "/images/livingroom.png",
-    aspect: "aspect-[4/3] sm:aspect-square",
-    href: "/projects",
-  },
-  {
-    title: "The Role of Material Honesty in Residential Architecture",
-    image: "/images/staircase.png",
-    aspect: "aspect-[4/3] sm:aspect-[16/12]",
-    href: "/projects",
-  },
-  {
-    title: "Balancing Openness, Privacy, and Everyday Comfort",
-    image: "/images/plan.png",
-    aspect: "aspect-[4/3] sm:aspect-[16/12]",
-    href: "/projects",
-  },
-  {
-    title: "Creating a Stronger Connection Between Home and Landscape",
-    image: "/images/garden.png",
-    aspect: "aspect-[4/3] sm:aspect-[12/14]",
-    href: "/projects",
-  },
+const ASPECTS = [
+  "aspect-[4/3] sm:aspect-square",
+  "aspect-[4/3] sm:aspect-[16/12]",
+  "aspect-[4/3] sm:aspect-[16/12]",
+  "aspect-[4/3] sm:aspect-[12/14]",
 ];
 
-export function JournalGrid() {
+export async function JournalGrid() {
+  const articles = await getJournalArticles();
+
   return (
     <section
       id="journal"
@@ -56,7 +40,7 @@ export function JournalGrid() {
           {/* Action Accent */}
           <div className="relative flex flex-col gap-6 sm:items-end">
             <Link
-              href="/projects"
+              href="/journal"
               className="group bg-charcoal text-paper hover:bg-ink inline-flex items-center gap-3 rounded-full px-6 py-3 font-mono text-xs tracking-wider uppercase shadow-sm transition-all duration-300 hover:shadow"
             >
               <span>View Posts</span>
@@ -67,14 +51,14 @@ export function JournalGrid() {
 
         {/* 4-Card Editorial Study Grid */}
         <div className="grid grid-cols-1 gap-10 pt-16 sm:gap-16 md:grid-cols-2">
-          {ARTICLES.map((article, index) => (
-            <div key={article.title} className="group">
-              <Link href={article.href} className="block w-full">
+          {articles.map((article, index) => (
+            <div key={article.slug} className="group">
+              <Link href={`/journal/${article.slug}`} className="block w-full">
                 <div
-                  className={`relative w-full ${article.aspect} bg-paper-dim border-line overflow-hidden rounded-lg border shadow-sm transition-all group-hover:shadow-md`}
+                  className={`relative w-full ${ASPECTS[index % ASPECTS.length]} bg-paper-dim border-line overflow-hidden rounded-lg border shadow-sm transition-all group-hover:shadow-md`}
                 >
                   <Image
-                    src={article.image}
+                    src={urlFor(article.image).width(900).height(675).url()}
                     alt={article.title}
                     fill
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"

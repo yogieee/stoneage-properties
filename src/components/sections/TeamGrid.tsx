@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Typography } from "@/components/ui/Typography";
-import type { TeamMember } from "@/content/team";
+import type { TeamMember } from "@/sanity/queries";
+import { urlFor } from "@/sanity/image";
 
 function initialsFor(name: string): string {
   return name
@@ -28,7 +29,7 @@ export function TeamGrid({ members }: TeamGridProps) {
           {member.photo ? (
             <div className="border-line relative aspect-square w-full overflow-hidden rounded-2xl border">
               <Image
-                src={member.photo}
+                src={urlFor(member.photo).width(800).height(800).url()}
                 alt={member.name}
                 fill
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"

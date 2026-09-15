@@ -2,8 +2,23 @@ import Link from "next/link";
 import Image from "next/image";
 import { StarIcon } from "@/components/decorative/StarIcon";
 import { Paperclip } from "@/components/decorative/Paperclip";
+import { getSiteSettings } from "@/sanity/queries";
 
-export function SiteFooter() {
+const FALLBACK_EMAIL = "enquiries@stoneageproperties.com";
+const FALLBACK_PHONE = { label: "Solihull HQ", number: "0121 537 8229" };
+const FALLBACK_OFFICES = [
+  { name: "Solihull HQ", address: "20 Micklehill Dr, B90 2PU" },
+  { name: "London", address: "1 Colegrave Rd, E15 1DZ" },
+  { name: "Nottingham", address: "12 Northfield Ave, NG12" },
+];
+
+export async function SiteFooter() {
+  const settings = await getSiteSettings();
+  const email = settings?.email || FALLBACK_EMAIL;
+  const phone = settings?.phones?.[0] || FALLBACK_PHONE;
+  const offices = settings?.offices?.length ? settings.offices : FALLBACK_OFFICES;
+  const phoneHref = `tel:${phone.number.replace(/\s+/g, "")}`;
+
   return (
     <footer className="relative w-full bg-charcoal text-paper pt-24 pb-16 overflow-hidden">
       <div className="w-full px-6 sm:px-12">
@@ -65,23 +80,24 @@ export function SiteFooter() {
               <ul className="space-y-2.5 font-mono text-xs text-paper/70">
                 <li>
                   <a
-                    href="mailto:enquiries@stoneageproperties.com"
+                    href={`mailto:${email}`}
                     className="hover:text-paper transition-colors"
                   >
-                    enquiries@stoneageproperties.com
+                    {email}
                   </a>
                 </li>
                 <li>
-                  <a href="tel:01215378229" className="hover:text-paper transition-colors">
-                    0121 537 8229
+                  <a href={phoneHref} className="hover:text-paper transition-colors">
+                    {phone.number}
                   </a>
                 </li>
                 <li className="pt-2 text-paper/50 leading-relaxed">
-                  Solihull HQ: 20 Micklehill Dr, B90 2PU
-                  <br />
-                  London: 1 Colegrave Rd, E15 1DZ
-                  <br />
-                  Nottingham: 12 Northfield Ave, NG12
+                  {offices.map((office, index) => (
+                    <span key={office.name}>
+                      {office.name}: {office.address}
+                      {index < offices.length - 1 && <br />}
+                    </span>
+                  ))}
                 </li>
               </ul>
             </div>

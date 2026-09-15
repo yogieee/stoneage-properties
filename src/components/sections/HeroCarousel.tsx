@@ -14,44 +14,13 @@ interface Slide {
   caption: string;
 }
 
-const DEFAULT_SLIDES: Slide[] = [
-  {
-    src: "/images/hero/exterior.png",
-    alt: "Contemporary Stoneage residential home cantilevered over private landscaped gardens",
-    tag: "Exterior Architecture",
-    title: "Contemporary Residential Exteriors",
-    caption:
-      "Stoneage designs contemporary homes and striking exterior architecture that prioritises clarity, material honesty, and enduring craftsmanship throughout.",
-  },
-  {
-    src: "/images/hero/extension.png",
-    alt: "Solihull pavilion residence with glazed and timber architectural extension",
-    tag: "Bespoke Extensions",
-    title: "Timber & Glazed Pavilions",
-    caption:
-      "Stoneage crafts bespoke extensions that seamlessly connect indoor spaces with private gardens, balancing natural light, proportion, and modern living effortlessly.",
-  },
-  {
-    src: "/images/hero/construction.png",
-    alt: "Specialist structural construction and precision engineering on site",
-    tag: "Specialist Construction",
-    title: "Structural Craft & On-Site Precision",
-    caption:
-      "Stoneage oversees every stage of structural construction with dedicated on-site craft, rigorous engineering standards, and dependable JCT contract administration.",
-  },
-  {
-    src: "/images/hero/oldtonew.png",
-    alt: "Heritage stone and brick property transformed into modern open-plan living",
-    tag: "Old to New Transformations",
-    title: "Heritage Reimagining & Renewal",
-    caption:
-      "Stoneage bridges past and future by breathing new life into historic structures, turning heritage properties into light-filled, enduring contemporary homes.",
-  },
-];
-
 const SLIDE_DURATION_MS = 6000;
 
-export function HeroCarousel() {
+type HeroCarouselProps = {
+  slides: Slide[];
+};
+
+export function HeroCarousel({ slides }: HeroCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -62,10 +31,10 @@ export function HeroCarousel() {
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
 
   const nextSlide = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % DEFAULT_SLIDES.length);
+    setActiveIndex((prev) => (prev + 1) % slides.length);
     setProgress(0);
     startTimeRef.current = Date.now();
-  }, []);
+  }, [slides.length]);
 
   const goToSlide = (index: number) => {
     setActiveIndex(index);
@@ -130,7 +99,9 @@ export function HeroCarousel() {
     };
   }, [activeIndex, isPaused, nextSlide, progress]);
 
-  const activeSlide = DEFAULT_SLIDES[activeIndex];
+  const activeSlide = slides[activeIndex];
+
+  if (!activeSlide) return null;
 
   return (
     <section
@@ -139,7 +110,7 @@ export function HeroCarousel() {
     >
       {/* Background Image Carousel with parallax scroll scrub */}
       <div ref={imageContainerRef} className="absolute inset-0 w-full h-full will-change-transform">
-        {DEFAULT_SLIDES.map((slide, index) => {
+        {slides.map((slide, index) => {
           const isActive = index === activeIndex;
           return (
             <div
@@ -168,7 +139,7 @@ export function HeroCarousel() {
       <div className="relative z-20 w-full h-full px-6 sm:px-12 flex flex-col justify-end pb-12 sm:pb-16 gap-8 sm:gap-10">
         {/* Expanding Segmented Progress Indicators matching Storey (Active = 50% width, Inactive = 16.66% width) */}
         <div className="flex w-full gap-3 sm:gap-4 items-center" role="tablist" aria-label="Hero Slides">
-          {DEFAULT_SLIDES.map((slide, idx) => {
+          {slides.map((slide, idx) => {
             const isActive = idx === activeIndex;
             const isPast = idx < activeIndex;
             return (

@@ -78,8 +78,9 @@ Real content (copy, project photos) will be gathered from the live site and the 
 | Design direction: minimal, monochrome, bold type, GSAP motion | Matches both Awwwards references the user pointed to | — Pending |
 | Next.js as the framework | Explicitly requested by user, supports future AI/CRM milestones | — Pending |
 | Three-milestone structure (redesign → AI lead-gen → CRM) | User's own phasing; keeps v1 scope focused on the marketing site | — Pending |
-| No CMS in v1 — content is hardcoded in the Next.js codebase | Tried Sanity in Phase 1, then decided the client wants a self-built AWS/Terraform backend instead of a third-party CMS. That backend is real infra work deserving its own milestone, not something to rush into Phase 1. v1 ships as a static/hardcoded-content site; CMS-01 moves to v2. | Superseded 2026-09-08 |
+| No CMS in v1 — content is hardcoded in the Next.js codebase | Tried Sanity in Phase 1, then decided the client wants a self-built AWS/Terraform backend instead of a third-party CMS. That backend is real infra work deserving its own milestone, not something to rush into Phase 1. v1 ships as a static/hardcoded-content site; CMS-01 moves to v2. | Superseded 2026-09-15 |
 | Contact form does not persist to a database in v1 (email/log only) | Same reasoning as above — the `leads` backend is part of the v2 AWS/Terraform buildout, not v1. CONT-03 moves to v2. | Superseded 2026-09-08 |
+| Sanity CMS added to v1 (reverses the above) | Client wants to edit site content themselves (services, team, projects, testimonials, journal, hero slides, expertise areas, site settings) without a developer. Explicit instruction to reverse the earlier "no CMS" call rather than wait for the deferred v2 AWS/Terraform backend. CMS-01 pulled back into v1; the custom backend idea is dropped, not merely postponed. | Active 2026-09-15 |
 
 ---
 *Last updated: 2026-09-08 after initialization*
