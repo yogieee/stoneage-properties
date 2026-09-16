@@ -161,7 +161,7 @@ export default async function JournalArticlePage({
       </div>
 
       {/* Body */}
-      <div className="mx-auto max-w-3xl px-6 py-16 sm:px-12 sm:py-24">
+      <div className="px-6 py-16 sm:px-12 sm:py-24">
         {Array.isArray(article.body) && article.body.length > 0 ? (
           <ArticleBody value={article.body} />
         ) : (
