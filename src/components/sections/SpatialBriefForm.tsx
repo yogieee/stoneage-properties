@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Paperclip } from "@/components/decorative/Paperclip";
-import { StarIcon } from "@/components/decorative/StarIcon";
+import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 
 interface SpatialBriefFormProps {
   isModal?: boolean;
@@ -53,10 +53,10 @@ export function SpatialBriefForm({
           </div>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-2">
-              <span className="font-display text-xs font-medium sm:text-sm">
+              <span className="font-display text-base font-bold sm:text-lg">
                 Stoneage
               </span>
-              <StarIcon size="w-3.5 h-3.5" className="text-ink" />
+              <LogoSpinner size="w-6 h-6" className="text-ink" />
             </span>
             {isModal && onClose && (
               <button
@@ -252,7 +252,7 @@ export function SpatialBriefForm({
                 className="group bg-charcoal text-paper hover:bg-ink inline-flex items-center gap-4 rounded-full px-8 py-3.5 font-mono text-xs tracking-wider uppercase shadow-md transition-all duration-300 hover:shadow-lg"
               >
                 <span>Submit Spatial Brief</span>
-                <StarIcon className="text-paper h-3.5 w-3.5 transition-transform duration-500 group-hover:rotate-90" />
+                <LogoSpinner spin="hover" size="h-5 w-5" className="text-paper" />
               </button>
             </div>
 

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Paperclip } from "@/components/decorative/Paperclip";
-import { StarIcon } from "@/components/decorative/StarIcon";
+import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { getFeaturedProjects, getProjects, type Project } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
 
@@ -105,7 +105,7 @@ export async function FeaturedProjectsGrid() {
                     <span className="font-display text-xs font-medium">
                       Stoneage
                     </span>
-                    <StarIcon size="w-3.5 h-3.5" className="text-ink" />
+                    <LogoSpinner size="w-3.5 h-3.5" className="text-ink" />
                   </div>
                 </div>
 

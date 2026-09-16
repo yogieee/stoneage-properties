@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { StarIcon } from "@/components/decorative/StarIcon";
+import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { getJournalArticles } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
 
@@ -44,7 +44,7 @@ export async function JournalGrid() {
               className="group bg-charcoal text-paper hover:bg-ink inline-flex items-center gap-3 rounded-full px-6 py-3 font-mono text-xs tracking-wider uppercase shadow-sm transition-all duration-300 hover:shadow"
             >
               <span>View Posts</span>
-              <StarIcon className="text-paper h-3.5 w-3.5 transition-transform duration-500 group-hover:rotate-90" />
+              <LogoSpinner spin="hover" size="h-5 w-5" className="text-paper" />
             </Link>
           </div>
         </div>
@@ -81,7 +81,7 @@ export async function JournalGrid() {
 
                   <span className="group bg-paper-dim border-line text-ink group-hover:bg-charcoal group-hover:text-paper group-hover:border-charcoal inline-flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-1.5 font-mono text-xs uppercase transition-all">
                     <span>Read</span>
-                    <StarIcon className="h-3 w-3 transition-transform duration-500 group-hover:rotate-90" />
+                    <LogoSpinner spin="hover" size="h-4 w-4" />
                   </span>
                 </div>
               </Link>

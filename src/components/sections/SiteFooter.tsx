@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { StarIcon } from "@/components/decorative/StarIcon";
+import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { Paperclip } from "@/components/decorative/Paperclip";
 import { getSiteSettings } from "@/sanity/queries";
 
@@ -125,7 +125,7 @@ export async function SiteFooter() {
                   <span className="font-mono text-[9px] uppercase tracking-wider text-ink-subtle">
                     A NOTE FROM STONEAGE
                   </span>
-                  <StarIcon size="w-3 h-3" className="text-ink" />
+                  <LogoSpinner size="w-3 h-3" className="text-ink" />
                 </div>
                 <p className="font-display italic text-xs text-ink-muted leading-relaxed">
                   Built with integrity, verified by structural guarantees.
@@ -143,7 +143,7 @@ export async function SiteFooter() {
         <div className="pt-10 flex flex-col sm:flex-row justify-between items-center gap-6 font-mono text-xs text-paper/50">
           <div className="flex items-center gap-3 text-paper">
             <span className="font-display text-lg tracking-tight font-medium">Stoneage</span>
-            <StarIcon size="w-4 h-4" className="text-paper/80" />
+            <LogoSpinner size="w-4 h-4" className="text-paper/80" />
           </div>
 
           <p>&copy; {new Date().getFullYear()} Stoneage Properties. Specialist Building Contractors UK.</p>

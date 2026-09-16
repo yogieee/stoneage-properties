@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
-import { StarIcon } from "@/components/decorative/StarIcon";
+import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 
 /**
  * Initial-load screen: a black overlay with the wordmark held in the same
@@ -71,7 +71,7 @@ export function Preloader() {
         <span className="font-display text-2xl leading-none font-bold tracking-tight sm:text-3xl">
           Stoneage
         </span>
-        <StarIcon className="mt-1.5 h-8 w-8 shrink-0 animate-[spin_25s_linear_infinite] self-center sm:h-6 sm:w-6" />
+        <LogoSpinner spin="continuous" size="h-8 w-8 sm:h-9 sm:w-9" className="mt-1.5 self-center" />
       </div>
     </div>
   );

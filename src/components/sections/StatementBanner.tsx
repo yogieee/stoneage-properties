@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { StarIcon } from "@/components/decorative/StarIcon";
+import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { gsap } from "@/lib/gsap";
 
 export function StatementBanner() {
@@ -56,7 +56,7 @@ export function StatementBanner() {
           className="group bg-paper text-ink hover:bg-paper-warm inline-flex items-center gap-4 rounded-full px-8 py-4 font-mono text-xs tracking-wider uppercase shadow-xl transition-all duration-300 hover:shadow-2xl sm:px-10 sm:py-5 sm:text-sm"
         >
           <span>Start a project</span>
-          <StarIcon className="text-ink h-4 w-4 transition-transform duration-500 group-hover:rotate-90" />
+          <LogoSpinner spin="hover" size="h-5 w-5" className="text-ink" />
         </Link>
       </div>
 

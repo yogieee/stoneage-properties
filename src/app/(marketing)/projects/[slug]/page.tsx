@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { PortableText } from "@portabletext/react";
+import Link from "next/link";
 import { Typography } from "@/components/ui/Typography";
+import { ArticleBody } from "@/components/ui/ArticleBody";
+import { StoneageMonolithLogo } from "@/components/decorative/StoneageMonolithLogo";
+import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 import { getProject, getProjects } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
 
@@ -31,65 +34,163 @@ export default async function ProjectDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = await getProject(slug);
+  const [project, allProjects] = await Promise.all([
+    getProject(slug),
+    getProjects(),
+  ]);
 
   if (!project) notFound();
 
+  const moreProjects = allProjects
+    .filter((item) => item.slug !== slug)
+    .slice(0, 3);
+
   return (
     <div className="pt-16 sm:pt-24">
-      <div className="px-6 pb-16 sm:px-12">
-        <span className="text-ink-subtle mb-3 block font-mono text-xs tracking-widest uppercase">
-          {project.category}
-        </span>
-        <Typography variant="display-lg" as="h1">
-          {project.title}
-        </Typography>
-        <p className="text-ink-muted mt-4 font-mono text-sm">
-          {project.location}
-        </p>
+      {/* Breadcrumb */}
+      <div className="px-6 pt-8 sm:px-12">
+        <Link
+          href="/projects"
+          className="group text-ink-subtle hover:text-ink inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase transition-colors"
+        >
+          <span className="transition-transform duration-300 group-hover:-translate-x-1">
+            &larr;
+          </span>
+          Projects
+        </Link>
       </div>
 
-      <div className="border-line relative aspect-[16/9] w-full overflow-hidden border-y">
-        <Image
-          src={urlFor(project.image).width(2000).height(1125).url()}
-          alt={project.title}
-          fill
-          priority
-          className="object-cover"
-        />
+      {/* Header */}
+      <div className="px-6 pt-8 pb-16 sm:px-12">
+        <div className="mx-auto flex max-w-5xl flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <span className="text-ink-subtle mb-4 block font-mono text-xs tracking-widest uppercase">
+              {project.category}
+            </span>
+            <Typography variant="display-lg" as="h1">
+              {project.title}
+            </Typography>
+          </div>
+
+          <dl className="border-line shrink-0 gap-x-8 gap-y-3 border-t pt-4 font-mono text-sm sm:border-t-0 sm:border-l sm:pt-0 sm:pl-8">
+            <div className="flex justify-between gap-6 sm:block">
+              <dt className="text-ink-subtle text-xs tracking-widest uppercase">
+                Location
+              </dt>
+              <dd className="text-ink mt-1">{project.location}</dd>
+            </div>
+          </dl>
+        </div>
       </div>
 
-      <div className="mx-auto max-w-3xl px-6 py-16 sm:px-12">
+      {/* Cover image */}
+      <div className="px-6 sm:px-12">
+        <div className="border-line bg-paper-dim relative mx-auto aspect-[16/10] w-full max-w-5xl overflow-hidden rounded-xl border shadow-md sm:aspect-[16/9]">
+          <Image
+            src={urlFor(project.image).width(2000).height(1125).url()}
+            alt={project.title}
+            fill
+            priority
+            className="object-cover"
+          />
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="mx-auto max-w-3xl px-6 py-16 sm:px-12 sm:py-24">
         {project.summary && (
-          <Typography variant="body-lg" className="mb-8">
+          <Typography variant="body-lg" className="mb-10">
             {project.summary}
           </Typography>
         )}
 
         {Array.isArray(project.body) && project.body.length > 0 && (
-          <div className="prose prose-neutral max-w-none">
-            <PortableText value={project.body as never} />
-          </div>
+          <ArticleBody value={project.body} />
         )}
       </div>
 
+      {/* Gallery */}
       {project.gallery && project.gallery.length > 0 && (
-        <div className="grid grid-cols-1 gap-6 px-6 pb-24 sm:grid-cols-2 sm:px-12">
-          {project.gallery.map((image, index) => (
-            <div
-              key={index}
-              className="border-line relative aspect-[4/3] w-full overflow-hidden rounded-lg border"
-            >
-              <Image
-                src={urlFor(image).width(1000).height(750).url()}
-                alt={`${project.title} — image ${index + 1}`}
-                fill
-                className="object-cover"
-              />
+        <div className="px-6 pb-24 sm:px-12">
+          <div className="mx-auto max-w-5xl">
+            <span className="text-ink-subtle mb-8 block font-mono text-xs tracking-widest uppercase">
+              Gallery
+            </span>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              {project.gallery.map((image, index) => (
+                <div
+                  key={index}
+                  className="border-line relative aspect-[4/3] w-full overflow-hidden rounded-lg border shadow-sm"
+                >
+                  <Image
+                    src={urlFor(image).width(1200).height(900).url()}
+                    alt={`${project.title} — image ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       )}
+
+      {/* More projects */}
+      {moreProjects.length > 0 && (
+        <section className="border-line bg-paper-dim border-t px-6 py-20 sm:px-12 sm:py-28">
+          <div className="mx-auto max-w-5xl">
+            <div className="mb-12 flex items-end justify-between gap-4">
+              <Typography variant="display-sm" as="h2">
+                More Projects
+              </Typography>
+              <Link
+                href="/projects"
+                className="group text-ink-muted hover:text-ink hidden shrink-0 items-center gap-2 font-mono text-xs tracking-wider uppercase transition-colors sm:inline-flex"
+              >
+                View All
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  &rarr;
+                </span>
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+              {moreProjects.map((item) => (
+                <Link
+                  key={item.slug}
+                  href={`/projects/${item.slug}`}
+                  className="group block"
+                >
+                  <div className="border-line bg-paper-card relative aspect-[4/3] w-full overflow-hidden rounded-lg border shadow-sm transition-all group-hover:shadow-md">
+                    <Image
+                      src={urlFor(item.image).width(700).height(525).url()}
+                      alt={item.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="mt-4 flex items-start justify-between gap-3">
+                    <div>
+                      <span className="text-ink-subtle mb-1 block font-mono text-[10px] uppercase">
+                        {item.location}
+                      </span>
+                      <h3 className="font-display text-ink group-hover:text-ink-muted text-lg leading-snug font-medium transition-colors">
+                        {item.title}
+                      </h3>
+                    </div>
+                    <StoneageMonolithLogo
+                      variant="mark"
+                      className="text-ink-subtle mt-1 h-3 w-3 shrink-0 transition-transform duration-500 group-hover:rotate-90 group-hover:text-ink"
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <SpatialBriefSection />
     </div>
   );
 }

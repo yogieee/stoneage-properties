@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLenis } from "lenis/react";
-import { StarIcon } from "@/components/decorative/StarIcon";
+import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 
 interface SiteNavProps {
   onOpenContact?: () => void;
@@ -34,6 +34,7 @@ export function SiteNav({ onOpenContact }: SiteNavProps) {
 
   const navLinks = [
     { label: "Projects", href: "/projects" },
+    { label: "Journal", href: "/journal" },
     { label: "Services", href: "/#services" },
   ];
 
@@ -79,9 +80,10 @@ export function SiteNav({ onOpenContact }: SiteNavProps) {
             <span className="font-display text-2xl leading-none font-bold tracking-tight sm:text-3xl">
               Stoneage
             </span>
-            <StarIcon
-              size="h-6 w-6 sm:h-6 sm:w-6"
-              className={`mt-1.5 animate-[spin_25s_linear_infinite] self-center transition-colors duration-300 ${
+            <LogoSpinner
+              spin="continuous"
+              size="h-8 w-8 sm:h-9 sm:w-9"
+              className={`self-center transition-colors duration-300 ${
                 isDark ? "text-ink" : "text-paper"
               }`}
             />
@@ -119,7 +121,7 @@ export function SiteNav({ onOpenContact }: SiteNavProps) {
           </nav>
 
           <div className="flex items-center justify-self-end">
-            {/* Contact Button with StarIcon */}
+            {/* Contact Button with monolith mark */}
             <Link
               href="/contact"
               onClick={handleContactClick}
@@ -130,10 +132,10 @@ export function SiteNav({ onOpenContact }: SiteNavProps) {
               }`}
             >
               <span>Contact</span>
-              <StarIcon
-                className={`h-3.5 w-3.5 transition-transform duration-500 group-hover:rotate-90 ${
-                  isScrolled ? "text-paper" : "text-ink"
-                }`}
+              <LogoSpinner
+                spin="hover"
+                size="h-5 w-5"
+                className={isScrolled ? "text-paper" : "text-ink"}
               />
             </Link>
 

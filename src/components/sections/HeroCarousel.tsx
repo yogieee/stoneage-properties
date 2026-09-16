@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { StarIcon } from "@/components/decorative/StarIcon";
+import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { gsap } from "@/lib/gsap";
 
 interface Slide {
@@ -195,7 +195,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
               className="group inline-flex items-center justify-between gap-4 bg-paper text-ink px-6 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-sm font-mono tracking-wider uppercase transition-all duration-300 hover:bg-paper-warm hover:shadow-lg"
             >
               <span>Projects</span>
-              <StarIcon className="text-ink w-4 h-4 transition-transform duration-500 group-hover:rotate-90" />
+              <LogoSpinner spin="hover" size="w-5 h-5" className="text-ink" />
             </Link>
 
             {/* Accessible WCAG Pause Toggle */}
