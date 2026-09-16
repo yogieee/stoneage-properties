@@ -63,6 +63,13 @@ export const project = defineType({
       initialValue: false,
     }),
     defineField({
+      name: "services",
+      title: "Related services",
+      description: "Which service(s) this project demonstrates — shown on the matching service detail page.",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "service" }] }],
+    }),
+    defineField({
       name: "order",
       title: "Display order",
       type: "number",

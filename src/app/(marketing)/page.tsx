@@ -1,6 +1,7 @@
 import { Hero } from "@/components/sections/Hero";
 import { IntroSection } from "@/components/sections/IntroSection";
 import { ExpertiseSection } from "@/components/sections/ExpertiseSection";
+import { MoreServicesGrid } from "@/components/sections/MoreServicesGrid";
 import { StatementBanner } from "@/components/sections/StatementBanner";
 import { FeaturedProjectsGrid } from "@/components/sections/FeaturedProjectsGrid";
 import { TestimonialsSlider } from "@/components/sections/TestimonialsSlider";
@@ -27,6 +28,7 @@ export default function HomePage() {
       <Hero />
       <IntroSection />
       <ExpertiseSection />
+      <MoreServicesGrid />
       <StatementBanner />
       <FeaturedProjectsGrid />
       <TestimonialsSlider />

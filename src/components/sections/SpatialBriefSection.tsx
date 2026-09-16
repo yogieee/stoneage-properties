@@ -1,6 +1,18 @@
 import { SpatialBriefForm } from "@/components/sections/SpatialBriefForm";
 
-export function SpatialBriefSection() {
+interface SpatialBriefSectionProps {
+  eyebrow?: string;
+  heading?: string;
+  intro?: string;
+  defaultMessage?: string;
+}
+
+export function SpatialBriefSection({
+  eyebrow = "Consultation & Enquiries",
+  heading = "Start a conversation about your project, vision or future space.",
+  intro = "Whether you are planning a contemporary new home, a complete internal remodelling, or a structural extension, we would welcome the opportunity to review your ideas and explore how our specialist team can help shape it.",
+  defaultMessage,
+}: SpatialBriefSectionProps = {}) {
   return (
     <section
       id="contact"
@@ -12,18 +24,15 @@ export function SpatialBriefSection() {
           <div className="space-y-8 lg:col-span-5">
             <div>
               <span className="text-ink-subtle mb-4 block font-mono text-xs tracking-widest uppercase">
-                Consultation & Enquiries
+                {eyebrow}
               </span>
               <h2 className="font-display text-ink text-3xl leading-[1.12] font-medium tracking-tight sm:text-5xl lg:text-6xl">
-                Start a conversation about your project, vision or future space.
+                {heading}
               </h2>
             </div>
 
             <p className="font-body text-ink-muted max-w-md text-base leading-relaxed sm:text-lg">
-              Whether you are planning a contemporary new home, a complete
-              internal remodelling, or a structural extension, we would welcome
-              the opportunity to review your ideas and explore how our
-              specialist team can help shape it.
+              {intro}
             </p>
 
             <div className="border-line text-ink-muted space-y-3 border-t pt-6 font-mono text-xs">
@@ -41,7 +50,7 @@ export function SpatialBriefSection() {
 
           {/* Right Column: Signature Pinned Spatial Brief Paper Form */}
           <div className="pt-6 lg:col-span-7 lg:pt-0">
-            <SpatialBriefForm />
+            <SpatialBriefForm defaultMessage={defaultMessage} />
           </div>
         </div>
       </div>

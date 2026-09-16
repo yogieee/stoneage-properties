@@ -33,6 +33,13 @@ export const expertiseArea = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "service",
+      title: "Related service",
+      description: "If set, the \"Explore Related Works\" link points to this service's detail page instead of the general Projects page.",
+      type: "reference",
+      to: [{ type: "service" }],
+    }),
+    defineField({
       name: "order",
       title: "Display order",
       type: "number",

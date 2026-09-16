@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Typography } from "@/components/ui/Typography";
 import { ArticleBody } from "@/components/ui/ArticleBody";
-import { StoneageMonolithLogo } from "@/components/decorative/StoneageMonolithLogo";
+import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 import { getProject, getProjects } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
@@ -178,9 +178,10 @@ export default async function ProjectDetailPage({
                         {item.title}
                       </h3>
                     </div>
-                    <StoneageMonolithLogo
-                      variant="mark"
-                      className="text-ink-subtle mt-1 h-3 w-3 shrink-0 transition-transform duration-500 group-hover:rotate-90 group-hover:text-ink"
+                    <LogoSpinner
+                      spin="hover"
+                      size="h-4 w-4"
+                      className="text-ink-subtle mt-1 shrink-0 group-hover:text-ink"
                     />
                   </div>
                 </Link>

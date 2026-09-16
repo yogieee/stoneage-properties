@@ -8,12 +8,14 @@ interface SpatialBriefFormProps {
   isModal?: boolean;
   onSuccess?: () => void;
   onClose?: () => void;
+  defaultMessage?: string;
 }
 
 export function SpatialBriefForm({
   isModal = false,
   onSuccess,
   onClose,
+  defaultMessage,
 }: SpatialBriefFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [projectTypes, setProjectTypes] = useState<string[]>(["Residential"]);
@@ -237,6 +239,7 @@ export function SpatialBriefForm({
                   <textarea
                     id="brief-message"
                     rows={4}
+                    defaultValue={defaultMessage}
                     placeholder="Share initial dimensions, requirements, planning permissions, or architectural aspirations..."
                     className="notepad-lines font-body placeholder:text-ink-subtle/40 w-full resize-none bg-transparent text-sm leading-[2.25rem] focus:outline-none sm:text-base"
                   />

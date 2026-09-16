@@ -167,7 +167,31 @@ const SERVICES = [
     },
     order: 7,
   },
+  {
+    _id: `${SEED_ID_PREFIX}service-kitchens`,
+    _type: "service",
+    name: "Modern Kitchen Remodeling",
+    slug: { _type: "slug", current: "kitchens" },
+    summary:
+      "Bespoke kitchen remodels designed and fitted to a professional, lasting standard.",
+    description:
+      "We design and build bespoke kitchen remodels that balance everyday practicality with a considered, modern finish. From layout and cabinetry through to worktops, lighting, and appliance integration, every kitchen is planned around how you actually use the space and delivered with the same attention to detail as a full renovation.",
+    warranty: {
+      label: "3-Year Workmanship Guarantee",
+      detail:
+        "Every kitchen remodel is backed by Stoneage Properties' standard 3-year workmanship guarantee, covering the quality of our labour and materials.",
+    },
+    order: 8,
+  },
 ];
+
+// NOTE: seed-sanity.mjs's run() uses createOrReplace() on the full SERVICES
+// and EXPERTISE_AREAS documents, which would wipe fields patched in later by
+// seed-service-details.mjs and add-kitchen-service.mjs (heroImage, process,
+// features, faqs, note, and the expertiseArea "service" reference). Once a
+// dataset has been through those later scripts, do not re-run this script's
+// run() against it — it's kept here as the from-scratch bootstrap for a new,
+// empty dataset.
 
 const TEAM = [
   {
@@ -360,10 +384,12 @@ const EXPERTISE_AREAS = [
   },
 ];
 
-// No real blog copy exists in the codebase (JournalGrid only had
-// placeholder titles/images pointing at generic stock photography) —
-// seeded here as clearly-placeholder journal entries per instruction,
-// using the same titles/images that were already in the static build.
+// Full article bodies + hero "note" fields live in
+// write-journal-content.mjs (patch-based, run after this script). The
+// excerpts below are kept in sync with that script for documentation, but
+// this script's createOrReplace() would wipe body/note if re-run against a
+// dataset that's already been through write-journal-content.mjs — see the
+// SERVICES warning above; the same caution applies here.
 const JOURNAL_ARTICLES = [
   {
     _id: `${SEED_ID_PREFIX}journal-long-term-living`,
@@ -371,7 +397,7 @@ const JOURNAL_ARTICLES = [
     slug: "designing-for-long-term-living-rather-than-trends",
     imagePath: "images/livingroom.png",
     excerpt:
-      "[Placeholder] A look at how considered material choices outlast passing interior trends.",
+      "Interior trends move in cycles measured in seasons. A well-built home has to hold up for decades. Here's how we design for the second decade of ownership, not the first six months.",
     order: 1,
   },
   {
@@ -380,7 +406,7 @@ const JOURNAL_ARTICLES = [
     slug: "the-role-of-material-honesty-in-residential-architecture",
     imagePath: "images/staircase.png",
     excerpt:
-      "[Placeholder] Why letting materials express their true nature creates more enduring homes.",
+      "Timber that looks like timber. Brick that's allowed to read as brick. Why letting materials express their true nature — rather than disguising them — produces homes that age with dignity instead of just getting old.",
     order: 2,
   },
   {
@@ -389,7 +415,7 @@ const JOURNAL_ARTICLES = [
     slug: "balancing-openness-privacy-and-everyday-comfort",
     imagePath: "images/plan.png",
     excerpt:
-      "[Placeholder] Notes on planning layouts that feel open without sacrificing privacy.",
+      "Open-plan living solved one problem and created another: how do you stay connected as a household without losing anywhere quiet to retreat to? Notes on planning layouts that feel open without sacrificing privacy.",
     order: 3,
   },
   {
@@ -398,7 +424,7 @@ const JOURNAL_ARTICLES = [
     slug: "creating-a-stronger-connection-between-home-and-landscape",
     imagePath: "images/garden.png",
     excerpt:
-      "[Placeholder] Exploring how extensions and glazing can dissolve the line between inside and out.",
+      "The line between indoors and outdoors has become one of the most valuable decisions in a home extension. Exploring how extensions, glazing, and level changes can dissolve that boundary rather than just decorate it.",
     order: 4,
   },
 ];

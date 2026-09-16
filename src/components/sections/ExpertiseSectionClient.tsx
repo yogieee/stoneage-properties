@@ -11,6 +11,7 @@ type ExpertiseItem = {
   title: string;
   description: string;
   image: string;
+  href: string;
 };
 
 type ExpertiseSectionClientProps = {
@@ -191,7 +192,7 @@ export function ExpertiseSectionClient({ areas }: ExpertiseSectionClientProps) {
                     {item.description}
                   </p>
                   <Link
-                    href="/projects"
+                    href={item.href}
                     className="text-ink hover:text-ink-muted inline-block font-mono text-xs tracking-widest uppercase underline underline-offset-8 transition-colors"
                   >
                     Explore Related Works &rarr;

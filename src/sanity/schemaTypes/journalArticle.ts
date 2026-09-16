@@ -38,6 +38,17 @@ export const journalArticle = defineType({
       of: [{ type: "block" }],
     }),
     defineField({
+      name: "note",
+      title: "Hero note",
+      description:
+        "Short pinned-note line shown beside the excerpt on the article detail page (e.g. homepage's 'Calm homes, lasting craft.').",
+      type: "object",
+      fields: [
+        defineField({ name: "line", title: "Line", type: "string" }),
+        defineField({ name: "subline", title: "Subline", type: "string" }),
+      ],
+    }),
+    defineField({
       name: "publishedAt",
       title: "Published at",
       type: "datetime",

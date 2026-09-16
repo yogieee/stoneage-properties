@@ -12,6 +12,7 @@ export async function ExpertiseSection() {
         title: area.title,
         description: area.description,
         image: urlFor(area.image).width(1200).height(720).url(),
+        href: area.service ? `/services/${area.service.slug}` : "/projects",
       }))}
     />
   );

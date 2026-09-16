@@ -3,10 +3,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { Typography } from "@/components/ui/Typography";
 import { ArticleBody } from "@/components/ui/ArticleBody";
-import { StoneageMonolithLogo } from "@/components/decorative/StoneageMonolithLogo";
+import { LogoSpinner } from "@/components/decorative/LogoSpinner";
+import { Paperclip } from "@/components/decorative/Paperclip";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 import { getJournalArticle, getJournalArticles } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
+
+function estimateReadingTime(body: unknown): string {
+  if (!Array.isArray(body)) return "3 min read";
+  const words = body
+    .filter((block): block is { children?: { text?: string }[] } => block?._type === "block")
+    .flatMap((block) => block.children ?? [])
+    .map((span) => span.text ?? "")
+    .join(" ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return `${Math.max(1, Math.round(words / 200))} min read`;
+}
 
 export async function generateStaticParams() {
   const articles = await getJournalArticles();
@@ -72,40 +86,78 @@ export default async function JournalArticlePage({
 
       {/* Header */}
       <div className="px-6 pt-8 pb-16 sm:px-12">
-        <div className="mx-auto max-w-4xl">
-          <span className="text-ink-subtle mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs tracking-widest uppercase">
-            <span>Journal</span>
-            {publishedDate && (
-              <>
-                <span aria-hidden className="text-line">
-                  &middot;
-                </span>
-                <time dateTime={article.publishedAt}>{publishedDate}</time>
-              </>
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-4 lg:items-start lg:gap-x-12">
+          <div className="lg:col-span-3">
+            <span className="text-ink-subtle mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs tracking-widest uppercase">
+              <span>Journal</span>
+              {publishedDate && (
+                <>
+                  <span aria-hidden className="text-line">
+                    &middot;
+                  </span>
+                  <time dateTime={article.publishedAt}>{publishedDate}</time>
+                </>
+              )}
+            </span>
+            <h1 className="font-display text-ink mb-6 text-3xl leading-[1.12] font-medium tracking-tight sm:text-5xl lg:text-6xl">
+              {article.title}
+            </h1>
+            {article.excerpt && (
+              <Typography variant="body-lg" className="whitespace-pre-line">
+                {article.excerpt}
+              </Typography>
             )}
-          </span>
-          <Typography variant="display-lg" as="h1">
-            {article.title}
-          </Typography>
-          {article.excerpt && (
-            <Typography variant="body-lg" className="mt-6 max-w-2xl">
-              {article.excerpt}
-            </Typography>
-          )}
+
+            <div className="border-line mt-8 gap-x-8 gap-y-3 border-t pt-4 font-mono text-sm">
+              <div className="flex flex-col gap-1">
+                <span className="text-ink-subtle text-xs tracking-widest uppercase">
+                  Reading Time
+                </span>
+                <span className="text-ink mt-1 whitespace-nowrap">
+                  {estimateReadingTime(article.body)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative -rotate-2 transition-transform duration-500 hover:rotate-0 lg:col-span-1 lg:mt-2">
+            <div className="pointer-events-none absolute -top-7 left-6 z-20">
+              <Paperclip className="h-auto w-10 drop-shadow-md" />
+            </div>
+
+            <div className="bg-paper-card border-line text-ink relative overflow-hidden rounded border p-6 shadow-md">
+              <div className="border-line mb-6 flex items-center justify-between gap-2 border-b pb-4">
+                <span className="text-ink-subtle min-w-0 flex-1 truncate font-mono text-[10px] tracking-widest uppercase">
+                  A NOTE FROM STONEAGE
+                </span>
+                <div className="flex shrink-0 items-center gap-1.5">
+                  <span className="font-display text-xs font-medium">Stoneage</span>
+                  <LogoSpinner size="w-3.5 h-3.5" className="text-ink" />
+                </div>
+              </div>
+              <div className="notepad-lines font-display text-ink-muted py-2 text-base italic">
+                <p className="mb-0 pl-1 leading-loose">
+                  {article.note?.line || "Calm homes, lasting craft."}
+                </p>
+                <p className="text-ink-subtle pl-1 font-mono text-sm leading-loose not-italic">
+                  {article.note?.subline ||
+                    "30+ years delivering structural excellence across the UK."}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Cover image */}
-      <div className="px-6 sm:px-12">
-        <div className="border-line bg-paper-dim relative mx-auto aspect-[16/10] w-full max-w-5xl overflow-hidden rounded-xl border shadow-md sm:aspect-[16/9]">
-          <Image
-            src={urlFor(article.image).width(2000).height(1125).url()}
-            alt={article.title}
-            fill
-            priority
-            className="object-cover"
-          />
-        </div>
+      <div className="bg-paper-dim relative aspect-[16/10] w-full overflow-hidden sm:aspect-[21/9]">
+        <Image
+          src={urlFor(article.image).width(2400).height(1029).url()}
+          alt={article.title}
+          fill
+          priority
+          className="object-cover"
+        />
       </div>
 
       {/* Body */}
@@ -157,9 +209,10 @@ export default async function JournalArticlePage({
                     <h3 className="font-display text-ink group-hover:text-ink-muted text-lg leading-snug font-medium transition-colors">
                       {item.title}
                     </h3>
-                    <StoneageMonolithLogo
-                      variant="mark"
-                      className="text-ink-subtle mt-1 h-3 w-3 shrink-0 transition-transform duration-500 group-hover:rotate-90 group-hover:text-ink"
+                    <LogoSpinner
+                      spin="hover"
+                      size="h-3 w-3"
+                      className="text-ink-subtle mt-1 shrink-0 group-hover:text-ink"
                     />
                   </div>
                 </Link>

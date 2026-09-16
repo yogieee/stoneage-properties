@@ -10,6 +10,12 @@ export type Service = {
   name: string;
   summary: string;
   description: string;
+  heroImage?: SanityImage;
+  note?: { line?: string; subline?: string };
+  process?: { title: string; detail: string }[];
+  features?: string[];
+  faqs?: { question: string; answer: string }[];
+  metaDescription?: string;
   warranty: { label: string; detail: string };
 };
 
@@ -30,6 +36,7 @@ export type Project = {
   summary?: string;
   body?: unknown;
   featured?: boolean;
+  services?: { slug: string; name: string }[];
 };
 
 export type Testimonial = {
@@ -46,6 +53,7 @@ export type JournalArticle = {
   excerpt?: string;
   body?: unknown;
   publishedAt?: string;
+  note?: { line?: string; subline?: string };
 };
 
 export type HeroSlide = {
@@ -61,6 +69,7 @@ export type ExpertiseArea = {
   title: string;
   description: string;
   image: SanityImage;
+  service?: { slug: string };
 };
 
 export type SiteSettings = {
@@ -75,6 +84,12 @@ const SERVICE_PROJECTION = `{
   name,
   summary,
   description,
+  heroImage,
+  note,
+  process,
+  features,
+  faqs,
+  metaDescription,
   warranty
 }`;
 
@@ -87,7 +102,8 @@ const PROJECT_PROJECTION = `{
   gallery,
   summary,
   body,
-  featured
+  featured,
+  "services": services[]->{ "slug": slug.current, name }
 }`;
 
 const JOURNAL_PROJECTION = `{
@@ -96,7 +112,8 @@ const JOURNAL_PROJECTION = `{
   image,
   excerpt,
   body,
-  publishedAt
+  publishedAt,
+  note
 }`;
 
 export async function getServices(): Promise<Service[]> {
@@ -147,6 +164,14 @@ export async function getProject(slug: string): Promise<Project | null> {
   );
 }
 
+export async function getProjectsByService(slug: string): Promise<Project[]> {
+  return client.fetch(
+    `*[_type == "project" && $slug in services[]->slug.current] | order(order asc) ${PROJECT_PROJECTION}`,
+    { slug },
+    { next: { tags: ["project"] } },
+  );
+}
+
 export async function getTestimonials(): Promise<Testimonial[]> {
   return client.fetch(
     `*[_type == "testimonial"] | order(order asc) { quote, author, role, image }`,
@@ -183,9 +208,9 @@ export async function getHeroSlides(): Promise<HeroSlide[]> {
 
 export async function getExpertiseAreas(): Promise<ExpertiseArea[]> {
   return client.fetch(
-    `*[_type == "expertiseArea"] | order(order asc) { number, title, description, image }`,
+    `*[_type == "expertiseArea"] | order(order asc) { number, title, description, image, "service": service->{ "slug": slug.current } }`,
     {},
-    { next: { tags: ["expertiseArea"] } },
+    { next: { tags: ["expertiseArea", "service"] } },
   );
 }
 
