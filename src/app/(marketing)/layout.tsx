@@ -1,6 +1,7 @@
 import { SiteNav } from "@/components/sections/SiteNav";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { Preloader } from "@/components/motion/Preloader";
+import { ChatWidget } from "@/components/sections/ChatWidget";
 
 export default function MarketingLayout({
   children,
@@ -16,6 +17,7 @@ export default function MarketingLayout({
       <main className="flex-1 w-full">{children}</main>
       <SiteFooter />
       {modal}
+      <ChatWidget />
     </div>
   );
 }

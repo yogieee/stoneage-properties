@@ -56,3 +56,32 @@ body {
   background-color: #f7f6f2;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
 }
+
+/* Subtle attention-getting shake for the chat button, repeats with a pause */
+@keyframes chat-attention {
+  0%, 82%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  85% {
+    transform: translateY(-3px) rotate(-6deg);
+  }
+  88% {
+    transform: translateY(0) rotate(5deg);
+  }
+  91% {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+  94% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.animate-chat-attention {
+  animation: chat-attention 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-chat-attention {
+    animation: none;
+  }
+}

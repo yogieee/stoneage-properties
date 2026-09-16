@@ -18,6 +18,8 @@ export function SpatialBriefForm({
   defaultMessage,
 }: SpatialBriefFormProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [projectTypes, setProjectTypes] = useState<string[]>(["Residential"]);
 
   const toggleProjectType = (type: string) => {
@@ -26,11 +28,45 @@ export function SpatialBriefForm({
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    if (onSuccess) {
-      setTimeout(onSuccess, 1500);
+    setError(null);
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: String(formData.get("name") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      projectTypes,
+      location: String(formData.get("location") ?? ""),
+      timeline: String(formData.get("timeline") ?? ""),
+      message: String(formData.get("message") ?? ""),
+    };
+
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error ?? "Could not submit your brief.");
+      }
+
+      setSubmitted(true);
+      if (onSuccess) {
+        setTimeout(onSuccess, 1500);
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Could not submit your brief. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -103,6 +139,7 @@ export function SpatialBriefForm({
                 </label>
                 <input
                   id="brief-name"
+                  name="name"
                   type="text"
                   required
                   placeholder="Your full name"
@@ -125,6 +162,7 @@ export function SpatialBriefForm({
                 </label>
                 <input
                   id="brief-email"
+                  name="email"
                   type="email"
                   required
                   placeholder="name@domain.com"
@@ -190,6 +228,7 @@ export function SpatialBriefForm({
                 </label>
                 <input
                   id="brief-location"
+                  name="location"
                   type="text"
                   placeholder="e.g. Solihull, London, Nottingham or Postcode"
                   className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 w-full border-b bg-transparent py-1.5 text-sm transition-colors focus:outline-none sm:text-base"
@@ -211,6 +250,8 @@ export function SpatialBriefForm({
                 </label>
                 <select
                   id="brief-timeline"
+                  name="timeline"
+                  defaultValue="immediate"
                   className="border-line font-body focus:border-ink w-full cursor-pointer border-b bg-transparent py-1.5 text-sm transition-colors focus:outline-none sm:text-base"
                 >
                   <option value="immediate">Within 3 months</option>
@@ -238,6 +279,7 @@ export function SpatialBriefForm({
                 <div className="border-line bg-paper relative w-full rounded border p-3">
                   <textarea
                     id="brief-message"
+                    name="message"
                     rows={4}
                     defaultValue={defaultMessage}
                     placeholder="Share initial dimensions, requirements, planning permissions, or architectural aspirations..."
@@ -248,14 +290,23 @@ export function SpatialBriefForm({
             </div>
 
             {/* Submit Action */}
-            <div className="flex items-center justify-between pt-4">
-              <div />
+            <div className="flex items-center justify-between gap-4 pt-4">
+              <div>
+                {error && (
+                  <p className="font-mono text-xs text-red-600">{error}</p>
+                )}
+              </div>
               <button
                 type="submit"
-                className="group bg-charcoal text-paper hover:bg-ink inline-flex items-center gap-4 rounded-full px-8 py-3.5 font-mono text-xs tracking-wider uppercase shadow-md transition-all duration-300 hover:shadow-lg"
+                disabled={submitting}
+                className="group bg-charcoal text-paper hover:bg-ink inline-flex items-center gap-4 rounded-full px-8 py-3.5 font-mono text-xs tracking-wider uppercase shadow-md transition-all duration-300 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
               >
-                <span>Submit Spatial Brief</span>
-                <LogoSpinner spin="hover" size="h-5 w-5" className="text-paper" />
+                <span>{submitting ? "Submitting..." : "Submit Spatial Brief"}</span>
+                <LogoSpinner
+                  spin={submitting ? "continuous" : "hover"}
+                  size="h-5 w-5"
+                  className="text-paper"
+                />
               </button>
             </div>
 

@@ -189,7 +189,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
             </div>
           </div>
 
-          <div className="md:col-span-4 lg:col-span-3 flex md:justify-end items-center gap-4">
+          <div className="md:col-span-4 lg:col-span-3 flex md:justify-end items-center gap-4 md:mr-20 lg:mr-28">
             <Link
               href="/projects"
               className="group inline-flex items-center justify-between gap-4 bg-paper text-ink px-6 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-sm font-mono tracking-wider uppercase transition-all duration-300 hover:bg-paper-warm hover:shadow-lg"
