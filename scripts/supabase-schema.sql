@@ -12,6 +12,7 @@ create table if not exists public.contact_submissions (
   created_at timestamptz not null default now(),
   name text not null,
   email text not null,
+  phone text,
   project_types text[] not null default '{}',
   location text,
   timeline text,
@@ -19,8 +20,77 @@ create table if not exists public.contact_submissions (
   source text not null default 'spatial-brief-form',
   status text not null default 'new' check (status in ('new', 'contacted', 'archived')),
   user_agent text,
-  referrer text
+  referrer text,
+  -- Legacy combined consent flag (kept for historical rows) — superseded
+  -- by the per-channel preference columns below.
+  contact_consent boolean not null default false,
+  contact_consent_at timestamptz,
+  -- Per-channel communication preferences, set at submission time and
+  -- updatable later (e.g. via an unsubscribe link or a "STOP" reply).
+  email_opt_in boolean not null default false,
+  email_opted_out boolean not null default false,
+  email_opted_out_at timestamptz,
+  whatsapp_opt_in boolean not null default false,
+  whatsapp_opted_out boolean not null default false,
+  whatsapp_opted_out_at timestamptz,
+  preferences_updated_at timestamptz,
+  client_email_sent_at timestamptz,
+  admin_email_sent_at timestamptz,
+  client_whatsapp_sent_at timestamptz,
+  admin_whatsapp_sent_at timestamptz
 );
+
+-- Migration: add columns to a table created before this feature existed.
+alter table public.contact_submissions add column if not exists phone text;
+alter table public.contact_submissions add column if not exists contact_consent boolean not null default false;
+alter table public.contact_submissions add column if not exists contact_consent_at timestamptz;
+alter table public.contact_submissions add column if not exists email_opt_in boolean not null default false;
+alter table public.contact_submissions add column if not exists email_opted_out boolean not null default false;
+alter table public.contact_submissions add column if not exists email_opted_out_at timestamptz;
+alter table public.contact_submissions add column if not exists whatsapp_opt_in boolean not null default false;
+alter table public.contact_submissions add column if not exists whatsapp_opted_out boolean not null default false;
+alter table public.contact_submissions add column if not exists whatsapp_opted_out_at timestamptz;
+alter table public.contact_submissions add column if not exists preferences_updated_at timestamptz;
+alter table public.contact_submissions add column if not exists client_email_sent_at timestamptz;
+alter table public.contact_submissions add column if not exists admin_email_sent_at timestamptz;
+alter table public.contact_submissions add column if not exists client_whatsapp_sent_at timestamptz;
+alter table public.contact_submissions add column if not exists admin_whatsapp_sent_at timestamptz;
+
+-- Migration: rename the earlier whatsapp-only consent column if it exists
+-- from a prior run of this script (harmless no-op on a fresh database).
+do $$
+begin
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'contact_submissions' and column_name = 'whatsapp_consent'
+  ) and not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'contact_submissions' and column_name = 'contact_consent'
+  ) then
+    alter table public.contact_submissions rename column whatsapp_consent to contact_consent;
+  end if;
+
+  if exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'contact_submissions' and column_name = 'whatsapp_consent_at'
+  ) and not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'contact_submissions' and column_name = 'contact_consent_at'
+  ) then
+    alter table public.contact_submissions rename column whatsapp_consent_at to contact_consent_at;
+  end if;
+end $$;
+
+-- Migration: backfill the new per-channel opt-in columns from the legacy
+-- combined consent flag, for any rows submitted before this change.
+-- Never overwrites a row that already has an explicit preference set.
+update public.contact_submissions
+  set email_opt_in = true
+  where contact_consent = true and email_opt_in = false;
+
+update public.contact_submissions
+  set whatsapp_opt_in = true
+  where contact_consent = true and phone is not null and whatsapp_opt_in = false;
 
 create index if not exists contact_submissions_created_at_idx
   on public.contact_submissions (created_at desc);

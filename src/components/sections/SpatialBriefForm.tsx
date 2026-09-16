@@ -21,6 +21,7 @@ export function SpatialBriefForm({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [projectTypes, setProjectTypes] = useState<string[]>(["Residential"]);
+  const [contactConsent, setContactConsent] = useState(false);
 
   const toggleProjectType = (type: string) => {
     setProjectTypes((prev) =>
@@ -36,10 +37,12 @@ export function SpatialBriefForm({
     const payload = {
       name: String(formData.get("name") ?? ""),
       email: String(formData.get("email") ?? ""),
+      phone: String(formData.get("phone") ?? ""),
       projectTypes,
       location: String(formData.get("location") ?? ""),
       timeline: String(formData.get("timeline") ?? ""),
       message: String(formData.get("message") ?? ""),
+      contactConsent,
     };
 
     setSubmitting(true);
@@ -171,10 +174,32 @@ export function SpatialBriefForm({
               </div>
             </div>
 
-            {/* Field 03: Project Type */}
+            {/* Field 03: Phone */}
             <div className="grid grid-cols-12 items-baseline gap-4">
               <span className="text-ink-subtle col-span-2 font-mono text-xs">
                 03)
+              </span>
+              <div className="col-span-10 space-y-1.5">
+                <label
+                  htmlFor="brief-phone"
+                  className="text-ink-muted block font-mono text-xs tracking-wider uppercase"
+                >
+                  Phone (optional)
+                </label>
+                <input
+                  id="brief-phone"
+                  name="phone"
+                  type="tel"
+                  placeholder="+44 7000 000000"
+                  className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 w-full border-b bg-transparent py-1.5 text-sm transition-colors focus:outline-none sm:text-base"
+                />
+              </div>
+            </div>
+
+            {/* Field 04: Project Type */}
+            <div className="grid grid-cols-12 items-baseline gap-4">
+              <span className="text-ink-subtle col-span-2 font-mono text-xs">
+                04)
               </span>
               <div className="col-span-10 space-y-3">
                 <span className="text-ink-muted block font-mono text-xs tracking-wider uppercase">
@@ -214,10 +239,10 @@ export function SpatialBriefForm({
               </div>
             </div>
 
-            {/* Field 04: Location */}
+            {/* Field 05: Location */}
             <div className="grid grid-cols-12 items-baseline gap-4">
               <span className="text-ink-subtle col-span-2 font-mono text-xs">
-                04)
+                05)
               </span>
               <div className="col-span-10 space-y-1.5">
                 <label
@@ -236,10 +261,10 @@ export function SpatialBriefForm({
               </div>
             </div>
 
-            {/* Field 05: Timeline */}
+            {/* Field 06: Timeline */}
             <div className="grid grid-cols-12 items-baseline gap-4">
               <span className="text-ink-subtle col-span-2 font-mono text-xs">
-                05)
+                06)
               </span>
               <div className="col-span-10 space-y-1.5">
                 <label
@@ -264,10 +289,10 @@ export function SpatialBriefForm({
               </div>
             </div>
 
-            {/* Field 06: Tell us more (Notepad Lined Area) */}
+            {/* Field 07: Tell us more (Notepad Lined Area) */}
             <div className="grid grid-cols-12 items-start gap-4">
               <span className="text-ink-subtle col-span-2 pt-2 font-mono text-xs">
-                06)
+                07)
               </span>
               <div className="col-span-10 space-y-1.5">
                 <label
@@ -289,6 +314,28 @@ export function SpatialBriefForm({
               </div>
             </div>
 
+            {/* Contact Consent */}
+            <div className="grid grid-cols-12 items-start gap-4">
+              <span className="text-ink-subtle col-span-2 font-mono text-xs" />
+              <div className="col-span-10">
+                <label className="flex cursor-pointer items-start gap-3">
+                  <input
+                    type="checkbox"
+                    required
+                    checked={contactConsent}
+                    onChange={(e) => setContactConsent(e.target.checked)}
+                    className="border-line accent-charcoal mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded"
+                  />
+                  <span className="font-body text-ink-muted text-xs leading-relaxed sm:text-sm">
+                    I agree that Stoneage Properties may contact me by email and
+                    where a phone number is provided via WhatsApp regarding this
+                    enquiry. We&apos;ll only message about your Spatial Brief
+                    and you can opt out anytime.
+                  </span>
+                </label>
+              </div>
+            </div>
+
             {/* Submit Action */}
             <div className="flex items-center justify-between gap-4 pt-4">
               <div>
@@ -301,7 +348,9 @@ export function SpatialBriefForm({
                 disabled={submitting}
                 className="group bg-charcoal text-paper hover:bg-ink inline-flex items-center gap-4 rounded-full px-8 py-3.5 font-mono text-xs tracking-wider uppercase shadow-md transition-all duration-300 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
               >
-                <span>{submitting ? "Submitting..." : "Submit Spatial Brief"}</span>
+                <span>
+                  {submitting ? "Submitting..." : "Submit Spatial Brief"}
+                </span>
                 <LogoSpinner
                   spin={submitting ? "continuous" : "hover"}
                   size="h-5 w-5"
