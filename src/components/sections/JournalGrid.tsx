@@ -69,7 +69,7 @@ export async function JournalGrid() {
                   </div>
                 </div>
 
-                <div className="mt-5 flex items-end justify-between gap-4">
+                <div className="mt-5 flex items-center justify-between gap-4">
                   <div>
                     <span className="text-ink-subtle mb-1 block font-mono text-[10px] uppercase">
                       Case Study &middot; 0{index + 1}
