@@ -2,6 +2,7 @@ import { SiteNav } from "@/components/sections/SiteNav";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { Preloader } from "@/components/motion/Preloader";
 import { ChatWidget } from "@/components/sections/ChatWidget";
+import { MediaRail } from "@/components/sections/MediaRail";
 
 export default function MarketingLayout({
   children,
@@ -18,6 +19,7 @@ export default function MarketingLayout({
       <SiteFooter />
       {modal}
       <ChatWidget />
+      <MediaRail />
     </div>
   );
 }

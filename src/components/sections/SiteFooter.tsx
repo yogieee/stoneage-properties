@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { Paperclip } from "@/components/decorative/Paperclip";
+import { SocialIcon } from "@/components/decorative/SocialIcon";
 import { getSiteSettings } from "@/sanity/queries";
 
 const FALLBACK_EMAIL = "enquiries@stoneageproperties.com";
@@ -11,12 +12,19 @@ const FALLBACK_OFFICES = [
   { name: "London", address: "1 Colegrave Rd, E15 1DZ" },
   { name: "Nottingham", address: "12 Northfield Ave, NG12" },
 ];
+const FALLBACK_SOCIALS = [
+  { platform: "Instagram", url: "https://www.instagram.com/stoneage_building_contractors/" },
+  { platform: "Facebook", url: "https://www.facebook.com/stoneageproperties" },
+  { platform: "LinkedIn", url: "https://www.linkedin.com/in/stoneage-properties-5bb8171a1/" },
+  { platform: "YouTube", url: "https://www.youtube.com/channel/UCaXNV-S7WE2LfIQOr9NlGeQ" },
+];
 
 export async function SiteFooter() {
   const settings = await getSiteSettings();
   const email = settings?.email || FALLBACK_EMAIL;
   const phone = settings?.phones?.[0] || FALLBACK_PHONE;
   const offices = settings?.offices?.length ? settings.offices : FALLBACK_OFFICES;
+  const socials = settings?.socials?.length ? settings.socials : FALLBACK_SOCIALS;
   const phoneHref = `tel:${phone.number.replace(/\s+/g, "")}`;
 
   return (
@@ -97,6 +105,21 @@ export async function SiteFooter() {
                       {office.name}: {office.address}
                       {index < offices.length - 1 && <br />}
                     </span>
+                  ))}
+                </li>
+                <li className="flex items-center gap-4 pt-3">
+                  {socials.map((social) => (
+                    <a
+                      key={social.platform}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.platform}
+                      title={social.platform}
+                      className="text-paper/60 transition-colors hover:text-paper"
+                    >
+                      <SocialIcon platform={social.platform} className="h-4 w-4" />
+                    </a>
                   ))}
                 </li>
               </ul>
