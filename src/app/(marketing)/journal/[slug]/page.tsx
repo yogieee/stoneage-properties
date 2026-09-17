@@ -8,6 +8,7 @@ import { Paperclip } from "@/components/decorative/Paperclip";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 import { getJournalArticle, getJournalArticles } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
+import { SITE_URL } from "@/lib/seo";
 
 function estimateReadingTime(body: unknown): string {
   if (!Array.isArray(body)) return "3 min read";
@@ -36,9 +37,28 @@ export async function generateMetadata({
   const article = await getJournalArticle(slug);
   if (!article) return {};
 
+  const images = article.image
+    ? [urlFor(article.image).width(1200).height(630).url()]
+    : undefined;
+
   return {
-    title: `${article.title} | Stoneage Properties Journal`,
+    title: article.title,
     description: article.excerpt,
+    alternates: { canonical: `${SITE_URL}/journal/${article.slug}` },
+    openGraph: {
+      type: "article",
+      title: `${article.title} | Stoneage Properties Journal`,
+      description: article.excerpt,
+      url: `${SITE_URL}/journal/${article.slug}`,
+      images,
+      publishedTime: article.publishedAt || undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${article.title} | Stoneage Properties Journal`,
+      description: article.excerpt,
+      images,
+    },
   };
 }
 
@@ -69,8 +89,47 @@ export default async function JournalArticlePage({
     .filter((item) => item.slug !== slug)
     .slice(0, 3);
 
+  const articleImage = article.image
+    ? urlFor(article.image).width(1200).height(630).url()
+    : undefined;
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt,
+    image: articleImage ? [articleImage] : undefined,
+    datePublished: article.publishedAt || undefined,
+    author: { "@type": "Organization", name: "Stoneage Properties", url: SITE_URL },
+    publisher: { "@type": "Organization", name: "Stoneage Properties", url: SITE_URL },
+    mainEntityOfPage: `${SITE_URL}/journal/${article.slug}`,
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Journal", item: `${SITE_URL}/journal` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: article.title,
+        item: `${SITE_URL}/journal/${article.slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="pt-16 sm:pt-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       {/* Breadcrumb */}
       <div className="px-6 pt-8 sm:px-12">
         <Link

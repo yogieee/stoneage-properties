@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { IntroSection } from "@/components/sections/IntroSection";
 import { ExpertiseSection } from "@/components/sections/ExpertiseSection";
@@ -7,6 +8,19 @@ import { FeaturedProjectsGrid } from "@/components/sections/FeaturedProjectsGrid
 import { TestimonialsSlider } from "@/components/sections/TestimonialsSlider";
 import { JournalGrid } from "@/components/sections/JournalGrid";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
+
+export const metadata: Metadata = {
+  title: "Architecture & Property Design Services in Solihull, London & Nottingham",
+  description:
+    "Stoneage Properties designs new builds, renovations, extensions, and conversions across Solihull, London, and Nottingham. 30+ years of structural excellence — book a spatial brief consultation.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Architecture & Property Design Services | Stoneage Properties",
+    description:
+      "New builds, renovations, extensions, and conversions across Solihull, London, and Nottingham.",
+    url: "/",
+  },
+};
 
 /**
  * End-to-end replication of the Storey Architecture landing page

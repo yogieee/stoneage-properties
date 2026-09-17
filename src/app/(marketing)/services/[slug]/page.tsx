@@ -13,9 +13,7 @@ import {
   getSiteSettings,
 } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
-
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.stoneageproperties.com";
+import { SITE_URL } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const services = await getServices();
@@ -32,18 +30,25 @@ export async function generateMetadata({
   if (!service) return {};
 
   const description = service.metaDescription || service.summary;
+  const images = service.heroImage
+    ? [urlFor(service.heroImage).width(1200).height(630).url()]
+    : undefined;
 
   return {
-    title: `${service.name} | Stoneage Properties`,
+    title: service.name,
     description,
     alternates: { canonical: `${SITE_URL}/services/${service.slug}` },
     openGraph: {
       title: `${service.name} | Stoneage Properties`,
       description,
       url: `${SITE_URL}/services/${service.slug}`,
-      images: service.heroImage
-        ? [urlFor(service.heroImage).width(1200).height(630).url()]
-        : undefined,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${service.name} | Stoneage Properties`,
+      description,
+      images,
     },
   };
 }
@@ -92,6 +97,20 @@ export default async function ServiceDetailPage({
         }
       : null;
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Services", item: `${SITE_URL}/services` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: service.name,
+        item: `${SITE_URL}/services/${service.slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="pt-16 sm:pt-24">
       <script
@@ -104,6 +123,10 @@ export default async function ServiceDetailPage({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
 
       {/* Breadcrumb */}
       <div className="px-6 pt-8 sm:px-12">

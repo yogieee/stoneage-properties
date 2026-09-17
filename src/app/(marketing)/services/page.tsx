@@ -1,13 +1,21 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Typography } from "@/components/ui/Typography";
 import { getServices } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
 
-export const metadata = {
-  title: "Services | Stoneage Properties",
+export const metadata: Metadata = {
+  title: "Services",
   description:
     "New builds, renovations, extensions, and conversions delivered by Stoneage Properties across Solihull, London, and Nottingham.",
+  alternates: { canonical: "/services" },
+  openGraph: {
+    title: "Services | Stoneage Properties",
+    description:
+      "New builds, renovations, extensions, and conversions delivered by Stoneage Properties across Solihull, London, and Nottingham.",
+    url: "/services",
+  },
 };
 
 export default async function ServicesIndexPage() {

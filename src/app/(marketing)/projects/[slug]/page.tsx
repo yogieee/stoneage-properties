@@ -7,6 +7,7 @@ import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 import { getProject, getProjects } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
+import { SITE_URL } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -22,9 +23,28 @@ export async function generateMetadata({
   const project = await getProject(slug);
   if (!project) return {};
 
+  const description =
+    project.summary || `${project.category} project in ${project.location} by Stoneage Properties.`;
+  const images = project.image
+    ? [urlFor(project.image).width(1200).height(630).url()]
+    : undefined;
+
   return {
-    title: `${project.title} | Stoneage Properties`,
-    description: project.summary || project.category,
+    title: project.title,
+    description,
+    alternates: { canonical: `${SITE_URL}/projects/${project.slug}` },
+    openGraph: {
+      title: `${project.title} | Stoneage Properties`,
+      description,
+      url: `${SITE_URL}/projects/${project.slug}`,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} | Stoneage Properties`,
+      description,
+      images,
+    },
   };
 }
 
@@ -45,8 +65,43 @@ export default async function ProjectDetailPage({
     .filter((item) => item.slug !== slug)
     .slice(0, 3);
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Projects", item: `${SITE_URL}/projects` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: project.title,
+        item: `${SITE_URL}/projects/${project.slug}`,
+      },
+    ],
+  };
+
+  const projectJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.summary,
+    about: project.category,
+    locationCreated: project.location,
+    url: `${SITE_URL}/projects/${project.slug}`,
+    image: project.image ? urlFor(project.image).width(1200).height(630).url() : undefined,
+    creator: { "@type": "Organization", name: "Stoneage Properties", url: SITE_URL },
+  };
+
   return (
     <div className="pt-16 sm:pt-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       {/* Breadcrumb */}
       <div className="px-6 pt-8 sm:px-12">
         <Link
