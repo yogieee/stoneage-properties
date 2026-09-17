@@ -42,7 +42,10 @@ export const project = defineType({
       name: "gallery",
       title: "Gallery",
       type: "array",
-      of: [{ type: "image", options: { hotspot: true } }],
+      of: [
+        { type: "image", options: { hotspot: true } },
+        { type: "mux.video" },
+      ],
     }),
     defineField({
       name: "summary",
