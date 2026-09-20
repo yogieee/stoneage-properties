@@ -4,7 +4,7 @@ import Link from "next/link";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 
 export const metadata: Metadata = {
-  title: "Build | Specialist Construction & Delivery",
+  title: "Build",
   description:
     "Discover how build works with Stoneage Properties. Our master construction team provides complete control of the technical and construction stages from our Solihull HQ, London, and Nottingham.",
   alternates: { canonical: "/build" },

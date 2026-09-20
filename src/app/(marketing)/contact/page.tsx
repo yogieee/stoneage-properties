@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 
 export const metadata: Metadata = {
-  title: "Contact & Spatial Brief",
+  title: "Contact",
   description:
     "Start a conversation with Stoneage Properties. Submit a spatial brief for your residential new build, renovation, or structural extension.",
   alternates: { canonical: "/contact" },

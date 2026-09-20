@@ -6,7 +6,7 @@ import { urlFor } from "@/sanity/image";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 
 export const metadata: Metadata = {
-  title: "Services & Capabilities | Architecture & Specialist Construction",
+  title: "Services",
   description:
     "Comprehensive architectural design, bespoke new builds, structural renovations, and master construction services delivered by Stoneage Properties across Solihull, London, and Nottingham.",
   alternates: { canonical: "/services" },

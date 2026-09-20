@@ -6,7 +6,7 @@ import { urlFor } from "@/sanity/image";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 
 export const metadata: Metadata = {
-  title: "Journal | Architectural Insights & Research",
+  title: "Journal",
   description:
     "Thoughts, technical process studies, and construction case studies from Stoneage Properties on residential architecture, heritage conservation, and spatial craftsmanship.",
   alternates: { canonical: "/journal" },

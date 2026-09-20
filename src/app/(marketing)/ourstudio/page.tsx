@@ -4,7 +4,7 @@ import Link from "next/link";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 
 export const metadata: Metadata = {
-  title: "Our Studio | Architectural Practice & Heritage",
+  title: "Our Studio",
   description:
     "Explore Stoneage Properties' design and build studio. Rooted in Solihull with studios in London and Nottingham, we unite RIBA-chartered architects and master building contractors.",
   alternates: { canonical: "/ourstudio" },

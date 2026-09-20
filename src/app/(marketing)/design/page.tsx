@@ -4,7 +4,7 @@ import Link from "next/link";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 
 export const metadata: Metadata = {
-  title: "Design | Architectural Principles & Discipline",
+  title: "Design",
   description:
     "Discover how architectural design works at Stoneage Properties. Exploring our spatial discipline, RIBA stages, 3D modelling, and bespoke residential design principles.",
   alternates: { canonical: "/design" },

@@ -22,9 +22,8 @@ const body = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default:
-      "Stoneage Properties | Architects & Property Design in Solihull, London & Nottingham",
-    template: `%s | ${SITE_NAME}`,
+    default: "Stoneage - Specialised builders",
+    template: "Stoneage - %s",
   },
   description:
     "Stoneage Properties designs and delivers new builds, renovations, extensions, and conversions across Solihull, London, and Nottingham. Book a spatial brief consultation.",

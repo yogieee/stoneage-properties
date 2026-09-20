@@ -9,8 +9,7 @@ import { JournalGrid } from "@/components/sections/JournalGrid";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 
 export const metadata: Metadata = {
-  title:
-    "Architects & Specialist Building Contractors | Solihull, London & Nottingham",
+  title: { absolute: "Stoneage - Specialised builders" },
   description:
     "Stoneage Properties is a design and build practice specialising in luxury residential architecture, bespoke new builds, full renovations, and structural extensions.",
   alternates: { canonical: "/" },
