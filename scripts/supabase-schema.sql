@@ -195,3 +195,35 @@ create trigger chat_conversations_set_updated_at
   before update on public.chat_conversations
   for each row
   execute function public.set_updated_at();
+
+-- ============================================================
+-- Visit tracking (path + UTM source, cookieless, no IP / visitor id)
+-- ============================================================
+create table if not exists public.page_visits (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  host text,                       -- hostname visited, so preview/prod traffic can be told apart
+  path text not null,
+  utm_source text,
+  utm_medium text,
+  utm_campaign text,
+  referrer_host text,              -- external referrer hostname, first page of a visit only
+  -- Meta ad visits are the ones tagged utm_source=facebook or instagram.
+  is_meta_ad boolean generated always as (
+    coalesce(lower(utm_source) in ('facebook', 'instagram'), false)
+  ) stored
+);
+
+create index if not exists page_visits_created_at_idx
+  on public.page_visits (created_at desc);
+create index if not exists page_visits_utm_source_idx
+  on public.page_visits (utm_source) where utm_source is not null;
+
+alter table public.page_visits enable row level security;
+
+drop policy if exists "service role full access" on public.page_visits;
+create policy "service role full access"
+  on public.page_visits
+  for all
+  using (auth.role() = 'service_role')
+  with check (auth.role() = 'service_role');
