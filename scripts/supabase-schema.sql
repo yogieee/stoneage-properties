@@ -118,11 +118,40 @@ create table if not exists public.chat_conversations (
   user_agent text,
   contact_email text,              -- filled in if the visitor identifies themselves mid-chat
   contact_name text,
-  lead_captured boolean not null default false
+  contact_phone text,
+  lead_captured boolean not null default false,
+  -- Lead qualification, set by the assistant via the capture_lead tool as
+  -- it probes the visitor's need through natural conversation.
+  lead_temperature text check (lead_temperature in ('hot', 'warm', 'cold')),
+  lead_project_type text,
+  lead_timeline text,
+  -- Explicit opt-in to being contacted, asked in-chat before any contact
+  -- info is treated as a usable lead (mirrors the Spatial Brief form).
+  consent_given boolean not null default false,
+  consent_at timestamptz,
+  lead_notified_at timestamptz     -- when the admin alert for a hot lead was sent (sent once)
 );
 
 create index if not exists chat_conversations_visitor_id_idx
   on public.chat_conversations (visitor_id);
+
+alter table public.chat_conversations add column if not exists contact_phone text;
+alter table public.chat_conversations add column if not exists lead_temperature text;
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint where conname = 'chat_conversations_lead_temperature_check'
+  ) then
+    alter table public.chat_conversations
+      add constraint chat_conversations_lead_temperature_check
+      check (lead_temperature in ('hot', 'warm', 'cold'));
+  end if;
+end $$;
+alter table public.chat_conversations add column if not exists lead_project_type text;
+alter table public.chat_conversations add column if not exists lead_timeline text;
+alter table public.chat_conversations add column if not exists consent_given boolean not null default false;
+alter table public.chat_conversations add column if not exists consent_at timestamptz;
+alter table public.chat_conversations add column if not exists lead_notified_at timestamptz;
 
 create table if not exists public.chat_messages (
   id uuid primary key default gen_random_uuid(),

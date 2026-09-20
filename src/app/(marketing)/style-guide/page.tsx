@@ -1,5 +1,5 @@
 import { Reveal } from "@/components/motion/Reveal";
-import { Button } from "@/components/ui/Button";
+import { Button, ButtonArrow, BUTTON_VARIANTS } from "@/components/ui/Button";
 import { Typography, TYPOGRAPHY_VARIANTS } from "@/components/ui/Typography";
 
 const COLOR_TOKENS = [
@@ -10,8 +10,6 @@ const COLOR_TOKENS = [
   { name: "paper-dim", className: "bg-paper-dim" },
   { name: "line", className: "bg-line" },
 ] as const;
-
-const BUTTON_VARIANTS = ["primary", "secondary", "ghost"] as const;
 
 /**
  * Living design-system reference/audit page (Server Component). Every
@@ -60,6 +58,7 @@ export default function StyleGuidePage() {
           {BUTTON_VARIANTS.map((variant) => (
             <Button key={variant} variant={variant}>
               {variant}
+              {variant === "text-link" && <ButtonArrow />}
             </Button>
           ))}
         </div>

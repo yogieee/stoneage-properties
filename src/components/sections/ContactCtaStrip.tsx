@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/Button";
  */
 export function ContactCtaStrip() {
   return (
-    <div className="border-line flex flex-col items-start gap-8 border-t px-6 py-24 sm:px-12">
+    <div className="border-line flex flex-col items-start gap-8 border-t px-6 py-20 sm:px-12 sm:py-28">
       <TextReveal as="h2" className="font-display text-display-md text-ink">
         Let&apos;s build something
       </TextReveal>

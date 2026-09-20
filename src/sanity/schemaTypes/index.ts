@@ -4,8 +4,8 @@ import { project } from "./project";
 import { testimonial } from "./testimonial";
 import { journalArticle } from "./journalArticle";
 import { heroSlide } from "./heroSlide";
-import { expertiseArea } from "./expertiseArea";
 import { siteSettings } from "./siteSettings";
+import { homepagePanels } from "./homepagePanels";
 
 export const schemaTypes = [
   service,
@@ -14,6 +14,6 @@ export const schemaTypes = [
   testimonial,
   journalArticle,
   heroSlide,
-  expertiseArea,
   siteSettings,
+  homepagePanels,
 ];

@@ -1,8 +1,10 @@
 import "server-only";
 import { Resend } from "resend";
 import {
+  adminChatLeadEmail,
   adminNotificationEmail,
   clientThankYouEmail,
+  type ChatLeadForTemplates,
   type SubmissionForTemplates,
 } from "@/lib/notifications/templates";
 
@@ -55,6 +57,9 @@ export async function sendClientThankYouEmail(
           `<p style="font-size: 14px; line-height: 1.6; color:#555451; margin: 0 0 16px;">${escapeHtml(line)}</p>`,
       )
       .join("")}
+    <p style="font-size: 14px; line-height: 1.6; color:#555451; margin: 24px 0 0;">${template.signOff
+      .map(escapeHtml)
+      .join("<br />")}</p>
   `);
 
   try {
@@ -125,6 +130,54 @@ export async function sendAdminNotificationEmail(
     return true;
   } catch (err) {
     console.error("Resend admin email threw:", err);
+    return false;
+  }
+}
+
+export async function sendAdminChatLeadEmail(
+  lead: ChatLeadForTemplates,
+): Promise<boolean> {
+  const resend = getResendClient();
+  const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL;
+  if (!resend || !adminEmail) {
+    console.warn(
+      "Resend or ADMIN_NOTIFICATION_EMAIL is not configured; skipping chat lead email.",
+    );
+    return false;
+  }
+
+  const template = adminChatLeadEmail(lead);
+  const rowsHtml = template.fields
+    .map(
+      ([label, value]) => `
+      <tr>
+        <td style="padding: 6px 12px 6px 0; font-size: 12px; color:#8a8883; white-space: nowrap; vertical-align: top;">${escapeHtml(label)}</td>
+        <td style="padding: 6px 0; font-size: 14px; color:#111110;">${escapeHtml(value)}</td>
+      </tr>`,
+    )
+    .join("");
+
+  const html = emailWrapper(`
+    <h1 style="font-size: 20px; font-weight: 500; color:#111110; margin: 0 0 16px;">${escapeHtml(template.heading)}</h1>
+    <table style="width:100%; border-collapse: collapse; margin-bottom: 16px;">
+      ${rowsHtml}
+    </table>
+  `);
+
+  try {
+    const { error } = await resend.emails.send({
+      from: getFromAddress(),
+      to: adminEmail,
+      subject: template.subject,
+      html,
+    });
+    if (error) {
+      console.error("Resend chat lead email failed:", error);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("Resend chat lead email threw:", err);
     return false;
   }
 }

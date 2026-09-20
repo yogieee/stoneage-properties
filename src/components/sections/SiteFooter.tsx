@@ -1,177 +1,153 @@
 import Link from "next/link";
-import Image from "next/image";
-import { LogoSpinner } from "@/components/decorative/LogoSpinner";
-import { Paperclip } from "@/components/decorative/Paperclip";
-import { SocialIcon } from "@/components/decorative/SocialIcon";
 import { getSiteSettings } from "@/sanity/queries";
+import { StackingStonesLogo } from "@/components/decorative/StackingStonesLogo";
+import { SocialIcon } from "@/components/decorative/SocialIcon";
 
 const FALLBACK_EMAIL = "enquiries@stoneageproperties.com";
 const FALLBACK_PHONE = { label: "Solihull HQ", number: "0121 537 8229" };
 const FALLBACK_OFFICES = [
-  { name: "Solihull HQ", address: "20 Micklehill Dr, B90 2PU" },
-  { name: "London", address: "1 Colegrave Rd, E15 1DZ" },
-  { name: "Nottingham", address: "12 Northfield Ave, NG12" },
+  {
+    name: "Solihull HQ",
+    address: "20 Micklehill Dr, Shirley, Solihull, B90 2PU",
+  },
+  { name: "London", address: "1 Colegrave Rd, Stratford, London, E15 1DZ" },
+  { name: "Nottingham", address: "12 Northfield Ave, Nottingham, NG12" },
 ];
 const FALLBACK_SOCIALS = [
-  { platform: "Instagram", url: "https://www.instagram.com/stoneage_building_contractors/" },
+  {
+    platform: "Instagram",
+    url: "https://www.instagram.com/stoneage_building_contractors/",
+  },
   { platform: "Facebook", url: "https://www.facebook.com/stoneageproperties" },
-  { platform: "LinkedIn", url: "https://www.linkedin.com/in/stoneage-properties-5bb8171a1/" },
-  { platform: "YouTube", url: "https://www.youtube.com/channel/UCaXNV-S7WE2LfIQOr9NlGeQ" },
+  {
+    platform: "LinkedIn",
+    url: "https://www.linkedin.com/in/stoneage-properties-5bb8171a1/",
+  },
+  {
+    platform: "YouTube",
+    url: "https://www.youtube.com/channel/UCaXNV-S7WE2LfIQOr9NlGeQ",
+  },
 ];
 
 export async function SiteFooter() {
   const settings = await getSiteSettings();
   const email = settings?.email || FALLBACK_EMAIL;
   const phone = settings?.phones?.[0] || FALLBACK_PHONE;
-  const offices = settings?.offices?.length ? settings.offices : FALLBACK_OFFICES;
-  const socials = settings?.socials?.length ? settings.socials : FALLBACK_SOCIALS;
+  const offices = settings?.offices?.length
+    ? settings.offices
+    : FALLBACK_OFFICES;
+  const socials = settings?.socials?.length
+    ? settings.socials
+    : FALLBACK_SOCIALS;
   const phoneHref = `tel:${phone.number.replace(/\s+/g, "")}`;
 
   return (
-    <footer className="relative w-full bg-charcoal text-paper pt-24 pb-16 overflow-hidden">
-      <div className="w-full px-6 sm:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-20 border-b border-paper/15">
-          {/* Left Column: 3-column subgrid */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-10">
-            {/* Site index */}
-            <div className="space-y-4">
-              <h4 className="font-display text-base font-medium text-paper">Site index</h4>
-              <ul className="space-y-2.5 font-mono text-xs text-paper/70">
-                <li>
-                  <Link href="/" className="hover:text-paper transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/projects" className="hover:text-paper transition-colors">
-                    Projects
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/#services" className="hover:text-paper transition-colors">
-                    Services
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/#journal" className="hover:text-paper transition-colors">
-                    Journal
-                  </Link>
-                </li>
-              </ul>
+    <footer
+      className="w-full border-t border-[#1C1B19]/10 bg-[#F7F5F0] px-3 pt-16 pb-12 text-[#1C1B19] sm:px-6 md:px-12"
+      role="contentinfo"
+    >
+      <div className="w-full">
+        {/* Fabric 2-column primary layout */}
+        <div className="grid grid-cols-1 gap-10 border-b border-black/10 pb-16 md:grid-cols-12">
+          {/* Left Column: Phone, Email, Button, Socials */}
+          <div className="space-y-6 md:col-span-6 lg:col-span-5">
+            <div className="flex items-center gap-3 pb-2">
+              <span className="text-2xl leading-none font-normal tracking-[-1px]">
+                Stoneage
+              </span>
+              <StackingStonesLogo size="w-5 h-5" className="text-black" />
             </div>
 
-            {/* Legal */}
-            <div className="space-y-4">
-              <h4 className="font-display text-base font-medium text-paper">Legal</h4>
-              <ul className="space-y-2.5 font-mono text-xs text-paper/70">
-                <li>
-                  <Link href="/privacy-policy" className="hover:text-paper transition-colors">
-                    Privacy policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/terms-of-use" className="hover:text-paper transition-colors">
-                    Terms of use
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/cookie-policy" className="hover:text-paper transition-colors">
-                    Cookie policy
-                  </Link>
-                </li>
-              </ul>
+            <div>
+              <p className="mb-1 font-mono text-xs tracking-wider text-black/50 uppercase">
+                Phone
+              </p>
+              <a
+                href={phoneHref}
+                className="text-xl font-normal tracking-[-0.5px] transition-opacity hover:opacity-70 md:text-2xl"
+              >
+                {phone.number}
+              </a>
             </div>
 
-            {/* Get in touch */}
-            <div className="space-y-4">
-              <h4 className="font-display text-base font-medium text-paper">Get in touch</h4>
-              <ul className="space-y-2.5 font-mono text-xs text-paper/70">
-                <li>
-                  <a
-                    href={`mailto:${email}`}
-                    className="hover:text-paper transition-colors"
-                  >
-                    {email}
-                  </a>
-                </li>
-                <li>
-                  <a href={phoneHref} className="hover:text-paper transition-colors">
-                    {phone.number}
-                  </a>
-                </li>
-                <li className="pt-2 text-paper/50 leading-relaxed">
-                  {offices.map((office, index) => (
-                    <span key={office.name}>
-                      {office.name}: {office.address}
-                      {index < offices.length - 1 && <br />}
-                    </span>
-                  ))}
-                </li>
-                <li className="flex items-center gap-4 pt-3">
-                  {socials.map((social) => (
-                    <a
-                      key={social.platform}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.platform}
-                      title={social.platform}
-                      className="text-paper/60 transition-colors hover:text-paper"
-                    >
-                      <SocialIcon platform={social.platform} className="h-4 w-4" />
-                    </a>
-                  ))}
-                </li>
-              </ul>
+            <div>
+              <p className="mb-1 font-mono text-xs tracking-wider text-black/50 uppercase">
+                Email
+              </p>
+              <a
+                href={`mailto:${email}`}
+                className="text-lg font-normal tracking-[-0.5px] transition-opacity hover:opacity-70 md:text-xl"
+              >
+                {email}
+              </a>
+            </div>
+
+            <div className="pt-2">
+              <Link href="/contact" className="fabric-btn">
+                Project Enquiry
+              </Link>
+            </div>
+
+            <div className="flex items-center gap-5 pt-4 text-sm">
+              {socials.map((social) => (
+                <a
+                  key={social.platform}
+                  href={social.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={social.platform}
+                  className="flex items-center gap-1.5 hover:underline"
+                >
+                  <SocialIcon platform={social.platform} className="h-4 w-4" />
+                  {social.platform}
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Right Column: Architectural Photo with Pinned Paper Note */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative aspect-[16/10] w-full rounded-lg overflow-hidden bg-charcoal-light border border-paper/15 shadow-xl">
-              <Image
-                src="/images/inprocess.png"
-                alt="Stoneage Handover & Craftsmanship"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-charcoal/20" />
-            </div>
-
-            {/* Pinned Note from Stoneage */}
-            <div className="absolute -top-8 -left-4 sm:-left-8 z-20 w-44 sm:w-56 rotate-[-3deg] hover:rotate-0 transition-transform duration-300">
-              <div className="absolute -top-6 left-4 pointer-events-none z-30">
-                <Paperclip className="w-8 h-auto drop-shadow-md" />
-              </div>
-              <div className="paper-texture bg-paper-card border border-line p-4 sm:p-5 rounded shadow-lg text-ink">
-                <div className="flex justify-between items-center pb-2 border-b border-line mb-3">
-                  <span className="font-mono text-[9px] uppercase tracking-wider text-ink-subtle">
-                    A NOTE FROM STONEAGE
-                  </span>
-                  <LogoSpinner size="w-3 h-3" className="text-ink" />
-                </div>
-                <p className="font-display italic text-xs text-ink-muted leading-relaxed">
-                  Built with integrity, verified by structural guarantees.
+          {/* Right Column: Address & Directions */}
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:col-span-6 lg:col-span-7">
+            {offices.map((office) => (
+              <div key={office.name}>
+                <p className="mb-2 font-mono text-xs tracking-wider text-black/50 uppercase">
+                  {office.name}
                 </p>
-                <div className="flex justify-between pt-3 border-t border-line mt-3 font-mono text-[8px] text-ink-subtle uppercase">
-                  <span>ST / CTF</span>
-                  <span>STONEAGE</span>
-                </div>
+                <p className="text-sm leading-relaxed whitespace-pre-line text-black/80">
+                  {office.address}
+                </p>
+                <p className="pt-3">
+                  <a
+                    href={`https://maps.google.com/?q=${encodeURIComponent(office.address)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-mono text-xs tracking-wider uppercase underline underline-offset-4 hover:opacity-70"
+                  >
+                    Get Directions &rarr;
+                  </a>
+                </p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* Bottom Bar: Wordmark, Credits, and Copyright */}
-        <div className="pt-10 flex flex-col sm:flex-row justify-between items-center gap-6 font-mono text-xs text-paper/50">
-          <div className="flex items-center gap-3 text-paper">
-            <span className="font-display text-lg tracking-tight font-medium">Stoneage</span>
-            <LogoSpinner size="w-4 h-4" className="text-paper/80" />
+        {/* Fabric Sub-Footer: Accreditations, Reg, Copyright */}
+        <div className="flex flex-col items-start justify-between gap-6 pt-8 text-xs text-black/60 md:flex-row md:items-center">
+          <div className="flex flex-wrap items-center gap-4 font-mono text-[11px] tracking-wider uppercase">
+            <span>Specialist Building Contractors UK</span>
+            <span className="hidden md:inline">|</span>
+            <span>Solihull</span>
+            <span>&middot;</span>
+            <span>London</span>
+            <span>&middot;</span>
+            <span>Nottingham</span>
           </div>
 
-          <p>&copy; {new Date().getFullYear()} Stoneage Properties. Specialist Building Contractors UK.</p>
-
-          <p className="text-[11px] text-paper/40">Solihull &middot; London &middot; Nottingham</p>
+          <div className="text-left font-mono text-[11px] text-black/50 md:text-right">
+            <p>
+              &copy; {new Date().getFullYear()} Stoneage Properties Ltd &middot;
+              All Rights Reserved
+            </p>
+          </div>
         </div>
       </div>
     </footer>

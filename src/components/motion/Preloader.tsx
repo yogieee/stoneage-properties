@@ -2,26 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
-import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 
 /**
- * Initial-load screen: a black overlay with the wordmark held in the same
- * top-left position/size as the real nav logo, so when the overlay fades
- * out the logo underneath lines up exactly and reads as one continuous
- * element rather than a cut between two different logos.
+ * Initial-load preloader: A stark, pure, empty white overlay
+ * that fades out smoothly to reveal the landing page underneath.
  */
 export function Preloader() {
   const [visible, setVisible] = useState(true);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const overlay = overlayRef.current;
-    const logo = logoRef.current;
-    if (!overlay || !logo) return;
+    if (!overlay) return;
 
     if (mediaQuery.matches) {
       setVisible(false);
@@ -37,17 +32,18 @@ export function Preloader() {
       },
     });
 
-    tl.to(logo, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0.15).to(
+    // Hold pure empty white momentarily, then fade out smoothly into the landing page
+    tl.to(
       overlay,
       {
         opacity: 0,
-        duration: 0.7,
-        ease: "power2.out",
+        duration: 0.8,
+        ease: "power2.inOut",
         onStart: () => {
           overlay.style.pointerEvents = "none";
         },
       },
-      1.0,
+      0.6,
     );
 
     return () => {
@@ -61,18 +57,8 @@ export function Preloader() {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-100 bg-charcoal"
+      className="fixed inset-0 z-100 bg-[#F7F5F0]"
       aria-hidden="true"
-    >
-      <div
-        ref={logoRef}
-        className="absolute top-0 left-0 flex items-center gap-2 px-10 py-5 text-paper opacity-0 sm:py-7"
-      >
-        <span className="font-display text-2xl leading-none font-bold tracking-tight sm:text-3xl">
-          Stoneage
-        </span>
-        <LogoSpinner spin="continuous" size="h-8 w-8 sm:h-9 sm:w-9" className="mt-1.5 self-center" />
-      </div>
-    </div>
+    />
   );
 }

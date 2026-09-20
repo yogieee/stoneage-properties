@@ -24,12 +24,14 @@ export interface SubmissionForTemplates {
 
 export function clientThankYouEmail(submission: SubmissionForTemplates) {
   return {
-    subject: "We've received your Spatial Brief",
-    heading: `Brief received, ${submission.name}`,
+    subject: `Thank you for getting in touch, ${submission.name}`,
+    heading: `Thanks for reaching out, ${submission.name}`,
     bodyLines: [
-      "Thank you for sharing your project details with Stoneage Properties. A senior director from our Solihull HQ will review your spatial brief and respond within one business day.",
-      "In the meantime, if anything changes about your project or you'd like to add more detail, just reply to this email.",
+      "We've received your Spatial Brief, and we're glad you thought of Stoneage Properties for your project.",
+      "A senior director from our Solihull studio will read it personally and come back to you within 1-2 working days.",
+      "If anything changes, or you'd like to add more detail, just reply to this email. We'd love to hear more.",
     ],
+    signOff: ["Warm regards,", "The Stoneage Properties team"],
   };
 }
 
@@ -65,9 +67,9 @@ export function clientWhatsAppTemplate(submission: SubmissionForTemplates) {
   return {
     name: "spatial_brief_client_confirmation",
     metaTemplateBody:
-      "Hi {{1}}, thanks for reaching out to Stoneage Properties. We've received your Spatial Brief and a senior director will be in touch within one business day. Reply here anytime with questions.",
+      "Hi {{1}}, thank you for getting in touch with Stoneage Properties. We've received your Spatial Brief and a senior director will contact you within 1-2 working days. Feel free to reply here with any questions.",
     render: () =>
-      `Hi ${submission.name}, thanks for reaching out to Stoneage Properties. We've received your Spatial Brief and a senior director will be in touch within one business day. Reply here anytime with questions.`,
+      `Hi ${submission.name}, thank you for getting in touch with Stoneage Properties. We've received your Spatial Brief and a senior director will contact you within 1-2 working days. Feel free to reply here with any questions.`,
   };
 }
 
@@ -85,6 +87,58 @@ export function adminWhatsAppTemplate(submission: SubmissionForTemplates) {
         submission.projectTypes.length > 0
           ? `Project type: ${submission.projectTypes.join(", ")}`
           : null,
+      ]
+        .filter(Boolean)
+        .join("\n"),
+  };
+}
+
+// ============================================================
+// Chat widget: hot lead alert
+//
+// Sent once per conversation, only when the assistant classifies the
+// visitor as a "hot" lead, they've given contact info, and they've
+// explicitly consented to being contacted.
+// ============================================================
+
+export interface ChatLeadForTemplates {
+  name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  projectType?: string | null;
+  timeline?: string | null;
+  pagePath?: string | null;
+}
+
+export function adminChatLeadEmail(lead: ChatLeadForTemplates) {
+  return {
+    subject: `Hot lead from chat: ${lead.name || "Website visitor"}`,
+    heading: "Hot lead captured via AI chat",
+    fields: [
+      ["Name", lead.name || "-"],
+      ["Email", lead.email || "-"],
+      ["Phone", lead.phone || "-"],
+      ["Project type", lead.projectType || "-"],
+      ["Timeline", lead.timeline || "-"],
+      ["Page", lead.pagePath || "-"],
+    ] as Array<[string, string]>,
+    message: null as string | null,
+  };
+}
+
+export function adminChatLeadWhatsAppTemplate(lead: ChatLeadForTemplates) {
+  return {
+    name: "chat_hot_lead_admin_alert",
+    metaTemplateBody:
+      "Hot lead from chat\nName: {{1}}\nEmail: {{2}}\nPhone: {{3}}\nProject type: {{4}}",
+    render: () =>
+      [
+        "Hot lead from chat",
+        `Name: ${lead.name || "-"}`,
+        lead.email ? `Email: ${lead.email}` : null,
+        lead.phone ? `Phone: ${lead.phone}` : null,
+        lead.projectType ? `Project type: ${lead.projectType}` : null,
+        lead.timeline ? `Timeline: ${lead.timeline}` : null,
       ]
         .filter(Boolean)
         .join("\n"),

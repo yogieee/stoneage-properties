@@ -64,12 +64,23 @@ export type HeroSlide = {
   caption: string;
 };
 
-export type ExpertiseArea = {
-  number: string;
-  title: string;
-  description: string;
+export type HomepagePanel = {
   image: SanityImage;
-  service?: { slug: string };
+  eyebrow: string;
+  title: string;
+  href: string;
+};
+
+export type HomepagePanels = {
+  panels: HomepagePanel[];
+  methodology?: { eyebrow?: string; heading?: string; body?: string[] };
+  statement?: {
+    eyebrow?: string;
+    heading?: string;
+    body?: string[];
+    ctaLabel?: string;
+    ctaHref?: string;
+  };
 };
 
 export type SiteSettings = {
@@ -206,11 +217,11 @@ export async function getHeroSlides(): Promise<HeroSlide[]> {
   );
 }
 
-export async function getExpertiseAreas(): Promise<ExpertiseArea[]> {
+export async function getHomepagePanels(): Promise<HomepagePanels | null> {
   return client.fetch(
-    `*[_type == "expertiseArea"] | order(order asc) { number, title, description, image, "service": service->{ "slug": slug.current } }`,
+    `*[_type == "homepagePanels"][0] { panels, methodology, statement }`,
     {},
-    { next: { tags: ["expertiseArea", "service"] } },
+    { next: { tags: ["homepagePanels"] } },
   );
 }
 

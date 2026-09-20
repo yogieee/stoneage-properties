@@ -1,10 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { LogoSpinner } from "@/components/decorative/LogoSpinner";
-import { gsap } from "@/lib/gsap";
 
 interface Slide {
   src: string;
@@ -20,193 +18,121 @@ type HeroCarouselProps = {
   slides: Slide[];
 };
 
+/**
+ * Fabric Design Group Hero Slide-System exact implementation:
+ * - Desktop: 100vh height with padding: 84px 0 72px 0 (clearing 72px header)
+ * - Mobile: 80vh height with padding: 72px 0 60px 0
+ * - Horizontal padding: 12px (mobile) to 48px (desktop) matching header
+ * - Bottom overview bar: 72px height, title (.text-lg .n-spaced), code, and View Project prompt
+ */
 export function HeroCarousel({ slides }: HeroCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const startTimeRef = useRef(Date.now());
-  const rafRef = useRef<number | null>(null);
-
-  const containerRef = useRef<HTMLElement | null>(null);
-  const imageContainerRef = useRef<HTMLDivElement | null>(null);
 
   const nextSlide = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % slides.length);
-    setProgress(0);
-    startTimeRef.current = Date.now();
   }, [slides.length]);
 
   const goToSlide = (index: number) => {
     setActiveIndex(index);
-    setProgress(0);
-    startTimeRef.current = Date.now();
   };
 
-  // Parallax Scroll scrub matching Storey Architecture
+  // Autoplay loop
   useEffect(() => {
-    if (!containerRef.current || !imageContainerRef.current) return;
+    if (typeof window === "undefined" || slides.length <= 1) return;
 
-    const ctx = gsap.context(() => {
-      gsap.to(imageContainerRef.current, {
-        y: "20%",
-        opacity: 0.6,
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    }, containerRef);
+    const interval = setInterval(() => {
+      nextSlide();
+    }, SLIDE_DURATION_MS);
 
-    return () => ctx.revert();
-  }, []);
-
-  // Timer loop for carousel autoplay with reduced-motion support
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches) {
-      setIsPaused(true);
-      return;
-    }
-
-    if (isPaused) {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      return;
-    }
-
-    startTimeRef.current = Date.now() - progress * SLIDE_DURATION_MS;
-
-    const tick = () => {
-      const elapsed = Date.now() - startTimeRef.current;
-      const currentProgress = Math.min(elapsed / SLIDE_DURATION_MS, 1);
-      setProgress(currentProgress);
-
-      if (currentProgress >= 1) {
-        nextSlide();
-      } else {
-        rafRef.current = requestAnimationFrame(tick);
-      }
-    };
-
-    rafRef.current = requestAnimationFrame(tick);
-
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [activeIndex, isPaused, nextSlide, progress]);
+    return () => clearInterval(interval);
+  }, [nextSlide, slides.length]);
 
   const activeSlide = slides[activeIndex];
-
   if (!activeSlide) return null;
 
   return (
-    <section
-      ref={containerRef}
-      className="relative w-full h-[100svh] min-h-[640px] bg-charcoal text-paper overflow-hidden select-none"
-    >
-      {/* Background Image Carousel with parallax scroll scrub */}
-      <div ref={imageContainerRef} className="absolute inset-0 w-full h-full will-change-transform">
-        {slides.map((slide, index) => {
-          const isActive = index === activeIndex;
-          return (
-            <div
-              key={slide.src}
-              className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out ${
-                isActive
-                  ? "opacity-90 scale-100 z-10"
-                  : "opacity-0 scale-105 z-0 pointer-events-none"
-              }`}
-            >
-              <Image
-                src={slide.src}
-                alt={slide.alt}
-                fill
-                priority={index === 0}
-                className="object-cover opacity-[0.92] saturate-125"
-                sizes="100vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/40 to-charcoal/25" />
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Hero Narrative Overlay at Bottom */}
-      <div className="relative z-20 w-full h-full px-6 sm:px-12 flex flex-col justify-end pb-12 sm:pb-16 gap-8 sm:gap-10">
-        {/* Expanding Segmented Progress Indicators matching Storey (Active = 50% width, Inactive = 16.66% width) */}
-        <div className="flex w-full gap-3 sm:gap-4 items-center" role="tablist" aria-label="Hero Slides">
-          {slides.map((slide, idx) => {
-            const isActive = idx === activeIndex;
-            const isPast = idx < activeIndex;
+    <section className="relative h-[80vh] w-full bg-[#F7F5F0] px-3 text-[#1C1B19] select-none sm:px-6 md:h-[100vh] md:px-12">
+      <div className="relative flex h-full w-full flex-col justify-between pt-[72px] pb-[72px] md:pt-[84px]">
+        {/* Image Holder with exact Fabric padding & structure */}
+        <div className="relative h-full w-full overflow-hidden bg-black">
+          {slides.map((slide, index) => {
+            const isActive = index === activeIndex;
             return (
-              <button
+              <div
                 key={slide.src}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                aria-label={`Go to slide ${idx + 1}: ${slide.tag}`}
-                onClick={() => goToSlide(idx)}
-                className={`py-3 group cursor-pointer focus:outline-none transition-all duration-500 ease-out ${
-                  isActive ? "flex-[3]" : "flex-1"
+                className={`absolute inset-0 h-full w-full transition-opacity duration-1000 ease-in-out ${
+                  isActive
+                    ? "z-10 opacity-100"
+                    : "pointer-events-none z-0 opacity-0"
                 }`}
               >
-                <div className="w-full h-[2px] sm:h-[3px] bg-paper/25 rounded-full overflow-hidden transition-colors group-hover:bg-paper/40">
-                  <div
-                    className="h-full bg-paper transition-all"
-                    style={{
-                      width: isActive ? `${progress * 100}%` : isPast ? "100%" : "0%",
-                      transition: isActive ? "none" : "width 400ms ease-out",
-                    }}
-                  />
-                </div>
-              </button>
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  priority={index === 0}
+                  className="object-cover"
+                  sizes="100vw"
+                />
+              </div>
             );
           })}
         </div>
 
-        {/* Narrative Headline, Caption & CTA */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-end">
-          <div className="md:col-span-8 lg:col-span-9 space-y-3">
-            {/* Dynamic Tag based on image name */}
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs uppercase tracking-widest text-paper/60">
-                0{activeIndex + 1} &middot; {activeSlide.tag}
-              </span>
-            </div>
-
-            {/* Dynamic Caption that updates with each image change */}
-            <div className="min-h-[72px] sm:min-h-[84px] md:min-h-[96px] flex items-center">
-              <h1
-                key={activeSlide.src}
-                className="font-display text-lg sm:text-2xl md:text-3xl lg:text-[2rem] font-light leading-snug tracking-tight text-paper/95 max-w-3xl animate-in fade-in slide-in-from-bottom-2 duration-500 ease-out"
-              >
-                {activeSlide.caption}
-              </h1>
-            </div>
+        {/* Fabric Overview Bar (height: 72px, padding: 17px 0) */}
+        <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-black/10">
+          {/* Project Title & Code with smooth synchronized crossfade */}
+          <div className="relative flex h-10 min-w-0 flex-1 items-center overflow-hidden">
+            {slides.map((slide, idx) => {
+              const isCurrent = idx === activeIndex;
+              return (
+                <div
+                  key={slide.src}
+                  className={`absolute inset-0 flex items-baseline gap-2 transition-all duration-700 ease-in-out sm:gap-3 ${
+                    isCurrent
+                      ? "pointer-events-auto translate-y-0 opacity-100"
+                      : "pointer-events-none translate-y-3 opacity-0"
+                  }`}
+                >
+                  <h2 className="max-w-[200px] truncate text-base font-normal tracking-[-1px] text-black sm:max-w-md sm:text-2xl">
+                    {slide.title || slide.tag}
+                  </h2>
+                  <span className="shrink-0 font-mono text-[11px] tracking-wider text-black/50 uppercase sm:text-sm">
+                    ST0{idx + 1}
+                  </span>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="md:col-span-4 lg:col-span-3 flex md:justify-end items-center gap-4 md:mr-20 lg:mr-28">
+          {/* View Project prompt on right (shrink-0 so mobile never collides) */}
+          <div className="flex shrink-0 items-center gap-3 sm:gap-6">
             <Link
               href="/projects"
-              className="group inline-flex items-center justify-between gap-4 bg-paper text-ink px-6 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-sm font-mono tracking-wider uppercase transition-all duration-300 hover:bg-paper-warm hover:shadow-lg"
+              className="group inline-flex items-center gap-1.5 text-sm font-normal tracking-[-0.5px] whitespace-nowrap text-black transition-opacity hover:opacity-75 sm:gap-2 sm:text-lg"
             >
-              <span>Projects</span>
-              <LogoSpinner spin="hover" size="w-5 h-5" className="text-ink" />
+              <span>View Project</span>
+              <span className="font-mono transition-transform duration-300 group-hover:translate-x-1">
+                &rarr;
+              </span>
             </Link>
 
-            {/* Accessible WCAG Pause Toggle */}
-            <button
-              type="button"
-              onClick={() => setIsPaused(!isPaused)}
-              className="font-mono text-xs text-paper/60 hover:text-paper uppercase tracking-widest px-2 py-1 focus:outline-none"
-              aria-label={isPaused ? "Resume carousel autoplay" : "Pause carousel autoplay"}
-            >
-              {isPaused ? "Play" : "Pause"}
-            </button>
+            {/* Subtle pagination indicator dots */}
+            <div className="hidden items-center gap-1.5 sm:flex">
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => goToSlide(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    idx === activeIndex
+                      ? "w-5 bg-black"
+                      : "w-2 bg-black/20 hover:bg-black/40"
+                  }`}
+                  aria-label={`Slide ${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

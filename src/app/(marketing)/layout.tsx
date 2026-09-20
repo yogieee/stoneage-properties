@@ -1,25 +1,29 @@
 import { SiteNav } from "@/components/sections/SiteNav";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { Preloader } from "@/components/motion/Preloader";
-import { ChatWidget } from "@/components/sections/ChatWidget";
+import { PageTransition } from "@/components/motion/PageTransition";
 import { MediaRail } from "@/components/sections/MediaRail";
+import { getSiteSettings } from "@/sanity/queries";
 
-export default function MarketingLayout({
+export default async function MarketingLayout({
   children,
   modal,
 }: Readonly<{
   children: React.ReactNode;
   modal: React.ReactNode;
 }>) {
+  const settings = await getSiteSettings();
+
   return (
-    <div className="flex min-h-screen flex-col bg-paper text-ink selection:bg-charcoal selection:text-paper">
+    <div className="flex min-h-screen flex-col bg-[#F7F5F0] text-[#1C1B19]">
       <Preloader />
-      <SiteNav />
-      <main className="flex-1 w-full">{children}</main>
+      <SiteNav siteSettings={settings} />
+      <main className="flex w-full flex-1 flex-col">
+        <PageTransition>{children}</PageTransition>
+      </main>
       <SiteFooter />
       {modal}
-      <ChatWidget />
-      <MediaRail />
+      <MediaRail socials={settings?.socials} />
     </div>
   );
 }

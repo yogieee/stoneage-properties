@@ -1,15 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import { GeometricLogo } from "@/components/decorative/GeometricLogo";
-import { gsap } from "@/lib/gsap";
+import { useState, useEffect, useCallback } from "react";
 
 type TestimonialItem = {
   quote: string;
   author: string;
   role?: string;
-  image: string;
+  image?: string;
+  project?: string;
+  location?: string;
 };
 
 type TestimonialsSliderClientProps = {
@@ -20,161 +19,140 @@ export function TestimonialsSliderClient({
   testimonials,
 }: TestimonialsSliderClientProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const startTimeRef = useRef(Date.now());
-  const containerRef = useRef<HTMLElement | null>(null);
-  const DURATION = 5000;
+  const [isPaused, setIsPaused] = useState(false);
+  const [isFading, setIsFading] = useState(false);
 
+  const length = testimonials?.length || 0;
+
+  const goToNext = useCallback(() => {
+    if (length <= 1) return;
+    setIsFading(true);
+    setTimeout(() => {
+      setActiveIndex((prev) => (prev + 1) % length);
+      setIsFading(false);
+    }, 300);
+  }, [length]);
+
+  const goToPrev = useCallback(() => {
+    if (length <= 1) return;
+    setIsFading(true);
+    setTimeout(() => {
+      setActiveIndex((prev) => (prev - 1 + length) % length);
+      setIsFading(false);
+    }, 300);
+  }, [length]);
+
+  // Auto-scroll timer: advances to the next testimonial every 5.5 seconds, pauses when hovered
   useEffect(() => {
-    if (!containerRef.current) return;
-    const ctx = gsap.context(() => {
-      gsap.to("#background-logo-spinner", {
-        rotateZ: 90,
-        transformOrigin: "50% 50%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    }, containerRef);
+    if (isPaused || length <= 1) return;
 
-    return () => ctx.revert();
-  }, []);
+    const timer = setInterval(() => {
+      goToNext();
+    }, 5500);
 
-  useEffect(() => {
-    if (testimonials.length === 0) return;
-    startTimeRef.current = Date.now();
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % testimonials.length);
-      setProgress(0);
-    }, DURATION);
+    return () => clearInterval(timer);
+  }, [isPaused, length, goToNext]);
 
-    const animInterval = setInterval(() => {
-      const elapsed = Date.now() - startTimeRef.current;
-      setProgress(Math.min(elapsed / DURATION, 1));
-    }, 50);
-
-    return () => {
-      clearInterval(interval);
-      clearInterval(animInterval);
-    };
-  }, [activeIndex, testimonials.length]);
+  if (!testimonials || length === 0) return null;
 
   const current = testimonials[activeIndex];
 
-  if (!current) return null;
-
   return (
     <section
-      ref={containerRef}
-      className="bg-charcoal text-paper relative w-full overflow-hidden py-24 select-none sm:py-36"
+      className="w-full border-t border-[#1C1B19]/10 bg-[#F7F5F0] px-3 py-16 text-[#1C1B19] sm:px-6 md:px-12 md:py-24"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      aria-label="Client Testimonials"
     >
-      {/* Ambient Rotating Watermark Logo matching Storey */}
-      <div className="pointer-events-none absolute -bottom-24 left-1/2 z-0 flex h-[550px] w-[550px] -translate-x-1/2 items-center justify-center overflow-hidden overflow-visible opacity-10 select-none sm:h-[750px] sm:w-[750px]">
-        <div
-          id="background-logo-spinner"
-          className="text-paper flex h-full w-full items-center justify-center"
-        >
-          <GeometricLogo className="h-full w-full text-current" />
-        </div>
-      </div>
-      <div className="px-6 sm:px-12">
-        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-12 lg:gap-16">
-          {/* Left Column: Image Showcase */}
-          <div className="md:col-span-6">
-            <div className="bg-charcoal-light border-paper/15 relative aspect-[4/3] w-full overflow-hidden rounded-lg border shadow-xl">
-              <Image
-                src={current.image}
-                alt={current.author}
-                fill
-                className="object-cover transition-all duration-700 ease-out"
+      <div className="w-full">
+        {/* Header with Title & Auto-scroll indicator */}
+        <div className="mb-8 flex items-center justify-between md:mb-12">
+          <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
+            What our clients say:
+          </h2>
+          {length > 1 && (
+            <div className="hidden items-center gap-2 font-mono text-[11px] tracking-wider text-black/40 uppercase sm:flex">
+              <span
+                className={`inline-block h-1.5 w-1.5 rounded-full ${
+                  isPaused ? "bg-black/30" : "animate-pulse bg-black"
+                }`}
               />
-              <div className="bg-charcoal/20 absolute inset-0" />
+              <span>{isPaused ? "Paused" : "Auto"}</span>
             </div>
-
-            {/* Segmented Progress Lines */}
-            <div className="mt-6 flex gap-2 sm:gap-3">
-              {testimonials.map((item, idx) => (
-                <button
-                  key={item.author}
-                  type="button"
-                  onClick={() => {
-                    setActiveIndex(idx);
-                    setProgress(0);
-                    startTimeRef.current = Date.now();
-                  }}
-                  className="flex-1 cursor-pointer py-2 focus:outline-none"
-                  aria-label={`Show testimonial ${idx + 1}`}
-                >
-                  <div className="bg-paper/20 h-[2px] w-full overflow-hidden rounded-full">
-                    <div
-                      className="bg-paper h-full transition-all"
-                      style={{
-                        width:
-                          idx === activeIndex
-                            ? `${progress * 100}%`
-                            : idx < activeIndex
-                              ? "100%"
-                              : "0%",
-                      }}
-                    />
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Column: Quote + Client Identity Card */}
-          <div className="flex min-h-[300px] flex-col justify-between md:col-span-6">
-            <div>
-              <span className="text-paper/50 mb-6 block font-mono text-xs tracking-widest uppercase">
-                Client Testimonials &middot; {activeIndex + 1} of{" "}
-                {testimonials.length}
-              </span>
-
-              {/* Quote text with smooth fade */}
-              <blockquote className="font-display text-paper/95 min-h-[140px] text-lg leading-relaxed font-light sm:text-2xl">
-                &ldquo;{current.quote}&rdquo;
-              </blockquote>
-            </div>
-
-            {/* Client Avatar / Name */}
-            <div className="border-paper/15 mt-8 flex items-center justify-between border-t pt-8">
-              <div>
-                <p className="font-display text-paper text-base font-medium sm:text-lg">
-                  {current.author}
-                </p>
-                <p className="text-paper/60 mt-0.5 font-mono text-xs tracking-wider uppercase">
-                  {current.role}
-                </p>
-              </div>
-
-              {/* Monospace Counter */}
-              <span className="text-paper/40 font-mono text-xs">
-                0{activeIndex + 1} / 0{testimonials.length}
-              </span>
-            </div>
-          </div>
+          )}
         </div>
 
-        {/* Supporting collaboration statement */}
-        <div className="border-paper/15 text-paper/80 mt-20 grid grid-cols-1 gap-8 border-t pt-20 sm:gap-16 md:grid-cols-12">
-          <div className="md:col-span-6">
-            <p className="font-body text-base leading-relaxed sm:text-lg">
-              We collaborate closely with clients, consultants, and specialist
-              craftspeople to ensure every project is resolved with structural
-              precision from initial design through handover.
+        {/* Testimonial Content with smooth fade transition */}
+        <div
+          className={`min-h-[260px] transition-all duration-300 md:min-h-[220px] ${
+            isFading ? "translate-y-1 opacity-0" : "translate-y-0 opacity-100"
+          }`}
+        >
+          <p className="mb-2 text-xl font-normal tracking-[-0.5px] text-black sm:text-2xl">
+            Project : {current.role || "Residential Architecture"}
+          </p>
+          <p className="mb-6 font-mono text-sm tracking-wider text-black/60 uppercase">
+            Location : Solihull &amp; Warwickshire
+          </p>
+
+          <div className="text-reg max-w-4xl space-y-4 leading-relaxed font-light text-black/80">
+            <p className="text-lg leading-relaxed md:text-xl">
+              &ldquo;{current.quote}&rdquo;
             </p>
           </div>
-          <div className="md:col-span-6">
-            <p className="font-body text-base leading-relaxed sm:text-lg">
-              Our building process prioritises clarity, communication, and
-              lasting architectural quality that continues to age gracefully
-              alongside the families who inhabit them.
-            </p>
+
+          <p className="mt-6 text-base font-normal tracking-[-0.5px] text-black sm:text-lg">
+            {current.author}
+          </p>
+        </div>
+
+        {/* Prev / Next Controls & Progress Indicators */}
+        <div className="mt-8 flex items-center justify-between border-t border-black/10 pt-8">
+          {/* Progress dots / bars */}
+          <div className="flex items-center gap-2">
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => {
+                  setIsFading(true);
+                  setTimeout(() => {
+                    setActiveIndex(idx);
+                    setIsFading(false);
+                  }, 250);
+                }}
+                aria-label={`Go to testimonial ${idx + 1}`}
+                className={`h-1.5 cursor-pointer rounded-full transition-all duration-300 ${
+                  idx === activeIndex
+                    ? "w-8 bg-black"
+                    : "w-2 bg-black/20 hover:bg-black/40"
+                }`}
+              />
+            ))}
+          </div>
+
+          <div className="flex items-center gap-6">
+            <button
+              type="button"
+              onClick={goToPrev}
+              className="flex cursor-pointer items-center gap-2 text-base font-normal tracking-[-0.5px] text-black transition-opacity hover:opacity-70 sm:text-lg"
+            >
+              <span className="font-mono">&larr;</span>
+              <span>Prev</span>
+            </button>
+
+            <span className="font-mono text-xs text-black/40">
+              {activeIndex + 1} / {testimonials.length}
+            </span>
+
+            <button
+              type="button"
+              onClick={goToNext}
+              className="flex cursor-pointer items-center gap-2 text-base font-normal tracking-[-0.5px] text-black transition-opacity hover:opacity-70 sm:text-lg"
+            >
+              <span>Next</span>
+              <span className="font-mono">&rarr;</span>
+            </button>
           </div>
         </div>
       </div>

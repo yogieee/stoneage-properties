@@ -1,15 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { getJournalArticles } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
-
-const ASPECTS = [
-  "aspect-[4/3] sm:aspect-square",
-  "aspect-[4/3] sm:aspect-[16/12]",
-  "aspect-[4/3] sm:aspect-[16/12]",
-  "aspect-[4/3] sm:aspect-[12/14]",
-];
 
 export async function JournalGrid() {
   const articles = await getJournalArticles();
@@ -17,75 +9,54 @@ export async function JournalGrid() {
   return (
     <section
       id="journal"
-      className="bg-paper relative w-full overflow-hidden py-24 sm:py-36"
+      className="w-full border-t border-[#1C1B19]/10 bg-[#F7F5F0] px-3 py-16 text-[#1C1B19] sm:px-6 md:px-12 md:py-24"
     >
-      <div className="px-6 sm:px-12">
-        {/* Section Header */}
-        <div className="border-line relative flex flex-col justify-between gap-8 border-b pb-16 sm:pb-20 md:flex-row md:items-end">
-          <div className="max-w-2xl">
-            <span className="text-ink-subtle mb-3 block font-mono text-xs tracking-widest uppercase">
-              Research & Process
-            </span>
-            <h2 className="font-display text-ink mb-6 text-3xl font-medium tracking-tight sm:text-5xl">
-              Spaces Shaped Through Intention
+      <div className="w-full">
+        {/* Fabric Header */}
+        <div className="mb-12 flex flex-col justify-between gap-4 border-b border-black/10 pb-6 sm:flex-row sm:items-end">
+          <div>
+            <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
+              Journal &amp; Insights
             </h2>
-            <p className="font-body text-ink-muted text-base leading-relaxed sm:text-lg">
-              Thoughts, technical process studies, and construction case studies
-              exploring how contemporary building can create calmer, more
-              durable living environments through material honesty and
-              structural restraint.
-            </p>
           </div>
-
-          {/* Action Accent */}
-          <div className="relative flex flex-col gap-6 sm:items-end">
-            <Link
-              href="/journal"
-              className="group bg-charcoal text-paper hover:bg-ink inline-flex items-center gap-3 rounded-full px-6 py-3 font-mono text-xs tracking-wider uppercase shadow-sm transition-all duration-300 hover:shadow"
-            >
-              <span>View Posts</span>
-              <LogoSpinner spin="hover" size="h-5 w-5" className="text-paper" />
-            </Link>
-          </div>
+          <Link
+            href="/journal"
+            className="flex items-center gap-2 text-base font-normal tracking-[-0.5px] text-black transition-opacity hover:opacity-70"
+          >
+            <span>View All Posts</span>
+            <span className="font-mono">&rarr;</span>
+          </Link>
         </div>
 
-        {/* 4-Card Editorial Study Grid */}
-        <div className="grid grid-cols-1 gap-10 pt-16 sm:gap-16 md:grid-cols-2">
+        {/* 2-Column Fabric Article Cards */}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
           {articles.map((article, index) => (
-            <div key={article.slug} className="group">
-              <Link href={`/journal/${article.slug}`} className="block w-full">
-                <div
-                  className={`relative w-full ${ASPECTS[index % ASPECTS.length]} bg-paper-dim border-line overflow-hidden rounded-lg border shadow-sm transition-all group-hover:shadow-md`}
-                >
-                  <Image
-                    src={urlFor(article.image).width(900).height(675).url()}
-                    alt={article.title}
-                    fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                  {/* Hover Read Badge */}
-                  <div className="bg-paper/95 text-ink absolute top-4 left-4 rounded px-3 py-1.5 font-mono text-xs tracking-wider uppercase opacity-0 shadow backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
-                    Read Case Study &rarr;
-                  </div>
-                </div>
+            <Link
+              key={article.slug}
+              href={`/journal/${article.slug}`}
+              className="group block w-full"
+            >
+              <div className="relative mb-4 aspect-[16/10] w-full overflow-hidden bg-black/5">
+                <Image
+                  src={urlFor(article.image).width(900).height(560).url()}
+                  alt={article.title}
+                  fill
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+              </div>
 
-                <div className="mt-5 flex items-center justify-between gap-4">
-                  <div>
-                    <span className="text-ink-subtle mb-1 block font-mono text-[10px] uppercase">
-                      Case Study &middot; 0{index + 1}
-                    </span>
-                    <h3 className="font-display text-ink group-hover:text-ink-muted text-xl leading-snug font-medium transition-colors sm:text-2xl">
-                      {article.title}
-                    </h3>
-                  </div>
-
-                  <span className="group bg-paper-dim border-line text-ink group-hover:bg-charcoal group-hover:text-paper group-hover:border-charcoal inline-flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-1.5 font-mono text-xs uppercase transition-all">
-                    <span>Read</span>
-                    <LogoSpinner spin="hover" size="h-4 w-4" />
+              <div className="border-t border-black/10 pt-3">
+                <div className="mb-1 flex items-center justify-between font-mono text-xs tracking-wider text-black/50 uppercase">
+                  <span>Insight &middot; 0{index + 1}</span>
+                  <span className="transition-transform group-hover:translate-x-1">
+                    &rarr;
                   </span>
                 </div>
-              </Link>
-            </div>
+                <h3 className="text-xl font-normal tracking-[-1px] text-black transition-opacity group-hover:opacity-75 sm:text-2xl">
+                  {article.title}
+                </h3>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -15,31 +15,31 @@ const VARIANT_STYLES: Record<
   { className: string; defaultElement: ElementType }
 > = {
   "display-xl": {
-    className: "font-display text-display-xl text-ink",
+    className: "font-display text-display-xl leading-tight text-ink",
     defaultElement: "h1",
   },
   "display-lg": {
-    className: "font-display text-display-lg text-ink",
+    className: "font-display text-display-lg leading-tight text-ink",
     defaultElement: "h1",
   },
   "display-md": {
-    className: "font-display text-display-md text-ink",
+    className: "font-display text-display-md leading-tight text-ink",
     defaultElement: "h2",
   },
   "display-sm": {
-    className: "font-display text-display-sm text-ink",
+    className: "font-display text-display-sm leading-snug text-ink",
     defaultElement: "h3",
   },
   "body-lg": {
-    className: "font-body text-body-lg text-ink-muted",
+    className: "font-body text-body-lg leading-relaxed text-ink-muted",
     defaultElement: "p",
   },
   body: {
-    className: "font-body text-body text-ink-muted",
+    className: "font-body text-body leading-relaxed text-ink-muted",
     defaultElement: "p",
   },
   "body-sm": {
-    className: "font-body text-body-sm text-ink-subtle",
+    className: "font-body text-body-sm leading-relaxed text-ink-subtle",
     defaultElement: "p",
   },
 };

@@ -1,49 +1,44 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { IntroSection } from "@/components/sections/IntroSection";
-import { ExpertiseSection } from "@/components/sections/ExpertiseSection";
-import { MoreServicesGrid } from "@/components/sections/MoreServicesGrid";
-import { StatementBanner } from "@/components/sections/StatementBanner";
+import { QuickLinksPanels } from "@/components/sections/QuickLinksPanels";
+import { ContinuousServicesTicker } from "@/components/sections/ContinuousServicesTicker";
 import { FeaturedProjectsGrid } from "@/components/sections/FeaturedProjectsGrid";
 import { TestimonialsSlider } from "@/components/sections/TestimonialsSlider";
 import { JournalGrid } from "@/components/sections/JournalGrid";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 
 export const metadata: Metadata = {
-  title: "Architecture & Property Design Services in Solihull, London & Nottingham",
+  title:
+    "Architects & Specialist Building Contractors | Solihull, London & Nottingham",
   description:
-    "Stoneage Properties designs new builds, renovations, extensions, and conversions across Solihull, London, and Nottingham. 30+ years of structural excellence — book a spatial brief consultation.",
+    "Stoneage Properties is a design and build practice specialising in luxury residential architecture, bespoke new builds, full renovations, and structural extensions.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Architecture & Property Design Services | Stoneage Properties",
+    title: "Stoneage Properties | Design & Build Specialists",
     description:
-      "New builds, renovations, extensions, and conversions across Solihull, London, and Nottingham.",
+      "Bespoke domestic residential architecture and specialist construction across Solihull, London, and Nottingham.",
     url: "/",
   },
 };
 
 /**
- * End-to-end replication of the Storey Architecture landing page
- * (storeyarchitecture.co.uk) adapted for Stoneage Properties.
- *
- * Sequence of sections:
- * 1. HeroCarousel — full-viewport crossfading carousel with progress bars and narrative
- * 2. IntroSection — 2-column philosophy manifesto + 3D project orbit in perspective
- * 3. ExpertiseSection — "Our areas of expertise" numbered 1, 2, 3 with drafting tools
- * 4. StatementBanner — "We shape space into purpose" full-width statement with dual manifesto
- * 5. FeaturedProjectsGrid — Staggered editorial portfolio grid + signature pinned paper note
- * 6. TestimonialsSlider — Client proof carousel with progress lines and collaboration statement
- * 7. JournalGrid — "Spaces Shaped Through Intention" 4-card study grid with drafting accents
- * 8. SpatialBriefSection — "SPATIAL BRIEF INTAKE" paper-textured form pinned with paperclip
+ * End-to-end design language aligned with Fabric Design Group (fabricdesigngroup.com):
+ * 1. Hero — Full-bleed slide system with project tag and prompt
+ * 2. IntroSection — Editorial manifesto headline + 2-column ethos
+ * 3. QuickLinksPanels — 2x2 interactive panels (Projects, Design, Build, Studio) + ethos
+ * 4. FeaturedProjectsGrid — High contrast 2-column architectural photography grid
+ * 5. TestimonialsSlider — Client quotes with project, location, and Prev/Next controls
+ * 6. JournalGrid — Research and technical editorial insights
+ * 7. SpatialBriefSection — Clean contact intake form
  */
 export default function HomePage() {
   return (
-    <div className="w-full min-h-screen">
+    <div className="min-h-screen w-full bg-[#F7F5F0] text-[#1C1B19]">
       <Hero />
       <IntroSection />
-      <ExpertiseSection />
-      <MoreServicesGrid />
-      <StatementBanner />
+      <QuickLinksPanels />
+      <ContinuousServicesTicker />
       <FeaturedProjectsGrid />
       <TestimonialsSlider />
       <JournalGrid />

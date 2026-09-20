@@ -1,11 +1,8 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Typography } from "@/components/ui/Typography";
-import { LogoSpinner } from "@/components/decorative/LogoSpinner";
-import { Paperclip } from "@/components/decorative/Paperclip";
-import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 import { FaqAccordionClient } from "@/components/sections/FaqAccordionClient";
+import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 import {
   getService,
   getServices,
@@ -59,15 +56,23 @@ export default async function ServiceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [service, relatedProjects, siteSettings] = await Promise.all([
+  const [service, relatedProjects, allServices, siteSettings] = await Promise.all([
     getService(slug),
     getProjectsByService(slug),
+    getServices(),
     getSiteSettings(),
   ]);
 
   if (!service) notFound();
 
+  const otherServices =
+    relatedProjects.length === 0
+      ? allServices.filter((item) => item.slug !== slug).slice(0, 3)
+      : [];
+
   const serviceAreas = siteSettings?.offices?.map((office) => office.name).filter(Boolean) ?? [];
+  const servingLine =
+    serviceAreas.length > 0 ? serviceAreas.join(", ") : "Solihull, London & Nottingham";
   const phone = siteSettings?.phones?.[0]?.number;
 
   const serviceJsonLd = {
@@ -111,8 +116,23 @@ export default async function ServiceDetailPage({
     ],
   };
 
+  const assuranceItems = [
+    {
+      title: service.warranty.label,
+      description: service.warranty.detail,
+    },
+    ...(service.note?.line
+      ? [
+          {
+            title: "A Note From Stoneage",
+            description: [service.note.line, service.note.subline].filter(Boolean).join(" "),
+          },
+        ]
+      : []),
+  ];
+
   return (
-    <div className="pt-16 sm:pt-24">
+    <div className="min-h-screen bg-[#F7F5F0] text-[#1C1B19]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
@@ -128,11 +148,11 @@ export default async function ServiceDetailPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      {/* Breadcrumb */}
-      <div className="px-6 pt-8 sm:px-12">
+      {/* Back link */}
+      <div className="px-3 pt-6 sm:px-6 md:px-12">
         <Link
           href="/services"
-          className="group text-ink-subtle hover:text-ink inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase transition-colors"
+          className="group inline-flex items-center gap-2 font-mono text-xs tracking-wider text-black/50 uppercase transition-colors hover:text-black"
         >
           <span className="transition-transform duration-300 group-hover:-translate-x-1">
             &larr;
@@ -141,122 +161,119 @@ export default async function ServiceDetailPage({
         </Link>
       </div>
 
-      {/* Header */}
-      <div className="px-6 pt-8 pb-16 sm:px-12">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-4 lg:items-start lg:gap-x-12">
-          <div className="lg:col-span-3">
-            <span className="text-ink-subtle mb-4 block font-mono text-xs tracking-widest uppercase">
-              Service
-            </span>
-            <h1 className="font-display text-ink mb-6 text-3xl leading-[1.12] font-medium tracking-tight sm:text-5xl lg:text-6xl">
-              {service.name}
-            </h1>
-            <Typography variant="body-lg" className="whitespace-pre-line">
-              {service.description}
-            </Typography>
-
-            <div className="border-line mt-8 gap-x-8 gap-y-3 border-t pt-4 font-mono text-sm">
-              <div className="flex flex-col gap-1">
-                <span className="text-ink-subtle text-xs tracking-widest uppercase">
-                  Serving
-                </span>
-                <span className="text-ink mt-1 whitespace-nowrap">
-                  {serviceAreas.length > 0
-                    ? serviceAreas.join(", ")
-                    : "Solihull, London & Nottingham"}
-                </span>
-              </div>
-            </div>
+      {/* 1. Hero matching Build / Design / Studio framing */}
+      <section className="relative h-[80vh] w-full bg-[#F7F5F0] px-3 pt-6 text-[#1C1B19] select-none sm:px-6 md:h-[90vh] md:px-12">
+        <div className="relative flex h-full w-full flex-col justify-between pb-[72px]">
+          <div className="relative h-full w-full overflow-hidden bg-black">
+            {service.heroImage ? (
+              <Image
+                src={urlFor(service.heroImage).width(2400).height(1200).url()}
+                alt={service.name}
+                fill
+                priority
+                className="object-cover opacity-90"
+                sizes="100vw"
+              />
+            ) : (
+              <div className="h-full w-full bg-black/80" />
+            )}
           </div>
 
-          <div className="relative -rotate-2 transition-transform duration-500 hover:rotate-0 lg:col-span-1 lg:mt-2">
-            <div className="pointer-events-none absolute -top-7 left-6 z-20">
-              <Paperclip className="h-auto w-10 drop-shadow-md" />
+          <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-black/10">
+            <div className="flex items-baseline gap-2 sm:gap-3">
+              <h1 className="text-base font-normal tracking-[-1px] text-black sm:text-2xl">
+                {service.name}
+              </h1>
+              <span className="font-mono text-[11px] tracking-wider text-black/50 uppercase sm:text-sm">
+                ST-{service.slug.toUpperCase()}
+              </span>
             </div>
 
-            <div className="bg-paper-card border-line text-ink relative overflow-hidden rounded border p-6 shadow-md">
-              <div className="border-line mb-6 flex items-center justify-between gap-2 border-b pb-4">
-                <span className="text-ink-subtle min-w-0 flex-1 truncate font-mono text-[10px] tracking-widest uppercase">
-                  A NOTE FROM STONEAGE
-                </span>
-                <div className="flex shrink-0 items-center gap-1.5">
-                  <span className="font-display text-xs font-medium">Stoneage</span>
-                  <LogoSpinner size="w-3.5 h-3.5" className="text-ink" />
-                </div>
-              </div>
-              <div className="notepad-lines font-display text-ink-muted py-2 text-base italic">
-                <p className="mb-0 pl-1 leading-loose">
-                  {service.note?.line || "Calm homes, lasting craft."}
-                </p>
-                <p className="text-ink-subtle pl-1 font-mono text-sm leading-loose not-italic">
-                  {service.note?.subline ||
-                    "30+ years delivering structural excellence across the UK."}
-                </p>
-              </div>
+            <div className="flex items-center gap-2 text-sm font-normal tracking-[-0.5px] text-black sm:text-base">
+              <span>Scroll</span>
+              <span className="font-mono text-sm">&darr;</span>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Hero image */}
-      {service.heroImage && (
-        <div className="bg-paper-dim relative aspect-[16/10] w-full overflow-hidden sm:aspect-[21/9]">
-          <Image
-            src={urlFor(service.heroImage).width(2400).height(1029).url()}
-            alt={service.name}
-            fill
-            priority
-            className="object-cover"
-          />
+      {/* 2. Section: Overview (layout-2-4) */}
+      <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
+          <div className="md:col-span-4">
+            <h2 className="text-xxl leading-none font-normal tracking-[-1.5px] text-black">
+              Overview
+            </h2>
+            <div className="mt-4 font-mono text-xs tracking-wider text-black/50 uppercase">
+              Serving {servingLine}
+            </div>
+          </div>
+
+          <div className="text-reg max-w-3xl space-y-5 leading-relaxed text-black/80 md:col-span-8">
+            <p className="text-lg font-medium tracking-[-0.5px] text-black sm:text-xl">
+              {service.summary}
+            </p>
+            <p className="whitespace-pre-line">{service.description}</p>
+          </div>
         </div>
-      )}
 
-      {/* Body: warranty */}
-      <div className="mx-auto max-w-3xl px-6 py-16 sm:px-12 sm:py-24">
-        <div className="border-line rounded-2xl border p-6">
-          <Typography variant="display-sm" as="h2" className="mb-2">
-            {service.warranty.label}
-          </Typography>
-          <Typography variant="body">{service.warranty.detail}</Typography>
+        {/* Warranty & Note strip */}
+        <div className="mt-16 grid grid-cols-1 gap-8 border-t border-black/10 pt-10 sm:grid-cols-2">
+          {assuranceItems.map((item) => (
+            <div key={item.title}>
+              <h3 className="font-display mb-2 text-xl font-medium tracking-tight text-black">
+                {item.title}
+              </h3>
+              <p className="text-sm leading-relaxed font-light text-black/70">
+                {item.description}
+              </p>
+            </div>
+          ))}
         </div>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
-          <Link
-            href="#contact"
-            className="bg-charcoal text-paper hover:bg-ink inline-flex items-center gap-3 rounded-full px-8 py-3.5 font-mono text-xs tracking-wider uppercase shadow-md transition-all duration-300 hover:shadow-lg"
-          >
+          <Link href="#contact" className="fabric-btn">
             Book a Consultation
           </Link>
           {phone && (
             <a
               href={`tel:${phone.replace(/\s+/g, "")}`}
-              className="border-line text-ink hover:border-ink inline-flex items-center gap-3 rounded-full border px-8 py-3.5 font-mono text-xs tracking-wider uppercase transition-colors"
+              className="inline-flex items-center gap-2 border border-black/10 px-6 py-3 font-mono text-xs tracking-wider text-black uppercase transition-colors hover:border-black"
             >
               Call {phone}
             </a>
           )}
         </div>
-      </div>
+      </section>
 
-      {/* Process: how it works + how we work with you */}
+      {/* 3. Section: How It Works (layout-2-4) */}
       {service.process && service.process.length > 0 && (
-        <section className="border-line bg-paper-dim border-t px-6 py-20 sm:px-12 sm:py-28">
-          <div className="mx-auto max-w-5xl">
-            <Typography variant="display-sm" as="h2" className="mb-12">
-              How It Works
-            </Typography>
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
+        <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
+            <div className="md:col-span-4">
+              <h2 className="text-xxl leading-none font-normal tracking-[-1.5px] text-black">
+                How It Works
+              </h2>
+              <p className="mt-3 max-w-xs text-sm text-black/60">
+                How the {service.name.toLowerCase()} process runs from first call to handover.
+              </p>
+            </div>
+
+            <div className="space-y-6 md:col-span-8">
               {service.process.map((step, index) => (
-                <div key={step.title} className="flex gap-5">
-                  <span className="text-ink/15 font-mono text-4xl leading-none font-light select-none sm:text-5xl">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <Typography variant="display-sm" as="h3" className="mb-2 text-lg sm:text-xl">
-                      {step.title}
-                    </Typography>
-                    <Typography variant="body">{step.detail}</Typography>
+                <div
+                  key={step.title}
+                  className="flex flex-col justify-between gap-4 border-t border-black/10 pt-4 sm:flex-row sm:items-baseline"
+                >
+                  <div className="sm:w-1/3">
+                    <span className="mb-1 block font-mono text-xs tracking-wider text-black/50 uppercase">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="text-lg font-medium text-black">{step.title}</h3>
                   </div>
+                  <p className="text-sm leading-relaxed font-light text-black/70 sm:w-2/3">
+                    {step.detail}
+                  </p>
                 </div>
               ))}
             </div>
@@ -264,60 +281,68 @@ export default async function ServiceDetailPage({
         </section>
       )}
 
-      {/* What's included */}
+      {/* 4. Section: What's Included (grid matching Assurance) */}
       {service.features && service.features.length > 0 && (
-        <section className="px-6 py-20 sm:px-12 sm:py-28">
-          <div className="mx-auto max-w-5xl">
-            <Typography variant="display-sm" as="h2" className="mb-10">
+        <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+          <div className="mb-12 border-b border-black/10 pb-6">
+            <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
               What&rsquo;s Included
-            </Typography>
-            <ul className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
-              {service.features.map((feature) => (
-                <li key={feature} className="border-line flex items-start gap-3 border-b pb-4">
-                  <LogoSpinner size="h-4 w-4" className="text-ink-subtle mt-0.5 shrink-0" />
-                  <Typography variant="body">{feature}</Typography>
-                </li>
-              ))}
-            </ul>
+            </h2>
+            <p className="text-reg mt-2 text-black/70">
+              Every {service.name.toLowerCase()} project includes the following as standard
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {service.features.map((feature, index) => (
+              <div key={feature} className="border-t border-black/10 pt-4">
+                <span className="mb-2 block font-mono text-xs tracking-wider text-black/50 uppercase">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <p className="text-sm leading-relaxed font-light text-black/70">{feature}</p>
+              </div>
+            ))}
           </div>
         </section>
       )}
 
-      {/* FAQ */}
+      {/* 5. Section: FAQ */}
       {service.faqs && service.faqs.length > 0 && (
-        <section className="border-line bg-paper-dim border-t px-6 py-20 sm:px-12 sm:py-28">
-          <div className="mx-auto max-w-3xl">
-            <Typography variant="display-sm" as="h2" className="mb-10">
+        <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+          <div className="mb-12 border-b border-black/10 pb-6">
+            <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
               Frequently Asked Questions
-            </Typography>
+            </h2>
+          </div>
+          <div className="mx-auto max-w-3xl [&_button]:text-black [&_p]:text-black/70 [&_span]:text-black/50">
             <FaqAccordionClient faqs={service.faqs} />
           </div>
         </section>
       )}
 
-      {/* Explore Related Work */}
-      {relatedProjects.length > 0 && (
-        <section className="px-6 py-20 sm:px-12 sm:py-28">
-          <div className="mx-auto max-w-5xl">
-            <div className="mb-12 flex items-end justify-between gap-4">
-              <Typography variant="display-sm" as="h2">
-                Explore Related Work
-              </Typography>
-              <Link
-                href="/projects"
-                className="group text-ink-muted hover:text-ink hidden shrink-0 items-center gap-2 font-mono text-xs tracking-wider uppercase transition-colors sm:inline-flex"
-              >
-                View All
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  &rarr;
-                </span>
-              </Link>
-            </div>
+      {/* 6. Section: Explore Related Work (falls back to other services) */}
+      {(relatedProjects.length > 0 || otherServices.length > 0) && (
+        <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+          <div className="mb-12 flex items-end justify-between gap-4 border-b border-black/10 pb-6">
+            <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
+              {relatedProjects.length > 0 ? "Explore Related Work" : "Explore Other Services"}
+            </h2>
+            <Link
+              href={relatedProjects.length > 0 ? "/projects" : "/services"}
+              className="group hidden shrink-0 items-center gap-2 font-mono text-xs tracking-wider text-black/50 uppercase transition-colors hover:text-black sm:inline-flex"
+            >
+              View All
+              <span className="transition-transform duration-300 group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </Link>
+          </div>
 
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+          {relatedProjects.length > 0 ? (
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
               {relatedProjects.slice(0, 3).map((item) => (
                 <Link key={item.slug} href={`/projects/${item.slug}`} className="group block">
-                  <div className="border-line bg-paper-card relative aspect-[4/3] w-full overflow-hidden rounded-lg border shadow-sm transition-all group-hover:shadow-md">
+                  <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black/5">
                     <Image
                       src={urlFor(item.image).width(700).height(525).url()}
                       alt={item.title}
@@ -325,28 +350,143 @@ export default async function ServiceDetailPage({
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                   </div>
-                  <div className="mt-4 flex items-start justify-between gap-3">
+                  <div className="flex items-start justify-between gap-3 border-t border-black/10 pt-3">
                     <div>
-                      <span className="text-ink-subtle mb-1 block font-mono text-[10px] uppercase">
+                      <span className="mb-1 block font-mono text-[10px] tracking-wider text-black/50 uppercase">
                         {item.location}
                       </span>
-                      <h3 className="font-display text-ink group-hover:text-ink-muted text-lg leading-snug font-medium transition-colors">
+                      <h3 className="text-lg font-normal tracking-[-0.5px] text-black transition-opacity group-hover:opacity-75">
                         {item.title}
                       </h3>
                     </div>
-                    <LogoSpinner
-                      spin="hover"
-                      size="h-4 w-4"
-                      className="text-ink-subtle mt-1 shrink-0 group-hover:text-ink"
-                    />
+                    <span className="font-mono text-sm text-black transition-transform group-hover:translate-x-1">
+                      &rarr;
+                    </span>
                   </div>
                 </Link>
               ))}
             </div>
-          </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+              {otherServices.map((item) => (
+                <Link
+                  key={item.slug}
+                  href={`/services/${item.slug}`}
+                  className="group block"
+                >
+                  <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black/5">
+                    {item.heroImage ? (
+                      <Image
+                        src={urlFor(item.heroImage).width(700).height(525).url()}
+                        alt={item.name}
+                        fill
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-black/5" />
+                    )}
+                  </div>
+                  <div className="flex items-start justify-between gap-3 border-t border-black/10 pt-3">
+                    <div>
+                      <h3 className="text-lg font-normal tracking-[-0.5px] text-black transition-opacity group-hover:opacity-75">
+                        {item.name}
+                      </h3>
+                      <p className="mt-1 line-clamp-2 text-sm leading-relaxed font-light text-black/70">
+                        {item.summary}
+                      </p>
+                    </div>
+                    <span className="font-mono text-sm text-black transition-transform group-hover:translate-x-1">
+                      &rarr;
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </section>
       )}
 
+      {/* 7. Section: Explore Navigation */}
+      <section className="w-full px-3 py-16 sm:px-6 md:px-12 md:py-20">
+        <div className="mb-10 flex items-baseline justify-between border-b border-black/10 pb-4">
+          <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">Explore</h2>
+          <span className="font-mono text-xs tracking-wider text-black/50 uppercase">
+            Navigation &rarr;
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <Link href="/design" className="group block">
+            <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
+              <Image
+                src="/images/hero/design-hero.png"
+                alt="Design & Capabilities"
+                fill
+                className="object-cover contrast-110 grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+              />
+            </div>
+            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+              <span className="text-lg font-normal tracking-[-0.5px]">Design</span>
+              <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </div>
+          </Link>
+
+          <Link href="/build" className="group block">
+            <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
+              <Image
+                src="/images/hero/build-hero.png"
+                alt="Build & Delivery"
+                fill
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+            </div>
+            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+              <span className="text-lg font-normal tracking-[-0.5px]">Build</span>
+              <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </div>
+          </Link>
+
+          <Link href="/ourstudio" className="group block">
+            <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
+              <Image
+                src="/images/hero/studio-hero.png"
+                alt="Our Studio"
+                fill
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+            </div>
+            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+              <span className="text-lg font-normal tracking-[-0.5px]">Studio</span>
+              <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </div>
+          </Link>
+
+          <Link href="/projects" className="group block">
+            <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
+              <Image
+                src="/images/hero/projects-panel.png"
+                alt="Projects"
+                fill
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+            </div>
+            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+              <span className="text-lg font-normal tracking-[-0.5px]">Projects</span>
+              <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* 8. Spatial Brief Consultation */}
       <SpatialBriefSection
         eyebrow="Book a Consultation"
         heading={`Start a conversation about your ${service.name} project.`}

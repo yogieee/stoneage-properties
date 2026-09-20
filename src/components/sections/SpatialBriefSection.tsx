@@ -1,4 +1,5 @@
 import { SpatialBriefForm } from "@/components/sections/SpatialBriefForm";
+import { getSiteSettings } from "@/sanity/queries";
 
 interface SpatialBriefSectionProps {
   eyebrow?: string;
@@ -7,49 +8,64 @@ interface SpatialBriefSectionProps {
   defaultMessage?: string;
 }
 
-export function SpatialBriefSection({
+const FALLBACK_OFFICE = {
+  name: "Solihull HQ",
+  address: "20 Micklehill Drive, Shirley, Solihull, B90 2PU",
+};
+const FALLBACK_PHONE = "0121 537 8229";
+const FALLBACK_EMAIL = "enquiries@stoneageproperties.com";
+
+export async function SpatialBriefSection({
   eyebrow = "Consultation & Enquiries",
   heading = "Start a conversation about your project, vision or future space.",
   intro = "Whether you are planning a contemporary new home, a complete internal remodelling, or a structural extension, we would welcome the opportunity to review your ideas and explore how our specialist team can help shape it.",
   defaultMessage,
 }: SpatialBriefSectionProps = {}) {
+  const settings = await getSiteSettings();
+  const office = settings?.offices?.[0] || FALLBACK_OFFICE;
+  const phone = settings?.phones?.[0]?.number || FALLBACK_PHONE;
+  const email = settings?.email || FALLBACK_EMAIL;
+
   return (
     <section
       id="contact"
-      className="bg-paper relative w-full overflow-hidden py-24 sm:py-36"
+      className="relative w-full overflow-hidden border-t border-[#1C1B19]/10 bg-[#F7F5F0] px-3 py-16 text-[#1C1B19] sm:px-6 md:px-12 md:py-24"
     >
-      <div className="px-6 sm:px-12">
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* Left Column: Heading and Intake Context */}
-          <div className="space-y-8 lg:col-span-5">
-            <div>
-              <span className="text-ink-subtle mb-4 block font-mono text-xs tracking-widest uppercase">
-                {eyebrow}
-              </span>
-              <h2 className="font-display text-ink text-3xl leading-[1.12] font-medium tracking-tight sm:text-5xl lg:text-6xl">
-                {heading}
-              </h2>
-            </div>
+      <div className="w-full">
+        {/* Fabric Standard Section Header matching Projects, Journal, Testimonials & Services */}
+        <div className="mb-12 border-b border-black/10 pb-6">
+          <div className="flex flex-col gap-2">
+            <span className="font-mono text-xs tracking-wider text-black/50 uppercase">
+              {eyebrow}
+            </span>
+            <h2 className="text-xxl max-w-4xl leading-tight font-normal tracking-[-1.5px] text-black">
+              {heading}
+            </h2>
+          </div>
+        </div>
 
-            <p className="font-body text-ink-muted max-w-md text-base leading-relaxed sm:text-lg">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* Left Column: Context & Contact Details */}
+          <div className="space-y-6 lg:col-span-5">
+            <p className="text-reg max-w-md leading-relaxed text-black/80">
               {intro}
             </p>
 
-            <div className="border-line text-ink-muted space-y-3 border-t pt-6 font-mono text-xs">
-              <p className="text-ink font-medium">
+            <div className="space-y-3 border-t border-black/10 pt-6 font-mono text-xs text-black/60">
+              <p className="font-medium text-black">
                 Stoneage Properties Specialist Contractors
               </p>
               <p>
-                Solihull HQ: 20 Micklehill Drive, Shirley, Solihull, B90 2PU
+                {office.name}: {office.address}
               </p>
               <p>
-                Direct: 0121 537 8229 &middot; enquiries@stoneageproperties.com
+                Direct: {phone} &middot; {email}
               </p>
             </div>
           </div>
 
           {/* Right Column: Signature Pinned Spatial Brief Paper Form */}
-          <div className="pt-6 lg:col-span-7 lg:pt-0">
+          <div className="lg:col-span-7">
             <SpatialBriefForm defaultMessage={defaultMessage} />
           </div>
         </div>

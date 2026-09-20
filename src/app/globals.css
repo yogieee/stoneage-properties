@@ -1,87 +1,167 @@
 @import "tailwindcss";
 
 @theme {
-  /* Monochrome & warm editorial palette */
-  --color-ink: #111110;
-  --color-ink-muted: #555451;
-  --color-ink-subtle: #8a8883;
-  --color-paper: #faf9f6;
-  --color-paper-dim: #f0eee9;
-  --color-paper-warm: #f5f4ef;
-  --color-paper-card: #fdfcf9;
-  --color-charcoal: #161615;
-  --color-charcoal-light: #252523;
-  --color-line: #dcdad4;
-  --color-line-dark: #333331;
+  /* Cotswold Limestone & Deep Basalt Architectural Palette */
+  --color-ink: #1c1b19;
+  --color-ink-muted: #4e4a44;
+  --color-ink-subtle: #7d7870;
+  --color-paper: #f7f5f0;
+  --color-paper-dim: #efece4;
+  --color-paper-warm: #e8e3d8;
+  --color-paper-card: #faf8f5;
+  --color-charcoal: #1c1b19;
+  --color-charcoal-light: #2c2925;
+  --color-line: #dfdacf;
+  --color-line-dark: #322f2a;
 
-  /* Editorial type scale */
-  --font-display: var(--font-display-family);
-  --font-body: var(--font-body-family);
+  /* Type scale */
+  --font-display:
+    var(--font-display-family), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+  --font-body:
+    var(--font-body-family), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  --text-display-xl: clamp(2.5rem, 5vw, 5rem);
+  --text-display-xl: clamp(2.5rem, 5vw, 4.5rem);
   --text-display-lg: clamp(2rem, 3.5vw, 3.5rem);
-  --text-display-md: clamp(1.5rem, 2.5vw, 2.5rem);
-  --text-display-sm: clamp(1.2rem, 1.8vw, 1.75rem);
-  --text-body-lg: 1.15rem;
+  --text-display-md: clamp(1.4rem, 2.2vw, 2.2rem);
+  --text-display-sm: clamp(1.1rem, 1.5vw, 1.4rem);
+  --text-body-lg: 1.0625rem;
   --text-body: 1rem;
   --text-body-sm: 0.875rem;
   --text-body-xs: 0.75rem;
 }
 
+/* Fabric Typography Utility Classes */
+.n-spaced {
+  letter-spacing: -1px;
+}
+
+.nx2-spaced {
+  letter-spacing: -2px;
+}
+
+.text-xxl {
+  font-size: 35px;
+  line-height: 1.15;
+  letter-spacing: -1px;
+}
+
+@media (min-width: 64em) {
+  .text-xxl {
+    font-size: 46px;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+  }
+}
+
+.text-reg {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.text-menu {
+  font-size: 28px;
+  line-height: 32px;
+  letter-spacing: -1px;
+}
+
+@media (min-width: 48em) {
+  .text-menu {
+    font-size: 44px;
+    line-height: 52px;
+    letter-spacing: -1.5px;
+  }
+}
+
+/* Architectural Basalt Action Button */
+.fabric-btn {
+  display: inline-block;
+  background-color: #1c1b19;
+  color: #f7f5f0;
+  border: 1px solid #1c1b19;
+  padding: 10px 22px;
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.fabric-btn:hover {
+  background-color: transparent;
+  color: #1c1b19;
+}
+
+.fabric-btn-white {
+  display: inline-block;
+  background-color: #f7f5f0;
+  color: #1c1b19;
+  border: 1px solid #f7f5f0;
+  padding: 10px 22px;
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.fabric-btn-white:hover {
+  background-color: transparent;
+  color: #f7f5f0;
+}
+
+/* Fabric Underline Link hover animation */
+.fabric-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.fabric-underline::after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 0%;
+  background: currentColor;
+  transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fabric-underline:hover::after {
+  width: 100%;
+}
+
 html {
   overflow-x: hidden;
+  background-color: #f7f5f0;
+  color: #1c1b19;
 }
 
 body {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background-color: #f7f5f0;
+  color: #1c1b19;
   font-family: var(--font-body);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Lined paper notepad effect */
-.notepad-lines {
-  background-image: repeating-linear-gradient(
-    transparent,
-    transparent 2.2rem,
-    rgba(17, 17, 16, 0.12) 2.2rem,
-    rgba(17, 17, 16, 0.12) 2.25rem
-  );
+/* Architectural natural selection */
+::selection {
+  background: #1c1b19;
+  color: #f7f5f0;
 }
 
-/* Noise overlay effect */
-.paper-texture {
-  background-color: #f7f6f2;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+::-moz-selection {
+  background: #1c1b19;
+  color: #f7f5f0;
 }
 
-/* Subtle attention-getting shake for the chat button, repeats with a pause */
-@keyframes chat-attention {
-  0%, 82%, 100% {
-    transform: translateY(0) rotate(0deg);
+/* Continuous smooth scrolling ticker */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
   }
-  85% {
-    transform: translateY(-3px) rotate(-6deg);
-  }
-  88% {
-    transform: translateY(0) rotate(5deg);
-  }
-  91% {
-    transform: translateY(-2px) rotate(-3deg);
-  }
-  94% {
-    transform: translateY(0) rotate(0deg);
-  }
-}
-
-.animate-chat-attention {
-  animation: chat-attention 3.2s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-chat-attention {
-    animation: none;
+  100% {
+    transform: translateX(-50%);
   }
 }

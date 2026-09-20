@@ -139,7 +139,7 @@ export default async function ProjectDetailPage({
       </div>
 
       {/* Cover image */}
-      <div className="px-6 sm:px-12">
+      <div className="px-6 sm:px-12 lg:px-16">
         <div className="border-line bg-paper-dim relative mx-auto aspect-[16/10] w-full max-w-5xl overflow-hidden rounded-xl border shadow-md sm:aspect-[16/9]">
           <Image
             src={urlFor(project.image).width(2000).height(1125).url()}

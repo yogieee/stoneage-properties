@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Typography } from "@/components/ui/Typography";
 import { ArticleBody } from "@/components/ui/ArticleBody";
 import { LogoSpinner } from "@/components/decorative/LogoSpinner";
-import { Paperclip } from "@/components/decorative/Paperclip";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 import { getJournalArticle, getJournalArticles } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
@@ -13,7 +12,10 @@ import { SITE_URL } from "@/lib/seo";
 function estimateReadingTime(body: unknown): string {
   if (!Array.isArray(body)) return "3 min read";
   const words = body
-    .filter((block): block is { children?: { text?: string }[] } => block?._type === "block")
+    .filter(
+      (block): block is { children?: { text?: string }[] } =>
+        block?._type === "block",
+    )
     .flatMap((block) => block.children ?? [])
     .map((span) => span.text ?? "")
     .join(" ")
@@ -100,8 +102,16 @@ export default async function JournalArticlePage({
     description: article.excerpt,
     image: articleImage ? [articleImage] : undefined,
     datePublished: article.publishedAt || undefined,
-    author: { "@type": "Organization", name: "Stoneage Properties", url: SITE_URL },
-    publisher: { "@type": "Organization", name: "Stoneage Properties", url: SITE_URL },
+    author: {
+      "@type": "Organization",
+      name: "Stoneage Properties",
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Stoneage Properties",
+      url: SITE_URL,
+    },
     mainEntityOfPage: `${SITE_URL}/journal/${article.slug}`,
   };
 
@@ -109,7 +119,12 @@ export default async function JournalArticlePage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Journal", item: `${SITE_URL}/journal` },
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Journal",
+        item: `${SITE_URL}/journal`,
+      },
       {
         "@type": "ListItem",
         position: 2,
@@ -120,7 +135,7 @@ export default async function JournalArticlePage({
   };
 
   return (
-    <div className="pt-16 sm:pt-24">
+    <div className="min-h-screen bg-[#F7F5F0] text-[#1C1B19]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -130,157 +145,143 @@ export default async function JournalArticlePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      {/* Breadcrumb */}
-      <div className="px-6 pt-8 sm:px-12">
-        <Link
-          href="/journal"
-          className="group text-ink-subtle hover:text-ink inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase transition-colors"
-        >
-          <span className="transition-transform duration-300 group-hover:-translate-x-1">
-            &larr;
-          </span>
-          Journal
-        </Link>
-      </div>
+      {/* 1. Header with Breadcrumb, Title & Editorial Details */}
+      <section className="w-full border-b border-black/10 px-3 pt-24 pb-12 sm:px-6 sm:pt-28 md:px-12 md:pb-16">
+        <div className="mb-6">
+          <Link
+            href="/journal"
+            className="group inline-flex items-center gap-2 font-mono text-xs tracking-wider text-black/50 uppercase transition-colors hover:text-black"
+          >
+            <span className="font-mono transition-transform duration-300 group-hover:-translate-x-1">
+              &larr;
+            </span>
+            <span>Back to Journal</span>
+          </Link>
+        </div>
 
-      {/* Header */}
-      <div className="px-6 pt-8 pb-16 sm:px-12">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-4 lg:items-start lg:gap-x-12">
-          <div className="lg:col-span-3">
-            <span className="text-ink-subtle mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs tracking-widest uppercase">
+        <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-12 md:gap-12">
+          <div className="md:col-span-8">
+            <div className="mb-4 flex flex-wrap items-center gap-3 font-mono text-xs tracking-wider text-black/50 uppercase">
               <span>Journal</span>
               {publishedDate && (
                 <>
-                  <span aria-hidden className="text-line">
-                    &middot;
-                  </span>
+                  <span>&middot;</span>
                   <time dateTime={article.publishedAt}>{publishedDate}</time>
                 </>
               )}
-            </span>
-            <h1 className="font-display text-ink mb-6 text-3xl leading-[1.12] font-medium tracking-tight sm:text-5xl lg:text-6xl">
+              <span>&middot;</span>
+              <span>{estimateReadingTime(article.body)}</span>
+            </div>
+
+            <h1 className="text-xxl mb-6 leading-tight font-normal tracking-[-1.5px] text-black">
               {article.title}
             </h1>
-            {article.excerpt && (
-              <Typography variant="body-lg" className="whitespace-pre-line">
-                {article.excerpt}
-              </Typography>
-            )}
 
-            <div className="border-line mt-8 gap-x-8 gap-y-3 border-t pt-4 font-mono text-sm">
-              <div className="flex flex-col gap-1">
-                <span className="text-ink-subtle text-xs tracking-widest uppercase">
-                  Reading Time
-                </span>
-                <span className="text-ink mt-1 whitespace-nowrap">
-                  {estimateReadingTime(article.body)}
-                </span>
-              </div>
-            </div>
+            {article.excerpt && (
+              <p className="text-lg leading-relaxed font-normal tracking-[-0.5px] text-black/75 sm:text-xl">
+                {article.excerpt}
+              </p>
+            )}
           </div>
 
-          <div className="relative -rotate-2 transition-transform duration-500 hover:rotate-0 lg:col-span-1 lg:mt-2">
-            <div className="pointer-events-none absolute -top-7 left-6 z-20">
-              <Paperclip className="h-auto w-10 drop-shadow-md" />
+          {/* Architectural Note Card */}
+          <div className="border border-black/10 bg-white p-6 md:col-span-4">
+            <div className="mb-4 flex items-center justify-between border-b border-black/10 pb-3">
+              <span className="font-mono text-[10px] tracking-widest text-black/50 uppercase">
+                A Note From Stoneage
+              </span>
+              <LogoSpinner size="w-3.5 h-3.5" className="text-black" />
             </div>
-
-            <div className="bg-paper-card border-line text-ink relative overflow-hidden rounded border p-6 shadow-md">
-              <div className="border-line mb-6 flex items-center justify-between gap-2 border-b pb-4">
-                <span className="text-ink-subtle min-w-0 flex-1 truncate font-mono text-[10px] tracking-widest uppercase">
-                  A NOTE FROM STONEAGE
-                </span>
-                <div className="flex shrink-0 items-center gap-1.5">
-                  <span className="font-display text-xs font-medium">Stoneage</span>
-                  <LogoSpinner size="w-3.5 h-3.5" className="text-ink" />
-                </div>
-              </div>
-              <div className="notepad-lines font-display text-ink-muted py-2 text-base italic">
-                <p className="mb-0 pl-1 leading-loose">
-                  {article.note?.line || "Calm homes, lasting craft."}
-                </p>
-                <p className="text-ink-subtle pl-1 font-mono text-sm leading-loose not-italic">
-                  {article.note?.subline ||
-                    "30+ years delivering structural excellence across the UK."}
-                </p>
-              </div>
-            </div>
+            <p className="mb-2 text-base leading-relaxed font-normal text-black/80">
+              {article.note?.line || "Calm homes, lasting craft."}
+            </p>
+            <p className="font-mono text-xs leading-relaxed tracking-wider text-black/50 uppercase">
+              {article.note?.subline || "Solihull, London & Nottingham"}
+            </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Cover image */}
-      <div className="bg-paper-dim relative aspect-[16/10] w-full overflow-hidden sm:aspect-[21/9]">
-        <Image
-          src={urlFor(article.image).width(2400).height(1029).url()}
-          alt={article.title}
-          fill
-          priority
-          className="object-cover"
-        />
-      </div>
-
-      {/* Body */}
-      <div className="px-6 py-16 sm:px-12 sm:py-24">
-        {Array.isArray(article.body) && article.body.length > 0 ? (
-          <ArticleBody value={article.body} />
-        ) : (
-          article.excerpt && (
-            <Typography variant="body-lg">{article.excerpt}</Typography>
-          )
-        )}
-      </div>
-
-      {/* More journal entries */}
-      {moreArticles.length > 0 && (
-        <section className="border-line bg-paper-dim border-t px-6 py-20 sm:px-12 sm:py-28">
-          <div className="mx-auto max-w-5xl">
-            <div className="mb-12 flex items-end justify-between gap-4">
-              <Typography variant="display-sm" as="h2">
-                More from the Journal
-              </Typography>
-              <Link
-                href="/journal"
-                className="group text-ink-muted hover:text-ink hidden shrink-0 items-center gap-2 font-mono text-xs tracking-wider uppercase transition-colors sm:inline-flex"
-              >
-                View All
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  &rarr;
-                </span>
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
-              {moreArticles.map((item) => (
-                <Link
-                  key={item.slug}
-                  href={`/journal/${item.slug}`}
-                  className="group block"
-                >
-                  <div className="border-line bg-paper-card relative aspect-[4/3] w-full overflow-hidden rounded-lg border shadow-sm transition-all group-hover:shadow-md">
-                    <Image
-                      src={urlFor(item.image).width(700).height(525).url()}
-                      alt={item.title}
-                      fill
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="mt-4 flex items-start justify-between gap-3">
-                    <h3 className="font-display text-ink group-hover:text-ink-muted text-lg leading-snug font-medium transition-colors">
-                      {item.title}
-                    </h3>
-                    <LogoSpinner
-                      spin="hover"
-                      size="h-3 w-3"
-                      className="text-ink-subtle mt-1 shrink-0 group-hover:text-ink"
-                    />
-                  </div>
-                </Link>
-              ))}
-            </div>
+      {/* 2. Full-Width Framed Editorial Cover Image */}
+      {article.image && (
+        <section className="w-full px-3 py-8 sm:px-6 md:px-12">
+          <div className="relative aspect-[16/9] w-full overflow-hidden bg-black/5">
+            <Image
+              src={urlFor(article.image).width(2400).height(1350).url()}
+              alt={article.title}
+              fill
+              priority
+              className="object-cover"
+              sizes="100vw"
+            />
           </div>
         </section>
       )}
 
+      {/* 3. Editorial Essay Body */}
+      <section className="w-full border-b border-black/10 px-3 py-12 sm:px-6 sm:py-16 md:px-12 md:py-20">
+        <div className="text-reg mx-auto max-w-3xl leading-relaxed text-black/85">
+          {Array.isArray(article.body) && article.body.length > 0 ? (
+            <ArticleBody value={article.body} />
+          ) : (
+            article.excerpt && (
+              <Typography variant="body-lg">{article.excerpt}</Typography>
+            )
+          )}
+        </div>
+      </section>
+
+      {/* 4. More from the Journal Grid */}
+      {moreArticles.length > 0 && (
+        <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+          <div className="mb-12 flex flex-col justify-between gap-4 border-b border-black/10 pb-6 sm:flex-row sm:items-end">
+            <div>
+              <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
+                More from the Journal
+              </h2>
+            </div>
+            <Link
+              href="/journal"
+              className="flex items-center gap-2 text-base font-normal tracking-[-0.5px] text-black transition-opacity hover:opacity-70"
+            >
+              <span>View All Articles</span>
+              <span className="font-mono">&rarr;</span>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+            {moreArticles.map((item) => (
+              <Link
+                key={item.slug}
+                href={`/journal/${item.slug}`}
+                className="group block"
+              >
+                <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black/5">
+                  <Image
+                    src={urlFor(item.image).width(800).height(600).url()}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                </div>
+                <div className="border-t border-black/10 pt-2.5">
+                  <div className="mb-1 flex items-center justify-between font-mono text-xs tracking-wider text-black/50 uppercase">
+                    <span>Insight</span>
+                    <span className="font-mono text-sm transition-transform duration-300 group-hover:translate-x-1">
+                      &rarr;
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-normal tracking-[-0.5px] text-black transition-opacity group-hover:opacity-70">
+                    {item.title}
+                  </h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 5. Standardized Spatial Brief Consultation */}
       <SpatialBriefSection />
     </div>
   );

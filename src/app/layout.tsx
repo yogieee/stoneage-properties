@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import { SmoothScrollProvider } from "@/components/motion/SmoothScrollProvider";
 import { getSiteSettings } from "@/sanity/queries";
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/seo";
 import "./globals.css";
 
-const display = Fraunces({
+const display = Inter({
   variable: "--font-display-family",
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "500", "600"],
 });
 
 const body = Inter({
   variable: "--font-body-family",
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -88,7 +90,9 @@ export default async function RootLayout({
       <body className="antialiased">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
         />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>

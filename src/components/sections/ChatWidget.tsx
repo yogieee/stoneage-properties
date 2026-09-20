@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -19,6 +18,8 @@ const CONVERSATION_ID_KEY = "stoneage_chat_conversation_id";
 const AUTO_OPENED_PATHS_KEY = "stoneage_chat_auto_opened_paths";
 const AUTO_OPEN_MIN_MS = 5000;
 const AUTO_OPEN_MAX_MS = 10000;
+const FALLBACK_REPLY =
+  "Sorry, something went wrong on our end. Please try again in a moment, or reach out via the Spatial Brief form and the team will follow up directly.";
 
 function getOrCreateVisitorId() {
   if (typeof window === "undefined") return "";
@@ -49,21 +50,38 @@ function markPathAutoOpened(path: string) {
   );
 }
 
+/**
+ * Minimalist speech bubble chat icon
+ */
+function ChatBubbleIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M4.8 4.8C3 6.6 2 9.1 2 12c0 2.3.6 4.3 1.8 6l-.8 3.2 3.3-.9c1.6.8 3.5 1.2 5.7 1.2 2.9 0 5.4-1 7.2-2.8 1.8-1.8 2.8-4.3 2.8-6.7 0-2.9-1-5.4-2.8-7.2C17.4 3 14.9 2 12 2c-2.9 0-5.4 1-7.2 2.8ZM12 3.5c2.5 0 4.6.8 6.1 2.3 1.5 1.5 2.4 3.6 2.4 6.2 0 2-.7 3.9-2.2 5.4-1.5 1.5-3.6 2.4-6.3 2.4-1.8 0-3.5-.4-4.8-1l-.4-.2-2 .6.5-1.9-.3-.4c-1-1.4-1.5-3.1-1.5-4.9 0-2.3.8-4.4 2.3-5.9C7.4 4.4 9.5 3.5 12 3.5Zm-3.5 8a1.25 1.25 0 1 1 2.5 0 1.25 1.25 0 0 1-2.5 0Zm3.5 0a1.25 1.25 0 1 1 2.5 0 1.25 1.25 0 0 1-2.5 0Zm3.5 0a1.25 1.25 0 1 1 2.5 0 1.25 1.25 0 0 1-2.5 0Z"
+      />
+    </svg>
+  );
+}
+
 export function ChatWidget() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [pageContext, setPageContext] = useState<PageContext | null>(null);
-  const [attention, setAttention] = useState(false);
   const conversationIdRef = useRef<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const fetchedContextForPathRef = useRef<string | null>(null);
   const userInteractedForPathRef = useRef(false);
 
-  // Don't show the widget inside the Sanity Studio.
   const hidden = pathname?.startsWith("/studio");
 
   useEffect(() => {
@@ -73,27 +91,17 @@ export function ChatWidget() {
         : null;
   }, []);
 
-  // Auto-open once per page path, 5-10s after the visitor lands on it,
-  // with a greeting tailored to that page. Re-fires on each new page the
-  // visitor navigates to (within the same session), unless they've
-  // already opened/closed the widget themselves on that specific page,
-  // or the widget already auto-opened for that path earlier this session.
   useEffect(() => {
     if (typeof window === "undefined" || hidden || !pathname) return;
     userInteractedForPathRef.current = false;
 
-    if (getAutoOpenedPaths().has(pathname)) {
-      setAttention(false);
-      return;
-    }
+    if (getAutoOpenedPaths().has(pathname)) return;
 
-    setAttention(true);
     const delay =
       AUTO_OPEN_MIN_MS + Math.random() * (AUTO_OPEN_MAX_MS - AUTO_OPEN_MIN_MS);
 
     const timer = window.setTimeout(() => {
       markPathAutoOpened(pathname);
-      setAttention(false);
       if (!userInteractedForPathRef.current) {
         setOpen(true);
       }
@@ -106,9 +114,6 @@ export function ChatWidget() {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [messages, open, pageContext]);
 
-  // Fetch a page-aware greeting + suggestions whenever the widget opens
-  // with no messages yet — re-fetches if the visitor navigated to a
-  // different page since the last time it opened.
   useEffect(() => {
     if (!open || messages.length > 0) return;
     if (fetchedContextForPathRef.current === pathname) return;
@@ -119,9 +124,7 @@ export function ChatWidget() {
       .then((data: PageContext | null) => {
         if (data) setPageContext(data);
       })
-      .catch(() => {
-        // Silent: the widget still works without a tailored greeting.
-      });
+      .catch(() => {});
   }, [open, pathname, messages.length]);
 
   if (hidden) return null;
@@ -130,7 +133,6 @@ export function ChatWidget() {
     const trimmed = text.trim();
     if (!trimmed || sending) return;
 
-    setError(null);
     setInput("");
     setMessages((prev) => [...prev, { role: "user", content: trimmed }]);
     setSending(true);
@@ -148,8 +150,15 @@ export function ChatWidget() {
       });
 
       if (!res.ok) {
+        // Surface server-side errors (rate limit, not configured, etc.) as a
+        // normal chat bubble so the visitor sees a graceful message inline
+        // rather than a raw error banner.
         const data = await res.json().catch(() => null);
-        throw new Error(data?.error ?? "Could not reach the assistant.");
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: data?.error ?? FALLBACK_REPLY },
+        ]);
+        return;
       }
 
       const data: { conversationId: string; reply: string } = await res.json();
@@ -160,12 +169,12 @@ export function ChatWidget() {
         ...prev,
         { role: "assistant", content: data.reply },
       ]);
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Could not reach the assistant. Please try again.",
-      );
+    } catch {
+      // Network failure or unexpected exception: same fail-safe treatment.
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: FALLBACK_REPLY },
+      ]);
     } finally {
       setSending(false);
     }
@@ -177,26 +186,25 @@ export function ChatWidget() {
   };
 
   return (
+    /* Fixed at the bottom of the screen, right-aligned with the MediaRail (right-4 sm:right-6) */
     <div
-      className="fixed right-4 bottom-4 z-40 sm:right-6 sm:bottom-6"
+      className="fixed right-4 bottom-5 z-40 flex flex-col items-end select-none sm:right-6 sm:bottom-6"
       style={{
         paddingBottom: "env(safe-area-inset-bottom, 0px)",
         paddingRight: "env(safe-area-inset-right, 0px)",
       }}
     >
+      {/* Chat conversation drawer */}
       {open && (
         <div
           data-lenis-prevent
-          className="paper-texture bg-paper-card border-line text-ink mb-3 flex h-[min(28rem,calc(100dvh-6rem))] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-lg border shadow-2xl sm:w-96"
+          className="mb-3 flex h-[min(30rem,calc(100dvh-7rem))] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded border border-black/10 bg-white text-black shadow-2xl sm:w-96"
         >
           {/* Header */}
-          <div className="border-line bg-charcoal text-paper flex items-center justify-between gap-3 border-b px-4 py-3">
-            <div className="flex items-center gap-2">
-              <LogoSpinner size="h-5 w-5" className="text-paper" spin="none" />
-              <span className="font-mono text-xs tracking-widest uppercase">
-                Ask Stoneage
-              </span>
-            </div>
+          <div className="flex items-center justify-between border-b border-black/10 bg-black px-4 py-3 text-white">
+            <span className="font-mono text-xs tracking-widest uppercase">
+              Ask Stoneage
+            </span>
             <button
               type="button"
               onClick={() => {
@@ -204,7 +212,7 @@ export function ChatWidget() {
                 setOpen(false);
               }}
               aria-label="Close chat"
-              className="text-paper/70 hover:text-paper font-mono text-xs"
+              className="font-mono text-base text-white/70 hover:text-white"
             >
               &times;
             </button>
@@ -217,7 +225,7 @@ export function ChatWidget() {
           >
             {messages.length === 0 && (
               <div className="space-y-3">
-                <div className="bg-paper-warm border-line text-ink max-w-[90%] rounded-lg border px-3 py-2 font-body text-sm leading-relaxed">
+                <div className="max-w-[90%] rounded border border-black/10 bg-black/5 px-3 py-2 text-sm leading-relaxed font-light text-black">
                   {pageContext?.greeting ??
                     "Ask about our services, process, or timelines — or share your project and we'll point you to a Spatial Brief."}
                 </div>
@@ -229,7 +237,7 @@ export function ChatWidget() {
                         type="button"
                         onClick={() => sendMessage(suggestion)}
                         disabled={sending}
-                        className="border-line text-ink-muted hover:border-ink hover:text-ink rounded-full border px-3 py-1.5 font-mono text-[11px] tracking-wide transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                        className="rounded border border-black/15 bg-white px-2.5 py-1 text-left font-mono text-[11px] tracking-wide text-black/70 transition-colors hover:border-black hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         {suggestion}
                       </button>
@@ -241,41 +249,38 @@ export function ChatWidget() {
             {messages.map((m, i) => (
               <div
                 key={i}
-                className={`max-w-[85%] rounded-lg px-3 py-2 font-body text-sm leading-relaxed whitespace-pre-line ${
+                className={`max-w-[85%] rounded px-3 py-2 text-sm leading-relaxed whitespace-pre-line ${
                   m.role === "user"
-                    ? "bg-charcoal text-paper ml-auto"
-                    : "bg-paper-warm text-ink border-line border"
+                    ? "ml-auto bg-black text-white"
+                    : "border border-black/10 bg-black/5 font-light text-black"
                 }`}
               >
                 {m.content}
               </div>
             ))}
             {sending && (
-              <div className="bg-paper-warm border-line text-ink-muted max-w-[85%] rounded-lg border px-3 py-2 font-mono text-xs">
+              <div className="max-w-[85%] rounded border border-black/10 bg-black/5 px-3 py-2 font-mono text-xs text-black/60">
                 Thinking&hellip;
               </div>
-            )}
-            {error && (
-              <p className="font-mono text-xs text-red-600">{error}</p>
             )}
           </div>
 
           {/* Input */}
           <form
             onSubmit={handleSubmit}
-            className="border-line flex items-center gap-2 border-t p-3"
+            className="flex items-center gap-2 border-t border-black/10 bg-white p-3"
           >
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type a message..."
-              className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 flex-1 rounded-full border bg-transparent px-3 py-2 text-base focus:outline-none sm:text-sm"
+              className="flex-1 rounded border border-black/15 bg-transparent px-3 py-1.5 text-sm text-black placeholder:text-black/40 focus:border-black focus:outline-none"
             />
             <button
               type="submit"
               disabled={sending || !input.trim()}
-              className="bg-charcoal text-paper hover:bg-ink rounded-full px-4 py-2 font-mono text-xs tracking-wider uppercase transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+              className="fabric-btn cursor-pointer !px-3 !py-1.5 !text-xs disabled:cursor-not-allowed disabled:opacity-50"
             >
               Send
             </button>
@@ -283,20 +288,25 @@ export function ChatWidget() {
         </div>
       )}
 
+      {/* Minimalist Chat Icon Button (fixed, right-aligned to MediaRail at the bottom, no text) */}
       <button
         type="button"
         onClick={() => {
           userInteractedForPathRef.current = true;
-          setAttention(false);
           setOpen((v) => !v);
         }}
         aria-label={open ? "Close chat" : "Open chat"}
-        className={`bg-charcoal text-paper hover:bg-ink group ml-auto flex items-center gap-2 rounded-full px-5 py-3.5 font-mono text-xs tracking-widest uppercase shadow-xl transition-all duration-300 hover:shadow-2xl ${
-          attention && !open ? "animate-chat-attention" : ""
+        className={`group flex h-10 w-10 items-center justify-center rounded-full border shadow-md transition-all duration-300 ${
+          open
+            ? "border-black bg-black text-white"
+            : "border-black/25 bg-white text-black hover:scale-105 hover:border-black"
         }`}
       >
-        <LogoSpinner spin="hover" size="h-5 w-5" className="text-paper" />
-        <span>{open ? "Close" : "Chat"}</span>
+        {open ? (
+          <span className="font-mono text-lg leading-none">&times;</span>
+        ) : (
+          <ChatBubbleIcon className="h-4 w-4 transition-transform group-hover:scale-110" />
+        )}
       </button>
     </div>
   );

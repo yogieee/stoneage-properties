@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# WordPress media import (downloaded videos, manifest)
+scripts/wp-media-export/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

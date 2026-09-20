@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Paperclip } from "@/components/decorative/Paperclip";
 import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 
 interface SpatialBriefFormProps {
@@ -77,13 +76,8 @@ export function SpatialBriefForm({
     <div
       className={`relative w-full ${isModal ? "mx-auto max-w-4xl" : "max-w-3xl"}`}
     >
-      {/* Signature Paperclip pinned over top edge */}
-      <div className="pointer-events-none absolute -top-24 left-6 z-30 sm:-top-16 sm:left-12">
-        <Paperclip className="h-auto w-12 drop-shadow-lg sm:w-16" />
-      </div>
-
-      {/* Tactile Paper Brief Container */}
-      <div className="paper-texture bg-paper-card border-line text-ink relative overflow-visible rounded-lg border p-6 shadow-xl sm:p-12">
+      {/* Brief Container */}
+      <div className="bg-paper-card border-line text-ink relative overflow-visible rounded-lg border p-6 shadow-md sm:p-12">
         {/* Paper Form Header */}
         <div className="border-line mb-8 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-b pb-6 sm:pb-8">
           <div className="flex items-center gap-3">
@@ -308,7 +302,7 @@ export function SpatialBriefForm({
                     rows={4}
                     defaultValue={defaultMessage}
                     placeholder="Share initial dimensions, requirements, planning permissions, or architectural aspirations..."
-                    className="notepad-lines font-body placeholder:text-ink-subtle/40 w-full resize-none bg-transparent text-sm leading-[2.25rem] focus:outline-none sm:text-base"
+                    className="font-body placeholder:text-ink-subtle/40 w-full resize-none bg-transparent text-sm leading-relaxed focus:outline-none sm:text-base"
                   />
                 </div>
               </div>
@@ -346,16 +340,11 @@ export function SpatialBriefForm({
               <button
                 type="submit"
                 disabled={submitting}
-                className="group bg-charcoal text-paper hover:bg-ink inline-flex items-center gap-4 rounded-full px-8 py-3.5 font-mono text-xs tracking-wider uppercase shadow-md transition-all duration-300 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+                className="fabric-btn cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <span>
                   {submitting ? "Submitting..." : "Submit Spatial Brief"}
                 </span>
-                <LogoSpinner
-                  spin={submitting ? "continuous" : "hover"}
-                  size="h-5 w-5"
-                  className="text-paper"
-                />
               </button>
             </div>
 

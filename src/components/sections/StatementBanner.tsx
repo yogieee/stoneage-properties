@@ -38,7 +38,7 @@ export function StatementBanner() {
         className="absolute inset-0 -top-[10%] h-[120%] w-full opacity-40 will-change-transform"
       >
         <Image
-          src="/images/hero/extension.png"
+          src="/images/hero/statement-banner.png"
           alt="Architectural structure in natural setting"
           fill
           className="object-cover"

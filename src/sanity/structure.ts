@@ -9,8 +9,17 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.document().schemaType("siteSettings").documentId("siteSettings"),
         ),
+      S.listItem()
+        .title("Homepage Panels")
+        .child(
+          S.document()
+            .schemaType("homepagePanels")
+            .documentId("homepagePanels"),
+        ),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (listItem) => listItem.getId() !== "siteSettings",
+        (listItem) =>
+          listItem.getId() !== "siteSettings" &&
+          listItem.getId() !== "homepagePanels",
       ),
     ]);

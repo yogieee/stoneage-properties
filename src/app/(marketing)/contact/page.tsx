@@ -16,8 +16,12 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="pt-16 sm:pt-24 min-h-screen">
-      <SpatialBriefSection />
+    <div className="min-h-screen bg-[#F7F5F0] pt-20 text-[#1C1B19]">
+      <SpatialBriefSection
+        eyebrow="Contact & Spatial Brief"
+        heading="Start a conversation about your project."
+        intro="Whether you are planning a contemporary new home, a complete internal remodelling, or a structural extension, we would welcome the opportunity to review your brief."
+      />
     </div>
   );
 }
