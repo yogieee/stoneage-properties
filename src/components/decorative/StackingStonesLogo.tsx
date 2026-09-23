@@ -9,13 +9,14 @@ interface StackingStonesLogoProps {
 }
 
 /**
- * Architectural emblem matching the clean, thin typography of "Stoneage":
- * - Default State: 3 clean, precise thin architectural vertical lines standing together side-by-side.
- *   - 1st line: Taller (dominant monolith)
- *   - 2nd line: Medium tall
- *   - 3rd line: Shorter
- *   Tightly clustered with minimalist spacing, echoing modern architectural elevation drawings.
- * - On Click / Stacked State: Morphs smoothly into 3 thin horizontal lines stacked on top of each other
+ * Architectural emblem matching the brand mark (three solid buildings, sharp
+ * slanted tops, flat bottoms sitting on a shared ground line — no ring):
+ * tallest to shortest, left to right.
+ * - Default State: 3 solid architectural forms standing together side-by-side.
+ *   - 1st: Taller (dominant monolith)
+ *   - 2nd: Medium tall
+ *   - 3rd: Shorter
+ * - On Click / Stacked State: Morphs into 3 forms stacked on top of each other
  *   (a minimalist cairn / horizontal stack).
  */
 export function StackingStonesLogo({
@@ -24,78 +25,51 @@ export function StackingStonesLogo({
   isStacked = false,
 }: StackingStonesLogoProps) {
   // Ultra-refined easing matching architectural precision
-  const lineTransition = "all 0.55s cubic-bezier(0.25, 1, 0.5, 1)";
+  const barTransition = "all 0.55s cubic-bezier(0.25, 1, 0.5, 1)";
 
   return (
     <svg
-      viewBox="0 0 32 32"
+      viewBox="66 30 159 320"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={`${size} ${className} block shrink-0 overflow-visible`}
       aria-hidden="true"
     >
-      {/* 
-        1st Line: TALLER (Left vertical line -> Top stacked horizontal line)
-        Standing: x=8, y1=4.5, y2=27.5 (height = 23px)
-        Stacked:  moves to top horizontal line (y=7.5, length=15px)
-      */}
-      <line
-        x1="8"
-        y1="4.5"
-        x2="8"
-        y2="27.5"
-        stroke="currentColor"
-        strokeWidth="3.5"
-        strokeLinecap="round"
+      {/* 1st: TALLER (bbox x 76-115, y 40-340; center 95.5, 190) */}
+      <path
+        d="M76 40 L115 60 L115 340 L76 340 Z"
+        fill="currentColor"
         style={{
-          transformOrigin: "8px 16px",
-          transition: lineTransition,
+          transformOrigin: "95.5px 190px",
+          transition: barTransition,
           transform: isStacked
-            ? "translate(8px, -8.5px) rotate(90deg) scaleX(0.65)"
+            ? "translate(80px, -85px) rotate(90deg) scaleX(0.65)"
             : "translate(0px, 0px) rotate(0deg) scaleX(1)",
         }}
       />
 
-      {/* 
-        2nd Line: MEDIUM TALL (Middle vertical line -> Center stacked horizontal line)
-        Standing: x=16, y1=8.5, y2=27.5 (height = 19px)
-        Stacked:  moves to center horizontal line (y=16, length=21px)
-      */}
-      <line
-        x1="16"
-        y1="8.5"
-        x2="16"
-        y2="27.5"
-        stroke="currentColor"
-        strokeWidth="3.5"
-        strokeLinecap="round"
+      {/* 2nd: MEDIUM TALL (bbox x 126-165, y 142-340; center 145.5, 241) */}
+      <path
+        d="M126 142 L165 162 L165 340 L126 340 Z"
+        fill="currentColor"
         style={{
-          transformOrigin: "16px 18px",
-          transition: lineTransition,
+          transformOrigin: "145.5px 241px",
+          transition: barTransition,
           transform: isStacked
-            ? "translate(0px, -2px) rotate(90deg) scaleX(1.1)"
+            ? "translate(0px, -20px) rotate(90deg) scaleX(1.1)"
             : "translate(0px, 0px) rotate(0deg) scaleX(1)",
         }}
       />
 
-      {/* 
-        3rd Line: SHORTER (Right vertical line -> Base stacked horizontal line)
-        Standing: x=24, y1=13.5, y2=27.5 (height = 14px)
-        Stacked:  moves to base foundation line (y=24.5, length=26px)
-      */}
-      <line
-        x1="24"
-        y1="13.5"
-        x2="24"
-        y2="27.5"
-        stroke="currentColor"
-        strokeWidth="3.5"
-        strokeLinecap="round"
+      {/* 3rd: SHORTER (bbox x 176-215, y 242-340; center 195.5, 291) */}
+      <path
+        d="M176 242 L215 262 L215 340 L176 340 Z"
+        fill="currentColor"
         style={{
-          transformOrigin: "24px 20.5px",
-          transition: lineTransition,
+          transformOrigin: "195.5px 291px",
+          transition: barTransition,
           transform: isStacked
-            ? "translate(-8px, 4px) rotate(90deg) scaleX(1.85)"
+            ? "translate(-80px, 40px) rotate(90deg) scaleX(1.85)"
             : "translate(0px, 0px) rotate(0deg) scaleX(1)",
         }}
       />

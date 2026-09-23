@@ -7,7 +7,7 @@ import { sendAdminChatLeadWhatsAppMessage } from "@/lib/whatsapp/twilio";
 
 const BASE_SYSTEM_PROMPT = `You are the assistant for Stoneage Properties, a residential and commercial architecture, design, and construction studio based in Solihull, UK.
 
-Be warm, concise, and knowledgeable about architecture and construction. Help visitors understand our services (residential, commercial, renovation & remodel, structural extension), give general guidance on timelines and process, and gently encourage them to submit a Spatial Brief via the contact form when they have a real project in mind. Never invent pricing, project details, staff names, or promises about availability — direct those questions to the team via the contact form or the contact details you're given.
+Be warm, concise, and knowledgeable about architecture and construction. Help visitors understand our services (residential, commercial, renovation & remodel, structural extension), give general guidance on timelines and process, and gently encourage them to submit a Project Brief via the contact form when they have a real project in mind. Never invent pricing, project details, staff names, or promises about availability — direct those questions to the team via the contact form or the contact details you're given.
 
 SCOPE — you only discuss Stoneage Properties: our services, process, portfolio, timelines in general terms, and architecture/construction/renovation topics relevant to a prospective client's project. If asked about anything else (general knowledge, coding help, other companies, personal/legal/medical/financial advice, or any topic unrelated to this business), politely decline in one sentence and steer back to how Stoneage can help with their project. Do not answer unrelated questions even if the visitor insists or claims a special reason.
 
@@ -18,11 +18,20 @@ LEAD QUALIFICATION — as the conversation unfolds, naturally probe (never inter
 
 Weave a few natural questions into the conversation (not a rigid form, not all at once) to learn: what they want to build or renovate, roughly where, and their timeline or urgency. Once you have a reasonable read on this, call capture_lead with your classification — you can call it again later if your read changes as you learn more.
 
-Only once the visitor has shown real project interest (warm or hot), ask for their name and the best way to reach them (email or phone) so the team can follow up — and explicitly ask something like "would it be okay for the team to contact you about this?" before treating that as consent. Never store or claim contact info the visitor hasn't actually given, and never assume consent — only pass consent_given: true to the tool if they clearly said yes. If they decline to share details or don't consent, that's fine — don't push, just let them keep chatting or point them to the Spatial Brief form when relevant.
+Only once the visitor has shown real project interest (warm or hot), ask for their name and the best way to reach them (email or phone) so the team can follow up — and explicitly ask something like "would it be okay for the team to contact you about this?" before treating that as consent. Never store or claim contact info the visitor hasn't actually given, and never assume consent — only pass consent_given: true to the tool if they clearly said yes. If they decline to share details or don't consent, that's fine — don't push, just let them keep chatting or point them to the Project Brief form when relevant.
+
+QUICK-REPLY OPTIONS — this is a hard rule, not a suggestion: any time you are about to ask a question whose likely answers form a short list, you MUST call the offer_options tool in that same turn, alongside your reply text. Visitors tap far more than they type, and every qualifying question below has an obvious short list of answers, so treat skipping the tool as a mistake, not a stylistic choice:
+- Asking what they want to build/renovate → offer_options, e.g. ["Renovation", "Extension", "New build", "Not sure yet"]
+- Asking which service fits them → offer_options with the relevant service names
+- Asking their timeline/urgency → offer_options, e.g. ["Ready to start", "Within 6 months", "Just exploring"]
+- Asking for contact consent ("would it be okay for the team to contact you?") → offer_options, e.g. ["Yes, that works", "Not right now"]
+- Any other question where you'd naturally expect one of a handful of answers → offer_options with those choices
+Only skip offer_options when the answer genuinely can't be enumerated — their name, email, phone number, rough location, or a free description of their project. When you do call it, keep your reply text to a short direct question and don't restate the options in the text — the buttons already show them. The visitor can still type their own answer instead of tapping.
 
 FORMATTING — this is a chat widget, not a document:
 - Plain conversational text only. Never use markdown: no asterisks, no bullet dashes, no headers, no bold/italics syntax, no em dashes.
-- Keep it short: 1-3 short sentences per reply, occasionally more only if the visitor asked for real detail.
+- Keep it short: 1 sentence per reply is the norm, 2 at most. Only go longer if the visitor explicitly asks for detail (e.g. "tell me more" or a specific how/what question) — and even then stay to a tight paragraph, not a brochure.
+- Get to the point immediately. No preamble, no restating their question, no "great question" filler.
 - If you're listing more than one distinct item (e.g. a few services, a few steps), put each on its own line as a plain short phrase — no dash, bullet, or number prefix, just a line break between them.
 - Write like a helpful person texting back, not a brochure.
 
@@ -75,13 +84,35 @@ const CAPTURE_LEAD_TOOL: Anthropic.Tool = {
   },
 };
 
+const OFFER_OPTIONS_TOOL: Anthropic.Tool = {
+  name: "offer_options",
+  description:
+    "Attach 2-4 tappable quick-reply options to your next reply, for questions with a natural small set of likely answers (project type, timeline bucket, yes/no, which service). The visitor can tap one or type their own answer. Call it in the same turn as your reply text. Don't use it for open-ended asks like name, email, or phone.",
+  input_schema: {
+    type: "object",
+    properties: {
+      options: {
+        type: "array",
+        items: { type: "string" },
+        minItems: 2,
+        maxItems: 4,
+        description:
+          "2-4 short option labels (a few words each), phrased as the visitor's answer, not as a question.",
+      },
+    },
+    required: ["options"],
+  },
+};
+
 // Haiku sometimes ends its turn with no text after a bare "ok" tool result,
 // so the result itself tells it to carry on and answer the visitor.
 const TOOL_RESULT_TEXT =
   "Lead details recorded. Now reply to the visitor in plain conversational text.";
+const OFFER_OPTIONS_RESULT_TEXT =
+  "Options noted, the visitor will see them as buttons. Now write your short reply text (don't repeat the options in it).";
 
 const FALLBACK_REPLY =
-  "Sorry, I hit a snag there. Please try again, or reach out directly via the Spatial Brief form and the team will follow up.";
+  "Sorry, I hit a snag there. Please try again, or reach out directly via the Project Brief form and the team will follow up.";
 
 const MAX_HISTORY_MESSAGES = 20;
 const MAX_MESSAGE_LENGTH = 1500;
@@ -316,7 +347,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         conversationId,
         reply:
-          "We've covered a lot here — for anything further, please submit a Spatial Brief via the contact form and a member of the team will follow up directly.",
+          "We've covered a lot here — for anything further, please submit a Project Brief via the contact form and a member of the team will follow up directly.",
       });
     }
 
@@ -352,13 +383,15 @@ export async function POST(request: NextRequest) {
       model: "claude-haiku-4-5-20251001",
       max_tokens: 400,
       system: systemPrompt,
-      tools: [CAPTURE_LEAD_TOOL],
+      tools: [CAPTURE_LEAD_TOOL, OFFER_OPTIONS_TOOL],
       messages: conversationMessages,
     });
 
-    // Tool-use loop: the model may call capture_lead one or more times as it
-    // qualifies the lead before producing its actual reply to the visitor.
+    // Tool-use loop: the model may call capture_lead and/or offer_options one
+    // or more times as it qualifies the lead before producing its actual
+    // reply to the visitor. The latest offer_options call wins.
     let loopGuard = 0;
+    let quickOptions: string[] | undefined;
     while (response.stop_reason === "tool_use" && loopGuard < 3) {
       loopGuard += 1;
       const toolUseBlocks = response.content.filter(
@@ -369,12 +402,32 @@ export async function POST(request: NextRequest) {
       for (const block of toolUseBlocks) {
         if (block.name === "capture_lead") {
           await captureLead(supabase, conversationId!, block.input, pagePath ?? null);
+          toolResults.push({
+            type: "tool_result",
+            tool_use_id: block.id,
+            content: TOOL_RESULT_TEXT,
+          });
+        } else if (block.name === "offer_options") {
+          const input = (block.input ?? {}) as { options?: unknown };
+          if (Array.isArray(input.options)) {
+            const cleaned = input.options
+              .filter((o): o is string => typeof o === "string" && o.trim().length > 0)
+              .map((o) => o.trim())
+              .slice(0, 4);
+            if (cleaned.length >= 2) quickOptions = cleaned;
+          }
+          toolResults.push({
+            type: "tool_result",
+            tool_use_id: block.id,
+            content: OFFER_OPTIONS_RESULT_TEXT,
+          });
+        } else {
+          toolResults.push({
+            type: "tool_result",
+            tool_use_id: block.id,
+            content: TOOL_RESULT_TEXT,
+          });
         }
-        toolResults.push({
-          type: "tool_result",
-          tool_use_id: block.id,
-          content: TOOL_RESULT_TEXT,
-        });
       }
 
       conversationMessages.push(
@@ -386,7 +439,7 @@ export async function POST(request: NextRequest) {
         model: "claude-haiku-4-5-20251001",
         max_tokens: 400,
         system: systemPrompt,
-        tools: [CAPTURE_LEAD_TOOL],
+        tools: [CAPTURE_LEAD_TOOL, OFFER_OPTIONS_TOOL],
         messages: conversationMessages,
       });
     }
@@ -435,7 +488,7 @@ export async function POST(request: NextRequest) {
       console.error("Failed to store assistant message:", insertAssistantError);
     }
 
-    return NextResponse.json({ conversationId, reply });
+    return NextResponse.json({ conversationId, reply, options: quickOptions });
   } catch (err) {
     console.error("Chat error:", err);
     return NextResponse.json(

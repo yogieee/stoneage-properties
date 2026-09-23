@@ -77,7 +77,7 @@ export function ContactModal({ onClose }: ContactModalProps) {
         data-lenis-prevent
         className="relative h-[95%] w-full lg:w-3/4 overflow-y-auto p-6 pt-16 sm:p-12 sm:pt-20"
       >
-        {/* Spatial Brief Intake Form */}
+        {/* Project Brief Intake Form */}
         <SpatialBriefForm isModal onSuccess={onClose} onClose={onClose} />
       </div>
     </div>

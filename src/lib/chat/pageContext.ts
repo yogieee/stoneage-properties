@@ -33,7 +33,7 @@ export async function buildPageContext(
     if (service) {
       return {
         label: service.name,
-        systemContext: `The visitor is currently viewing the "${service.name}" service page. Service summary: ${service.summary}. Proactively ask about their project (space, scope, timeline) in relation to this service, answer their questions, and work the conversation toward submitting a Spatial Brief via the contact form, or ${contactLine}.`,
+        systemContext: `The visitor is currently viewing the "${service.name}" service page. Service summary: ${service.summary}. Proactively ask about their project (space, scope, timeline) in relation to this service, answer their questions, and work the conversation toward submitting a Project Brief via the contact form, or ${contactLine}.`,
         greeting: `Thinking about a ${service.name.toLowerCase()} project? I can walk you through what's involved, typical timelines, or help you take the next step.`,
         suggestions: [
           `What's involved in a ${service.name}?`,
@@ -47,7 +47,7 @@ export async function buildPageContext(
   if (path.startsWith("/services")) {
     return {
       label: "Services",
-      systemContext: `The visitor is browsing the Services overview page. Help them identify the right service for their project, answer their questions, and work the conversation toward submitting a Spatial Brief via the contact form, or ${contactLine}.`,
+      systemContext: `The visitor is browsing the Services overview page. Help them identify the right service for their project, answer their questions, and work the conversation toward submitting a Project Brief via the contact form, or ${contactLine}.`,
       greeting:
         "Exploring our services? Tell me a bit about your project and I'll point you to the right one.",
       suggestions: [
@@ -61,7 +61,7 @@ export async function buildPageContext(
   if (path.startsWith("/projects")) {
     return {
       label: "Projects",
-      systemContext: `The visitor is browsing the project portfolio. Answer questions about our work in general terms, and work the conversation toward submitting a Spatial Brief for their own project, or ${contactLine}.`,
+      systemContext: `The visitor is browsing the project portfolio. Answer questions about our work in general terms, and work the conversation toward submitting a Project Brief for their own project, or ${contactLine}.`,
       greeting:
         "Browsing our portfolio? Happy to talk through the kind of work we do, or help you start your own project.",
       suggestions: [
@@ -75,7 +75,7 @@ export async function buildPageContext(
   if (path.startsWith("/journal")) {
     return {
       label: "Journal",
-      systemContext: `The visitor is reading the Journal (articles and insights). Answer relevant questions and work the conversation toward Stoneage's services and a Spatial Brief submission, or ${contactLine}.`,
+      systemContext: `The visitor is reading the Journal (articles and insights). Answer relevant questions and work the conversation toward Stoneage's services and a Project Brief submission, or ${contactLine}.`,
       greeting:
         "Reading up on design and construction? Ask me anything, or let me know if you have a project in mind.",
       suggestions: [
@@ -89,9 +89,9 @@ export async function buildPageContext(
   if (path.startsWith("/contact")) {
     return {
       label: "Contact",
-      systemContext: `The visitor is on the Contact page. Help them decide the best way to reach out — the Spatial Brief form on this page, or ${contactLine} — and answer any last questions before they submit.`,
+      systemContext: `The visitor is on the Contact page. Help them decide the best way to reach out — the Project Brief form on this page, or ${contactLine} — and answer any last questions before they submit.`,
       greeting:
-        "Ready to get in touch? I can answer a quick question, or help you fill out the Spatial Brief.",
+        "Ready to get in touch? I can answer a quick question, or help you fill out the Project Brief.",
       suggestions: [
         "What happens after I submit the form?",
         "How fast will someone respond?",
@@ -102,7 +102,7 @@ export async function buildPageContext(
 
   return {
     label: "Home",
-    systemContext: `The visitor is on the homepage. Help them understand what Stoneage Properties does, identify the right service for them, and work the conversation toward a Spatial Brief submission, or ${contactLine}.`,
+    systemContext: `The visitor is on the homepage. Help them understand what Stoneage Properties does, identify the right service for them, and work the conversation toward a Project Brief submission, or ${contactLine}.`,
     greeting:
       "Welcome to Stoneage Properties. Ask me about our services, our process, or a project you have in mind.",
     suggestions: [

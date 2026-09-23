@@ -2,7 +2,7 @@ import "server-only";
 
 /**
  * Single source of truth for every outbound message triggered by a
- * Spatial Brief submission. Edit copy here — email and WhatsApp senders
+ * Project Brief submission. Edit copy here — email and WhatsApp senders
  * both read from this file, and it doubles as the reference doc when
  * submitting the WhatsApp templates to Meta for approval (see the
  * {{1}}, {{2}}... placeholder notes on each WhatsApp template).
@@ -27,7 +27,7 @@ export function clientThankYouEmail(submission: SubmissionForTemplates) {
     subject: `Thank you for getting in touch, ${submission.name}`,
     heading: `Thanks for reaching out, ${submission.name}`,
     bodyLines: [
-      "We've received your Spatial Brief, and we're glad you thought of Stoneage Properties for your project.",
+      "We've received your Project Brief, and we're glad you thought of Stoneage Properties for your project.",
       "A senior director from our Solihull studio will read it personally and come back to you within 1-2 working days.",
       "If anything changes, or you'd like to add more detail, just reply to this email. We'd love to hear more.",
     ],
@@ -38,7 +38,7 @@ export function clientThankYouEmail(submission: SubmissionForTemplates) {
 export function adminNotificationEmail(submission: SubmissionForTemplates) {
   return {
     subject: `New enquiry: ${submission.name}`,
-    heading: "New Spatial Brief submission",
+    heading: "New Project Brief submission",
     fields: [
       ["Name", submission.name],
       ["Email", submission.email],
@@ -67,9 +67,9 @@ export function clientWhatsAppTemplate(submission: SubmissionForTemplates) {
   return {
     name: "spatial_brief_client_confirmation",
     metaTemplateBody:
-      "Hi {{1}}, thank you for getting in touch with Stoneage Properties. We've received your Spatial Brief and a senior director will contact you within 1-2 working days. Feel free to reply here with any questions.",
+      "Hi {{1}}, thank you for getting in touch with Stoneage Properties. We've received your Project Brief and a senior director will contact you within 1-2 working days. Feel free to reply here with any questions.",
     render: () =>
-      `Hi ${submission.name}, thank you for getting in touch with Stoneage Properties. We've received your Spatial Brief and a senior director will contact you within 1-2 working days. Feel free to reply here with any questions.`,
+      `Hi ${submission.name}, thank you for getting in touch with Stoneage Properties. We've received your Project Brief and a senior director will contact you within 1-2 working days. Feel free to reply here with any questions.`,
   };
 }
 
@@ -77,10 +77,10 @@ export function adminWhatsAppTemplate(submission: SubmissionForTemplates) {
   return {
     name: "spatial_brief_admin_alert",
     metaTemplateBody:
-      "New Spatial Brief submission\nName: {{1}}\nEmail: {{2}}\nPhone: {{3}}\nProject type: {{4}}",
+      "New Project Brief submission\nName: {{1}}\nEmail: {{2}}\nPhone: {{3}}\nProject type: {{4}}",
     render: () =>
       [
-        "New Spatial Brief submission",
+        "New Project Brief submission",
         `Name: ${submission.name}`,
         `Email: ${submission.email}`,
         submission.phone ? `Phone: ${submission.phone}` : null,

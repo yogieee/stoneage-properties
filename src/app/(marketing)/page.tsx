@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Stoneage Properties | Design & Build Specialists",
     description:
-      "Bespoke domestic residential architecture and specialist construction across Solihull, London, and Nottingham.",
+      "Bespoke domestic residential architecture and specialist construction in Solihull.",
     url: "/",
   },
 };

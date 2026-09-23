@@ -72,7 +72,7 @@ export default async function ServiceDetailPage({
 
   const serviceAreas = siteSettings?.offices?.map((office) => office.name).filter(Boolean) ?? [];
   const servingLine =
-    serviceAreas.length > 0 ? serviceAreas.join(", ") : "Solihull, London & Nottingham";
+    serviceAreas.length > 0 ? serviceAreas.join(", ") : "Solihull";
   const phone = siteSettings?.phones?.[0]?.number;
 
   const serviceJsonLd = {
@@ -416,17 +416,19 @@ export default async function ServiceDetailPage({
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <Link href="/design" className="group block">
+          <Link href="/craftsmanship" className="group block">
             <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
               <Image
-                src="/images/hero/design-hero.png"
-                alt="Design & Capabilities"
+                src="/images/hero/build-stone-masonry.png"
+                alt="Specialist Building & Master Craftsmanship"
                 fill
                 className="object-cover contrast-110 grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
               />
             </div>
             <div className="flex items-center justify-between border-t border-black/10 pt-2">
-              <span className="text-lg font-normal tracking-[-0.5px]">Design</span>
+              <span className="text-lg font-normal tracking-[-0.5px]">
+                Craftsmanship
+              </span>
               <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
                 &rarr;
               </span>
@@ -486,7 +488,7 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
-      {/* 8. Spatial Brief Consultation */}
+      {/* 8. Project Brief Consultation */}
       <SpatialBriefSection
         eyebrow="Book a Consultation"
         heading={`Start a conversation about your ${service.name} project.`}

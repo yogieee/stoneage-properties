@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "Stoneage - %s",
   },
   description:
-    "Stoneage Properties designs and delivers new builds, renovations, extensions, and conversions across Solihull, London, and Nottingham. Book a spatial brief consultation.",
+    "Stoneage Properties designs and delivers new builds, renovations, extensions, and conversions in Solihull. Book a project brief consultation.",
   keywords: [
     "architects near me",
     "residential architecture",
@@ -34,8 +34,7 @@ export const metadata: Metadata = {
     "renovation architects",
     "new build architects",
     "Solihull architects",
-    "London architects",
-    "Nottingham architects",
+    "Solihull building contractors",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -43,15 +42,13 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     url: SITE_URL,
     title: "Stoneage Properties | Architects & Property Design",
-    description:
-      "New builds, renovations, extensions, and conversions across Solihull, London, and Nottingham.",
+    description: "New builds, renovations, extensions, and conversions in Solihull.",
     images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Stoneage Properties | Architects & Property Design",
-    description:
-      "New builds, renovations, extensions, and conversions across Solihull, London, and Nottingham.",
+    description: "New builds, renovations, extensions, and conversions in Solihull.",
     images: [DEFAULT_OG_IMAGE],
   },
   robots: {

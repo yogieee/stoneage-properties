@@ -196,7 +196,7 @@ export default async function JournalArticlePage({
               {article.note?.line || "Calm homes, lasting craft."}
             </p>
             <p className="font-mono text-xs leading-relaxed tracking-wider text-black/50 uppercase">
-              {article.note?.subline || "Solihull, London & Nottingham"}
+              {article.note?.subline || "Solihull"}
             </p>
           </div>
         </div>
@@ -281,7 +281,7 @@ export default async function JournalArticlePage({
         </section>
       )}
 
-      {/* 5. Standardized Spatial Brief Consultation */}
+      {/* 5. Standardized Project Brief Consultation */}
       <SpatialBriefSection />
     </div>
   );

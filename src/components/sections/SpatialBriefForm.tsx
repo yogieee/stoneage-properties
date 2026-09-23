@@ -74,7 +74,7 @@ export function SpatialBriefForm({
 
   return (
     <div
-      className={`relative w-full ${isModal ? "mx-auto max-w-4xl" : "max-w-3xl"}`}
+      className={`relative w-full ${isModal ? "mx-auto max-w-5xl" : "max-w-4xl"}`}
     >
       {/* Brief Container */}
       <div className="bg-paper-card border-line text-ink relative overflow-visible rounded-lg border p-6 shadow-md sm:p-12">
@@ -82,8 +82,8 @@ export function SpatialBriefForm({
         <div className="border-line mb-8 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-b pb-6 sm:pb-8">
           <div className="flex items-center gap-3">
             <span className="text-ink-subtle font-mono text-xs">01</span>
-            <h3 className="text-ink font-mono text-sm font-semibold tracking-wider uppercase sm:text-base">
-              SPATIAL BRIEF INTAKE
+            <h3 className="text-ink font-mono text-base font-semibold tracking-wider uppercase sm:text-lg">
+              PROJECT BRIEF INTAKE
             </h3>
           </div>
           <div className="flex items-center gap-4">
@@ -112,7 +112,7 @@ export function SpatialBriefForm({
             </h4>
             <p className="font-body text-ink-muted mx-auto max-w-md text-sm leading-relaxed">
               Thank you for sharing your project details. A senior director from
-              our Solihull HQ will review your spatial brief and respond within
+              our Solihull HQ will review your project brief and respond within
               one business day.
             </p>
             <div className="text-ink-subtle pt-4 font-mono text-xs">
@@ -130,7 +130,7 @@ export function SpatialBriefForm({
               <div className="col-span-10 space-y-1.5">
                 <label
                   htmlFor="brief-name"
-                  className="text-ink-muted block font-mono text-xs tracking-wider uppercase"
+                  className="text-ink-muted block font-mono text-sm tracking-wider uppercase"
                 >
                   Name
                 </label>
@@ -140,7 +140,7 @@ export function SpatialBriefForm({
                   type="text"
                   required
                   placeholder="Your full name"
-                  className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 w-full border-b bg-transparent py-1.5 text-sm transition-colors focus:outline-none sm:text-base"
+                  className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 w-full border-b bg-transparent py-1.5 text-base transition-colors focus:outline-none sm:text-lg"
                 />
               </div>
             </div>
@@ -153,7 +153,7 @@ export function SpatialBriefForm({
               <div className="col-span-10 space-y-1.5">
                 <label
                   htmlFor="brief-email"
-                  className="text-ink-muted block font-mono text-xs tracking-wider uppercase"
+                  className="text-ink-muted block font-mono text-sm tracking-wider uppercase"
                 >
                   Email
                 </label>
@@ -163,7 +163,7 @@ export function SpatialBriefForm({
                   type="email"
                   required
                   placeholder="name@domain.com"
-                  className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 w-full border-b bg-transparent py-1.5 text-sm transition-colors focus:outline-none sm:text-base"
+                  className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 w-full border-b bg-transparent py-1.5 text-base transition-colors focus:outline-none sm:text-lg"
                 />
               </div>
             </div>
@@ -176,7 +176,7 @@ export function SpatialBriefForm({
               <div className="col-span-10 space-y-1.5">
                 <label
                   htmlFor="brief-phone"
-                  className="text-ink-muted block font-mono text-xs tracking-wider uppercase"
+                  className="text-ink-muted block font-mono text-sm tracking-wider uppercase"
                 >
                   Phone (optional)
                 </label>
@@ -185,7 +185,7 @@ export function SpatialBriefForm({
                   name="phone"
                   type="tel"
                   placeholder="+44 7000 000000"
-                  className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 w-full border-b bg-transparent py-1.5 text-sm transition-colors focus:outline-none sm:text-base"
+                  className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 w-full border-b bg-transparent py-1.5 text-base transition-colors focus:outline-none sm:text-lg"
                 />
               </div>
             </div>
@@ -196,7 +196,7 @@ export function SpatialBriefForm({
                 04)
               </span>
               <div className="col-span-10 space-y-3">
-                <span className="text-ink-muted block font-mono text-xs tracking-wider uppercase">
+                <span className="text-ink-muted block font-mono text-sm tracking-wider uppercase">
                   Project Type
                 </span>
                 <div className="grid grid-cols-2 gap-3 pt-1">
@@ -212,7 +212,7 @@ export function SpatialBriefForm({
                         key={type}
                         type="button"
                         onClick={() => toggleProjectType(type)}
-                        className={`flex items-center gap-3 rounded border px-3 py-2 text-left font-mono text-xs transition-all ${
+                        className={`flex items-center gap-3 rounded border px-3 py-2 text-left font-mono text-sm transition-all ${
                           checked
                             ? "bg-charcoal text-paper border-charcoal"
                             : "bg-paper-warm text-ink border-line hover:border-ink-muted"
@@ -241,7 +241,7 @@ export function SpatialBriefForm({
               <div className="col-span-10 space-y-1.5">
                 <label
                   htmlFor="brief-location"
-                  className="text-ink-muted block font-mono text-xs tracking-wider uppercase"
+                  className="text-ink-muted block font-mono text-sm tracking-wider uppercase"
                 >
                   Location
                 </label>
@@ -249,8 +249,8 @@ export function SpatialBriefForm({
                   id="brief-location"
                   name="location"
                   type="text"
-                  placeholder="e.g. Solihull, London, Nottingham or Postcode"
-                  className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 w-full border-b bg-transparent py-1.5 text-sm transition-colors focus:outline-none sm:text-base"
+                  placeholder="e.g. Solihull, West Midlands or Postcode"
+                  className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 w-full border-b bg-transparent py-1.5 text-base transition-colors focus:outline-none sm:text-lg"
                 />
               </div>
             </div>
@@ -263,7 +263,7 @@ export function SpatialBriefForm({
               <div className="col-span-10 space-y-1.5">
                 <label
                   htmlFor="brief-timeline"
-                  className="text-ink-muted block font-mono text-xs tracking-wider uppercase"
+                  className="text-ink-muted block font-mono text-sm tracking-wider uppercase"
                 >
                   Timeline
                 </label>
@@ -271,7 +271,7 @@ export function SpatialBriefForm({
                   id="brief-timeline"
                   name="timeline"
                   defaultValue="immediate"
-                  className="border-line font-body focus:border-ink w-full cursor-pointer border-b bg-transparent py-1.5 text-sm transition-colors focus:outline-none sm:text-base"
+                  className="border-line font-body focus:border-ink w-full cursor-pointer border-b bg-transparent py-1.5 text-base transition-colors focus:outline-none sm:text-lg"
                 >
                   <option value="immediate">Within 3 months</option>
                   <option value="medium">3 to 6 months</option>
@@ -291,7 +291,7 @@ export function SpatialBriefForm({
               <div className="col-span-10 space-y-1.5">
                 <label
                   htmlFor="brief-message"
-                  className="text-ink-muted block font-mono text-xs tracking-wider uppercase"
+                  className="text-ink-muted block font-mono text-sm tracking-wider uppercase"
                 >
                   Tell us more
                 </label>
@@ -302,7 +302,7 @@ export function SpatialBriefForm({
                     rows={4}
                     defaultValue={defaultMessage}
                     placeholder="Share initial dimensions, requirements, planning permissions, or architectural aspirations..."
-                    className="font-body placeholder:text-ink-subtle/40 w-full resize-none bg-transparent text-sm leading-relaxed focus:outline-none sm:text-base"
+                    className="font-body placeholder:text-ink-subtle/40 w-full resize-none bg-transparent text-base leading-relaxed focus:outline-none sm:text-lg"
                   />
                 </div>
               </div>
@@ -320,10 +320,10 @@ export function SpatialBriefForm({
                     onChange={(e) => setContactConsent(e.target.checked)}
                     className="border-line accent-charcoal mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded"
                   />
-                  <span className="font-body text-ink-muted text-xs leading-relaxed sm:text-sm">
+                  <span className="font-body text-ink-muted text-sm leading-relaxed sm:text-base">
                     I agree that Stoneage Properties may contact me by email and
                     where a phone number is provided via WhatsApp regarding this
-                    enquiry. We&apos;ll only message about your Spatial Brief
+                    enquiry. We&apos;ll only message about your Project Brief
                     and you can opt out anytime.
                   </span>
                 </label>
@@ -343,7 +343,7 @@ export function SpatialBriefForm({
                 className="fabric-btn cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <span>
-                  {submitting ? "Submitting..." : "Submit Spatial Brief"}
+                  {submitting ? "Submitting..." : "Submit Project Brief"}
                 </span>
               </button>
             </div>
@@ -352,7 +352,7 @@ export function SpatialBriefForm({
             <div className="border-line text-ink-subtle grid grid-cols-3 gap-2 border-t pt-6 text-center font-mono text-[9px] tracking-widest uppercase">
               <div>ST / CTF</div>
               <div>THANK YOU</div>
-              <div>STOREYARCHITECTURE / STONEAGE</div>
+              <div>STONEAGE</div>
             </div>
           </form>
         )}

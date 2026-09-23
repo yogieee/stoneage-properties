@@ -8,10 +8,15 @@ const FALLBACK_PHONE = { label: "Solihull HQ", number: "0121 537 8229" };
 const FALLBACK_OFFICES = [
   {
     name: "Solihull HQ",
-    address: "20 Micklehill Dr, Shirley, Solihull, B90 2PU",
+    address: "64 Stratford Rd, Shirley, Solihull, B90 3LP",
   },
-  { name: "London", address: "1 Colegrave Rd, Stratford, London, E15 1DZ" },
-  { name: "Nottingham", address: "12 Northfield Ave, Nottingham, NG12" },
+];
+const QUICK_LINKS = [
+  { label: "Studio", href: "/ourstudio" },
+  { label: "Projects", href: "/projects" },
+  { label: "Craftsmanship", href: "/craftsmanship" },
+  { label: "Build", href: "/build" },
+  { label: "Journal", href: "/journal" },
 ];
 const FALLBACK_SOCIALS = [
   {
@@ -105,26 +110,58 @@ export async function SiteFooter() {
             </div>
           </div>
 
-          {/* Right Column: Address & Directions */}
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:col-span-6 lg:col-span-7">
+          {/* Right Column: Address + Quick Links, then full-width Map */}
+          <div className="flex flex-col gap-8 md:col-span-6 lg:col-span-7">
             {offices.map((office) => (
-              <div key={office.name}>
-                <p className="mb-2 font-mono text-xs tracking-wider text-black/50 uppercase">
-                  {office.name}
-                </p>
-                <p className="text-sm leading-relaxed whitespace-pre-line text-black/80">
-                  {office.address}
-                </p>
-                <p className="pt-3">
-                  <a
-                    href={`https://maps.google.com/?q=${encodeURIComponent(office.address)}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-mono text-xs tracking-wider uppercase underline underline-offset-4 hover:opacity-70"
-                  >
-                    Get Directions &rarr;
-                  </a>
-                </p>
+              <div key={office.name} className="flex flex-col gap-8">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  <div>
+                    <p className="mb-2 font-mono text-xs tracking-wider text-black/50 uppercase">
+                      {office.name}
+                    </p>
+                    <p className="text-sm leading-relaxed whitespace-pre-line text-black/80">
+                      {office.address}
+                    </p>
+                    <p className="pt-3">
+                      <a
+                        href={`https://maps.google.com/?q=${encodeURIComponent(office.address)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-mono text-xs tracking-wider uppercase underline underline-offset-4 hover:opacity-70"
+                      >
+                        Get Directions &rarr;
+                      </a>
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="mb-2 font-mono text-xs tracking-wider text-black/50 uppercase">
+                      Quick Links
+                    </p>
+                    <ul className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-black/80">
+                      {QUICK_LINKS.map((link) => (
+                        <li key={link.href}>
+                          <Link
+                            href={link.href}
+                            className="transition-opacity hover:opacity-70"
+                          >
+                            {link.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="h-24 w-full overflow-hidden border border-black/10 sm:h-80 sm:w-[85%]">
+                  <iframe
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(office.address)}&output=embed`}
+                    title={`Map showing ${office.name}, ${office.address}`}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="h-full w-full border-0"
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -136,10 +173,6 @@ export async function SiteFooter() {
             <span>Specialist Building Contractors UK</span>
             <span className="hidden md:inline">|</span>
             <span>Solihull</span>
-            <span>&middot;</span>
-            <span>London</span>
-            <span>&middot;</span>
-            <span>Nottingham</span>
           </div>
 
           <div className="text-left font-mono text-[11px] text-black/50 md:text-right">

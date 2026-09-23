@@ -6,10 +6,10 @@ import { getTeam } from "@/sanity/queries";
 
 /**
  * Condensed About section for the single-page homepage. The brand-story
- * copy (30+ years combined experience, JCT contracts, Solihull/London/
- * Nottingham offices) is kept in FULL per 02-CONTEXT.md — adapted verbatim
- * from the original `/about` page's approved narrative (02-04) rather than
- * rewritten. Followed by the condensed `TeamStrip`.
+ * copy (30+ years combined experience, JCT contracts, Solihull office) is
+ * adapted from the original `/about` page's approved narrative (02-04) —
+ * updated to a single Solihull location, per the client's actual footprint.
+ * Followed by the condensed `TeamStrip`.
  */
 export async function AboutSection() {
   const team = await getTeam();
@@ -27,10 +27,10 @@ export async function AboutSection() {
             building work — new builds, renovations, extensions, and
             conversions — delivered with the transparency and rigour larger
             clients expect, and the personal attention smaller clients
-            deserve. Across our Solihull, London, and Nottingham offices, our
-            team brings over 30 years of combined experience to every
-            project, backed by JCT contract administration and structural
-            warranties from first enquiry to handover.
+            deserve. From our Solihull office, our team brings over 30 years
+            of combined experience to every project, backed by JCT contract
+            administration and structural warranties from first enquiry to
+            handover.
           </Typography>
         </Reveal>
 

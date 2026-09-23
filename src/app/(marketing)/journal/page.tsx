@@ -84,7 +84,7 @@ export default async function JournalPage() {
             <p>
               Each essay reflects the collaborative dialogue between our
               chartered architects, structural engineers, and on-site master
-              craftsmen across our Solihull, London, and Nottingham practices.
+              craftsmen at our Solihull practice.
             </p>
           </div>
         </div>
@@ -183,18 +183,18 @@ export default async function JournalPage() {
             </div>
           </Link>
 
-          <Link href="/design" className="group block">
+          <Link href="/craftsmanship" className="group block">
             <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
               <Image
-                src="/images/hero/design-hero.png"
-                alt="Design Discipline"
+                src="/images/hero/build-stone-masonry.png"
+                alt="Specialist Building & Master Craftsmanship"
                 fill
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
             <div className="flex items-center justify-between border-t border-black/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
-                Design
+                Craftsmanship
               </span>
               <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
                 &rarr;
@@ -223,7 +223,7 @@ export default async function JournalPage() {
         </div>
       </section>
 
-      {/* 5. Standardized Spatial Brief Consultation */}
+      {/* 5. Standardized Project Brief Consultation */}
       <SpatialBriefSection />
     </div>
   );

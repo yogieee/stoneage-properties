@@ -13,11 +13,11 @@ const FALLBACK_PANELS = [
     grayscale: false,
   },
   {
-    eyebrow: "Discipline",
-    title: "Architectural Design",
-    href: "/design",
-    src: "/images/hero/design-hero.png",
-    alt: "Stoneage Architectural Conception & Spatial Design",
+    eyebrow: "Craft",
+    title: "Master Craftsmanship",
+    href: "/craftsmanship",
+    src: "/images/hero/build-stone-masonry.png",
+    alt: "Stoneage Specialist Building & Master Craftsmanship",
     grayscale: true,
   },
   {
@@ -33,7 +33,7 @@ const FALLBACK_PANELS = [
     title: "Our Studio & Heritage",
     href: "/ourstudio",
     src: "/images/hero/studio-hero.png",
-    alt: "Stoneage Solihull, London & Nottingham Practice",
+    alt: "Stoneage Solihull Practice",
     grayscale: false,
   },
 ];
@@ -52,7 +52,7 @@ const FALLBACK_STATEMENT = {
   heading: "Quiet Luxury & Enduring Form",
   body: [
     "We craft private residential sanctuaries defined by spatial calm, tactile natural materials, and precision engineering. Our portfolio spans monolithic country estates, sensitive heritage transformations, and forward-thinking contemporary extensions.",
-    "Headquartered in Solihull with collaborative studios in London and Nottingham, Stoneage Properties advises discerning homeowners throughout the UK on complex planning, conservation zoning, and turnkey construction management.",
+    "Headquartered in Solihull, Stoneage Properties advises discerning homeowners throughout the region on complex planning, conservation zoning, and turnkey construction management.",
   ],
   ctaLabel: "Discuss your architectural commission",
   ctaHref: "/contact",
@@ -79,11 +79,11 @@ export async function QuickLinksPanels() {
     ? data.statement
     : FALLBACK_STATEMENT;
 
-  const [projectsPanel, designPanel, buildPanel, studioPanel] = panels;
+  const [projectsPanel, craftPanel, buildPanel, studioPanel] = panels;
 
   return (
     <section className="w-full bg-[#F7F5F0] px-3 pt-16 pb-12 text-[#1C1B19] sm:px-6 sm:pt-20 sm:pb-16 md:px-12 md:pt-24 md:pb-20">
-      {/* Row 1: Projects (wider/taller) & Design (asymmetrical pairing) */}
+      {/* Row 1: Projects (wider/taller) & Craft (asymmetrical pairing) */}
       <div className="mb-16 grid grid-cols-1 items-end gap-6 md:mb-24 md:grid-cols-12 md:gap-8">
         <div className="md:col-span-7">
           <Link
@@ -115,13 +115,13 @@ export async function QuickLinksPanels() {
 
         <div className="md:col-span-5">
           <Link
-            href={designPanel.href}
+            href={craftPanel.href}
             className="group relative block h-[320px] w-full overflow-hidden bg-black sm:h-[380px] md:h-[440px]"
           >
             {/* Grayscale architectural image for contrast and visual rhythm */}
             <Image
-              src={designPanel.src}
-              alt={designPanel.alt}
+              src={craftPanel.src}
+              alt={craftPanel.alt}
               fill
               className="object-cover opacity-85 contrast-125 grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
             />
@@ -129,10 +129,10 @@ export async function QuickLinksPanels() {
             <div className="absolute right-6 bottom-6 left-6 flex items-center justify-between text-white sm:bottom-8 sm:left-8">
               <div>
                 <span className="mb-1 block font-mono text-xs tracking-widest text-white/60 uppercase">
-                  {designPanel.eyebrow}
+                  {craftPanel.eyebrow}
                 </span>
                 <h3 className="flex items-center gap-3 text-2xl font-normal tracking-[-1px] sm:text-3xl">
-                  <span>{designPanel.title}</span>
+                  <span>{craftPanel.title}</span>
                   <span className="font-mono text-xl transition-transform duration-300 group-hover:translate-x-1.5">
                     &rarr;
                   </span>

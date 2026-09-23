@@ -8,7 +8,7 @@ import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Comprehensive architectural design, bespoke new builds, structural renovations, and master construction services delivered by Stoneage Properties across Solihull, London, and Nottingham.",
+    "Comprehensive architectural design, bespoke new builds, structural renovations, and master construction services delivered by Stoneage Properties in Solihull.",
   alternates: { canonical: "/services" },
   openGraph: {
     title: "Services & Capabilities | Stoneage Properties",
@@ -98,7 +98,7 @@ export default async function ServicesIndexPage() {
           </h2>
           <p className="text-reg mt-2 text-black/70">
             Dedicated architectural disciplines delivered across the West
-            Midlands, Cotswolds, and London
+            Midlands and Cotswolds
           </p>
         </div>
 
@@ -161,18 +161,18 @@ export default async function ServicesIndexPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-          <Link href="/design" className="group block">
+          <Link href="/craftsmanship" className="group block">
             <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
               <Image
-                src="/images/hero/design-hero.png"
-                alt="Design Discipline"
+                src="/images/hero/build-stone-masonry.png"
+                alt="Specialist Building & Master Craftsmanship"
                 fill
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
             <div className="flex items-center justify-between border-t border-black/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
-                Design
+                Craftsmanship
               </span>
               <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
                 &rarr;
@@ -220,7 +220,7 @@ export default async function ServicesIndexPage() {
         </div>
       </section>
 
-      {/* 5. Standardized Spatial Brief Consultation */}
+      {/* 5. Standardized Project Brief Consultation */}
       <SpatialBriefSection />
     </div>
   );

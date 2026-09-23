@@ -5,7 +5,7 @@ import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Curated portfolio of residential architecture, bespoke new builds, full renovations, and specialist extensions across Solihull, London, and Nottingham.",
+    "Curated portfolio of residential architecture, bespoke new builds, full renovations, and specialist extensions in Solihull.",
   alternates: { canonical: "/projects" },
   openGraph: {
     title: "Projects | Stoneage Properties",

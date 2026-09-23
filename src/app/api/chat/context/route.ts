@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       label: "Stoneage Properties",
       systemContext:
-        "Help the visitor understand Stoneage Properties' services and work the conversation toward a Spatial Brief submission.",
+        "Help the visitor understand Stoneage Properties' services and work the conversation toward a Project Brief submission.",
       greeting:
         "Welcome to Stoneage Properties. Ask me about our services, our process, or a project you have in mind.",
       suggestions: [

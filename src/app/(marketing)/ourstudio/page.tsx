@@ -6,7 +6,7 @@ import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 export const metadata: Metadata = {
   title: "Our Studio",
   description:
-    "Explore Stoneage Properties' design and build studio. Rooted in Solihull with studios in London and Nottingham, we unite RIBA-chartered architects and master building contractors.",
+    "Explore Stoneage Properties' design and build studio. Rooted in Solihull, we unite RIBA-chartered architects and master building contractors.",
   alternates: { canonical: "/ourstudio" },
   openGraph: {
     title: "Our Studio | Stoneage Properties",
@@ -83,7 +83,7 @@ const ASSURANCE_ITEMS = [
   {
     title: "Heritage",
     description:
-      "Our team brings over 30 years of combined craftsmanship experience across Solihull, London, and the English shires, with an unblemished reputation.",
+      "Our team brings over 30 years of combined craftsmanship experience across Solihull and the English shires, with an unblemished reputation.",
   },
 ];
 
@@ -151,9 +151,9 @@ export default function OurStudioPage() {
             <p>
               Stoneage Properties is a boutique collective of chartered
               architects, interior designers, structural engineers, and master
-              construction artisans. Operating from our Solihull headquarters
-              with project studios in London and Nottingham, we shape buildings
-              rooted in permanence, spatial quiet, and natural light.
+              construction artisans. Operating from our Solihull headquarters,
+              we shape buildings rooted in permanence, spatial quiet, and
+              natural light.
             </p>
             <p>
               We purposefully operate as a close-knit practice. Our boutique
@@ -212,8 +212,8 @@ export default function OurStudioPage() {
           <div className="text-reg max-w-3xl space-y-5 leading-relaxed text-black/80 md:col-span-8">
             <p>
               We aspire for recognition as the premier residential design and
-              build practice across the West Midlands, the Cotswolds, and
-              London. Whatever the brief—whether a generational new build
+              build practice across the West Midlands and the Cotswolds.
+              Whatever the brief—whether a generational new build
               estate, a sensitive listed barn conversion, or a monolithic
               structural extension—we never offer a mere drawing service.
             </p>
@@ -334,18 +334,18 @@ export default function OurStudioPage() {
             </div>
           </Link>
 
-          <Link href="/design" className="group block">
+          <Link href="/craftsmanship" className="group block">
             <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
               <Image
-                src="/images/hero/design-hero.png"
-                alt="Design & Capabilities"
+                src="/images/hero/build-stone-masonry.png"
+                alt="Specialist Building & Master Craftsmanship"
                 fill
                 className="object-cover contrast-110 grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
               />
             </div>
             <div className="flex items-center justify-between border-t border-black/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
-                Design
+                Craftsmanship
               </span>
               <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
                 &rarr;
@@ -393,7 +393,7 @@ export default function OurStudioPage() {
         </div>
       </section>
 
-      {/* 8. Integrated Spatial Brief */}
+      {/* 8. Integrated Project Brief */}
       <SpatialBriefSection />
     </div>
   );

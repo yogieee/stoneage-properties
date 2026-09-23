@@ -7,7 +7,7 @@ export function IntroSection() {
       <div className="w-full">
         {/* Fabric Title */}
         <h1 className="text-xxl mb-8 max-w-5xl font-normal text-black md:mb-12">
-          Architectural Vision &amp; Master Craftsmanship
+          Specialist Building &amp; Master Craftsmanship
           <br className="hidden sm:inline" /> Shaping Private Residential
           Sanctuaries
         </h1>
@@ -16,20 +16,19 @@ export function IntroSection() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="text-reg space-y-4 text-black/80 md:col-span-6">
             <p>
-              Stoneage Properties operates at the intersection of architectural
-              precision and generational craft. Rooted in Solihull with studios
-              in London and Nottingham, we shepherd ambitious private homes from
-              initial spatial inquiry through structural engineering, planning
-              consent, and meticulous on-site construction.
+              Stoneage Properties is a specialist building contractor rooted in
+              generational craft. Based in Solihull, we deliver ambitious
+              private homes on site from groundworks and structural build
+              through to the final finish.
             </p>
           </div>
           <div className="text-reg space-y-4 text-black/80 md:col-span-6">
             <p>
-              Rather than dividing design from delivery, our unified practice
-              brings architects, artisanal masons, and project directors
-              together on the same drawing table. The result is architecture
-              that endures: tactile materials, balanced daylight, and spaces
-              crafted uniquely around the rhythms of your life.
+              We work hand-in-hand with your architect, taking their drawing
+              and holding it to account on site through masonry, joinery, and
+              project management under one roof. The result is construction
+              that lasts: tactile materials, considered daylight, and homes
+              built uniquely around the rhythms of your life.
             </p>
           </div>
         </div>

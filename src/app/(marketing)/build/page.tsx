@@ -6,7 +6,7 @@ import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 export const metadata: Metadata = {
   title: "Build",
   description:
-    "Discover how build works with Stoneage Properties. Our master construction team provides complete control of the technical and construction stages from our Solihull HQ, London, and Nottingham.",
+    "Discover how build works with Stoneage Properties. Our master construction team provides complete control of the technical and construction stages from our Solihull HQ.",
   alternates: { canonical: "/build" },
   openGraph: {
     title: "Build | Stoneage Properties",
@@ -203,18 +203,18 @@ export default function BuildPage() {
             </div>
           </Link>
 
-          <Link href="/design" className="group block">
+          <Link href="/craftsmanship" className="group block">
             <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
               <Image
-                src="/images/hero/design-hero.png"
-                alt="Design & Capabilities"
+                src="/images/hero/build-stone-masonry.png"
+                alt="Specialist Building & Master Craftsmanship"
                 fill
                 className="object-cover contrast-110 grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
               />
             </div>
             <div className="flex items-center justify-between border-t border-black/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
-                Design
+                Craftsmanship
               </span>
               <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
                 &rarr;
@@ -262,7 +262,7 @@ export default function BuildPage() {
         </div>
       </section>
 
-      {/* 5. Direct Spatial Brief Intake Form */}
+      {/* 5. Direct Project Brief Intake Form */}
       <SpatialBriefSection />
     </div>
   );

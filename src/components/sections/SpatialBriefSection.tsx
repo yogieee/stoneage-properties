@@ -64,7 +64,7 @@ export async function SpatialBriefSection({
             </div>
           </div>
 
-          {/* Right Column: Signature Pinned Spatial Brief Paper Form */}
+          {/* Right Column: Signature Pinned Project Brief Paper Form */}
           <div className="lg:col-span-7">
             <SpatialBriefForm defaultMessage={defaultMessage} />
           </div>

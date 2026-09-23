@@ -222,11 +222,11 @@ export function MediaRail({ socials }: MediaRailProps) {
     <>
       {/* Desktop / Tablet Media Rail: Vertically centered on right edge */}
       <div
-        className="pointer-events-auto fixed top-1/2 right-0 z-30 hidden w-6 -translate-y-1/2 flex-col items-center justify-center mix-blend-difference sm:flex md:w-12"
+        className="pointer-events-auto fixed top-1/2 right-0 z-30 hidden w-10 -translate-y-1/2 flex-col items-center justify-center mix-blend-difference sm:flex md:w-12"
         aria-label="Social media and chat"
       >
-        <div className="flex flex-col items-center gap-4 py-2">
-          {/* Social icons: centered 24x24 hit areas with 16x16 icons */}
+        <div className="flex flex-col items-center gap-6 py-2">
+          {/* Social icons: centered 32x32 hit areas with 24x24 icons */}
           {activeSocials.map((social) => (
             <a
               key={social.platform}
@@ -235,14 +235,14 @@ export function MediaRail({ socials }: MediaRailProps) {
               rel="noopener noreferrer"
               aria-label={social.platform}
               title={social.platform}
-              className="hidden h-6 w-6 items-center justify-center text-white opacity-80 transition-opacity hover:opacity-100 lg:flex"
+              className="hidden h-8 w-8 items-center justify-center text-white opacity-90 transition-opacity hover:opacity-100 lg:flex"
             >
-              <SocialIcon platform={social.platform} className="h-4 w-4" />
+              <SocialIcon platform={social.platform} className="h-6 w-6" />
             </a>
           ))}
 
           {/* Thin subtle divider on desktop */}
-          <div className="my-0.5 hidden h-px w-3 bg-white/30 lg:block" />
+          <div className="my-0.5 hidden h-px w-5 bg-white/40 lg:block" />
 
           {/* Chat Icon / Close X Button in Media Rail */}
           <button
@@ -253,14 +253,14 @@ export function MediaRail({ socials }: MediaRailProps) {
             }}
             aria-label={open ? "Close chat" : "Open chat"}
             title={open ? "Close chat" : "Open chat"}
-            className="flex h-6 w-6 cursor-pointer items-center justify-center text-white opacity-85 transition-all duration-200 hover:scale-110 hover:opacity-100 focus:outline-none"
+            className="flex h-8 w-8 cursor-pointer items-center justify-center text-white opacity-95 transition-all duration-200 hover:scale-110 hover:opacity-100 focus:outline-none"
           >
             {open ? (
-              <span className="flex items-center justify-center font-mono text-xl leading-none font-medium select-none">
+              <span className="flex items-center justify-center font-mono text-3xl leading-none font-medium select-none">
                 &times;
               </span>
             ) : (
-              <ChatBubbleIcon className="h-4 w-4" />
+              <ChatBubbleIcon className="h-6 w-6" />
             )}
           </button>
         </div>
@@ -281,18 +281,18 @@ export function MediaRail({ socials }: MediaRailProps) {
             setOpen((v) => !v);
           }}
           aria-label={open ? "Close chat" : "Open chat"}
-          className={`flex h-12 w-12 items-center justify-center rounded-full border shadow-xl transition-all duration-200 active:scale-95 ${
+          className={`flex h-14 w-14 items-center justify-center rounded-full border shadow-xl transition-all duration-200 active:scale-95 ${
             open
               ? "border-black bg-black text-white"
               : "border-[#1C1B19]/15 bg-[#FAF8F5] text-[#1C1B19] hover:border-[#1C1B19]"
           }`}
         >
           {open ? (
-            <span className="font-mono text-2xl leading-none select-none">
+            <span className="font-mono text-4xl leading-none select-none">
               &times;
             </span>
           ) : (
-            <ChatBubbleIcon className="h-6 w-6" />
+            <ChatBubbleIcon className="h-8 w-8" />
           )}
         </button>
       </div>
@@ -330,7 +330,7 @@ export function MediaRail({ socials }: MediaRailProps) {
               <div className="space-y-3">
                 <div className="max-w-[90%] rounded border border-black/10 bg-black/5 px-3 py-2 text-sm leading-relaxed font-light text-black">
                   {pageContext?.greeting ??
-                    "Ask about our services, process, or timelines — or share your project and we'll point you to a Spatial Brief."}
+                    "Ask about our services, process, or timelines — or share your project and we'll point you to a Project Brief."}
                 </div>
                 {pageContext && pageContext.suggestions.length > 0 && (
                   <div className="flex flex-wrap gap-2">

@@ -19,7 +19,7 @@ const AUTO_OPENED_PATHS_KEY = "stoneage_chat_auto_opened_paths";
 const AUTO_OPEN_MIN_MS = 5000;
 const AUTO_OPEN_MAX_MS = 10000;
 const FALLBACK_REPLY =
-  "Sorry, something went wrong on our end. Please try again in a moment, or reach out via the Spatial Brief form and the team will follow up directly.";
+  "Sorry, something went wrong on our end. Please try again in a moment, or reach out via the Project Brief form and the team will follow up directly.";
 
 function getOrCreateVisitorId() {
   if (typeof window === "undefined") return "";
@@ -76,6 +76,7 @@ export function ChatWidget() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
+  const [quickOptions, setQuickOptions] = useState<string[]>([]);
   const [pageContext, setPageContext] = useState<PageContext | null>(null);
   const conversationIdRef = useRef<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -134,6 +135,7 @@ export function ChatWidget() {
     if (!trimmed || sending) return;
 
     setInput("");
+    setQuickOptions([]);
     setMessages((prev) => [...prev, { role: "user", content: trimmed }]);
     setSending(true);
 
@@ -161,7 +163,8 @@ export function ChatWidget() {
         return;
       }
 
-      const data: { conversationId: string; reply: string } = await res.json();
+      const data: { conversationId: string; reply: string; options?: string[] } =
+        await res.json();
       conversationIdRef.current = data.conversationId;
       window.sessionStorage.setItem(CONVERSATION_ID_KEY, data.conversationId);
 
@@ -169,6 +172,7 @@ export function ChatWidget() {
         ...prev,
         { role: "assistant", content: data.reply },
       ]);
+      setQuickOptions(data.options ?? []);
     } catch {
       // Network failure or unexpected exception: same fail-safe treatment.
       setMessages((prev) => [
@@ -227,7 +231,7 @@ export function ChatWidget() {
               <div className="space-y-3">
                 <div className="max-w-[90%] rounded border border-black/10 bg-black/5 px-3 py-2 text-sm leading-relaxed font-light text-black">
                   {pageContext?.greeting ??
-                    "Ask about our services, process, or timelines — or share your project and we'll point you to a Spatial Brief."}
+                    "Ask about our services, process, or timelines — or share your project and we'll point you to a Project Brief."}
                 </div>
                 {pageContext && pageContext.suggestions.length > 0 && (
                   <div className="flex flex-wrap gap-2">
@@ -264,6 +268,22 @@ export function ChatWidget() {
               </div>
             )}
           </div>
+
+          {/* Quick-reply options for the latest assistant message */}
+          {quickOptions.length > 0 && !sending && (
+            <div className="flex flex-wrap gap-2 border-t border-black/10 bg-white px-4 py-3">
+              {quickOptions.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => sendMessage(option)}
+                  className="rounded border border-black/15 bg-white px-2.5 py-1 text-left font-mono text-[11px] tracking-wide text-black/70 transition-colors hover:border-black hover:text-black"
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Input */}
           <form

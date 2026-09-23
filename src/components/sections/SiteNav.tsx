@@ -10,9 +10,7 @@ import type { SiteSettings } from "@/sanity/queries";
 const FALLBACK_PHONE = "0121 537 8229";
 const FALLBACK_EMAIL = "enquiries@stoneageproperties.com";
 const FALLBACK_OFFICES = [
-  { name: "Solihull HQ", address: "20 Micklehill Dr, Shirley, Solihull, B90 2PU" },
-  { name: "London Office", address: "1 Colegrave Rd, Stratford, E15 1DZ" },
-  { name: "Nottingham", address: "12 Northfield Ave, NG12" },
+  { name: "Solihull HQ", address: "64 Stratford Rd, Shirley, Solihull, B90 3LP" },
 ];
 const FALLBACK_SOCIALS = [
   {
@@ -79,7 +77,7 @@ export function SiteNav({ onOpenContact, siteSettings }: SiteNavProps) {
   const navLinks = [
     { label: "Studio", href: "/ourstudio" },
     { label: "Projects", href: "/projects" },
-    { label: "Design", href: "/design" },
+    { label: "Craftsmanship", href: "/craftsmanship" },
     { label: "Build", href: "/build" },
     { label: "Journal", href: "/journal" },
     { label: "Contact", href: "/contact", isContact: true },
@@ -123,11 +121,11 @@ export function SiteNav({ onOpenContact, siteSettings }: SiteNavProps) {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
-          className="group -mr-1 flex h-11 w-11 cursor-pointer items-center justify-center text-[#1C1B19] transition-opacity hover:opacity-75 focus:outline-none md:h-12 md:w-12"
+          className="group -mr-1 flex h-12 w-12 cursor-pointer items-center justify-center text-[#1C1B19] transition-opacity hover:opacity-75 focus:outline-none md:h-14 md:w-14"
         >
           <div className="flex items-center justify-center">
             <StackingStonesLogo
-              size="w-9 h-9 md:w-10 md:h-10"
+              size="w-10 h-10 md:w-12 md:h-12"
               isStacked={menuOpen}
               className="text-[#1C1B19] transition-transform duration-300 group-hover:scale-105"
             />
