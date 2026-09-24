@@ -25,7 +25,7 @@ export function StackingStonesLogo({
   isStacked = false,
 }: StackingStonesLogoProps) {
   // Ultra-refined easing matching architectural precision
-  const barTransition = "all 0.55s cubic-bezier(0.25, 1, 0.5, 1)";
+  const barTransition = "all 1.6s cubic-bezier(0.25, 1, 0.5, 1)";
 
   return (
     <svg
@@ -35,6 +35,18 @@ export function StackingStonesLogo({
       className={`${size} ${className} block shrink-0 overflow-visible`}
       aria-hidden="true"
     >
+      {/*
+        Stacked state target: all three bars become equal-length,
+        equal-thickness horizontal lines, evenly spaced (40 gap) and
+        centered on the same x-axis, sized to match the footprint of
+        the closed logo (~140 wide, ~40 thick bars — the original bar
+        width). Each bar starts a different height (300 / 198 / 98),
+        so scaleY normalizes length and scaleX normalizes thickness —
+        scaleX alone (the old approach) only affects thickness
+        post-rotation, not length, which is why the open-state lines
+        used to come out mismatched and noticeably smaller overall.
+      */}
+
       {/* 1st: TALLER (bbox x 76-115, y 40-340; center 95.5, 190) */}
       <path
         d="M76 40 L115 60 L115 340 L76 340 Z"
@@ -43,8 +55,8 @@ export function StackingStonesLogo({
           transformOrigin: "95.5px 190px",
           transition: barTransition,
           transform: isStacked
-            ? "translate(80px, -85px) rotate(90deg) scaleX(0.65)"
-            : "translate(0px, 0px) rotate(0deg) scaleX(1)",
+            ? "translate(50px, -29px) rotate(90deg) scaleX(1.03) scaleY(0.47)"
+            : "translate(0px, 0px) rotate(0deg) scaleX(1) scaleY(1)",
         }}
       />
 
@@ -56,8 +68,8 @@ export function StackingStonesLogo({
           transformOrigin: "145.5px 241px",
           transition: barTransition,
           transform: isStacked
-            ? "translate(0px, -20px) rotate(90deg) scaleX(1.1)"
-            : "translate(0px, 0px) rotate(0deg) scaleX(1)",
+            ? "translate(0px, 0px) rotate(90deg) scaleX(1.03) scaleY(0.71)"
+            : "translate(0px, 0px) rotate(0deg) scaleX(1) scaleY(1)",
         }}
       />
 
@@ -69,8 +81,8 @@ export function StackingStonesLogo({
           transformOrigin: "195.5px 291px",
           transition: barTransition,
           transform: isStacked
-            ? "translate(-80px, 40px) rotate(90deg) scaleX(1.85)"
-            : "translate(0px, 0px) rotate(0deg) scaleX(1)",
+            ? "translate(-50px, 30px) rotate(90deg) scaleX(1.03) scaleY(1.43)"
+            : "translate(0px, 0px) rotate(0deg) scaleX(1) scaleY(1)",
         }}
       />
     </svg>

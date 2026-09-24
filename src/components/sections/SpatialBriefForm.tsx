@@ -352,7 +352,7 @@ export function SpatialBriefForm({
             <div className="border-line text-ink-subtle grid grid-cols-3 gap-2 border-t pt-6 text-center font-mono text-[9px] tracking-widest uppercase">
               <div>ST / CTF</div>
               <div>THANK YOU</div>
-              <div>STONEAGE</div>
+              <div>STONEAGE PROPERTIES</div>
             </div>
           </form>
         )}
