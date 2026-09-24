@@ -56,11 +56,11 @@ export async function SiteFooter() {
         <div className="grid grid-cols-1 gap-10 border-b border-black/10 pb-16 md:grid-cols-12">
           {/* Left Column: Phone, Email, Button, Socials */}
           <div className="space-y-6 md:col-span-6 lg:col-span-5">
-            <div className="flex items-center gap-3 pb-2">
+            <div className="flex items-end gap-1.5 pb-2">
+              <StackingStonesLogo size="w-8 h-8" className="text-black" />
               <span className="text-2xl leading-none font-normal tracking-[-1px]">
                 Stoneage
               </span>
-              <StackingStonesLogo size="w-5 h-5" className="text-black" />
             </div>
 
             <div>

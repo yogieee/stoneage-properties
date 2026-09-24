@@ -235,7 +235,7 @@ export function MediaRail({ socials }: MediaRailProps) {
               rel="noopener noreferrer"
               aria-label={social.platform}
               title={social.platform}
-              className="hidden h-8 w-8 items-center justify-center text-white opacity-90 transition-opacity hover:opacity-100 lg:flex"
+              className="liquid-glass-pill hidden h-10 w-10 items-center justify-center rounded-full text-white opacity-90 transition-all duration-300 hover:isolate hover:opacity-100 lg:flex"
             >
               <SocialIcon platform={social.platform} className="h-6 w-6" />
             </a>
@@ -253,7 +253,7 @@ export function MediaRail({ socials }: MediaRailProps) {
             }}
             aria-label={open ? "Close chat" : "Open chat"}
             title={open ? "Close chat" : "Open chat"}
-            className="flex h-8 w-8 cursor-pointer items-center justify-center text-white opacity-95 transition-all duration-200 hover:scale-110 hover:opacity-100 focus:outline-none"
+            className="liquid-glass-pill flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white opacity-95 transition-all duration-300 hover:isolate hover:opacity-100 focus:outline-none"
           >
             {open ? (
               <span className="flex items-center justify-center font-mono text-3xl leading-none font-medium select-none">

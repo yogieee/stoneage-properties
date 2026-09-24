@@ -79,19 +79,19 @@ export function SpatialBriefForm({
       {/* Brief Container */}
       <div className="bg-paper-card border-line text-ink relative overflow-visible rounded-lg border p-6 shadow-md sm:p-12">
         {/* Paper Form Header */}
-        <div className="border-line mb-8 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-b pb-6 sm:pb-8">
-          <div className="flex items-center gap-3">
+        <div className="border-line mb-8 flex flex-wrap items-end justify-between gap-x-4 gap-y-3 border-b pb-6 sm:pb-8">
+          <div className="flex items-end gap-3">
             <span className="text-ink-subtle font-mono text-xs">01</span>
             <h3 className="text-ink font-mono text-base font-semibold tracking-wider uppercase sm:text-lg">
               PROJECT BRIEF INTAKE
             </h3>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-2">
-              <span className="font-display text-base font-bold sm:text-lg">
+          <div className="flex items-end gap-4">
+            <span className="flex items-end gap-1">
+              <LogoSpinner size="w-8 h-8 sm:w-9 sm:h-9" className="text-ink" />
+              <span className="font-display text-lg font-bold sm:text-xl">
                 Stoneage
               </span>
-              <LogoSpinner size="w-6 h-6" className="text-ink" />
             </span>
             {isModal && onClose && (
               <button
