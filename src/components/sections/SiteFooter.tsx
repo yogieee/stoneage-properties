@@ -32,6 +32,10 @@ const FALLBACK_SOCIALS = [
     platform: "YouTube",
     url: "https://www.youtube.com/channel/UCaXNV-S7WE2LfIQOr9NlGeQ",
   },
+  {
+    platform: "Trustpilot",
+    url: "https://uk.trustpilot.com/review/stoneageproperties.com",
+  },
 ];
 
 export async function SiteFooter() {

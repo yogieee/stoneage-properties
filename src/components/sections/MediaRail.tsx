@@ -225,7 +225,7 @@ export function MediaRail({ socials }: MediaRailProps) {
         className="pointer-events-auto fixed top-1/2 right-0 z-30 hidden w-10 -translate-y-1/2 flex-col items-center justify-center mix-blend-difference sm:flex md:w-12"
         aria-label="Social media and chat"
       >
-        <div className="flex flex-col items-center gap-6 py-2">
+        <div className="flex flex-col items-center gap-3 py-2">
           {/* Social icons: centered 32x32 hit areas with 24x24 icons */}
           {activeSocials.map((social) => (
             <a

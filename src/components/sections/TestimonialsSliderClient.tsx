@@ -18,44 +18,45 @@ type TestimonialsSliderClientProps = {
 export function TestimonialsSliderClient({
   testimonials,
 }: TestimonialsSliderClientProps) {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activePage, setActivePage] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isFading, setIsFading] = useState(false);
 
   const length = testimonials?.length || 0;
+  const pageCount = Math.ceil(length / 2);
 
   const goToNext = useCallback(() => {
-    if (length <= 1) return;
+    if (pageCount <= 1) return;
     setIsFading(true);
     setTimeout(() => {
-      setActiveIndex((prev) => (prev + 1) % length);
+      setActivePage((prev) => (prev + 1) % pageCount);
       setIsFading(false);
     }, 300);
-  }, [length]);
+  }, [pageCount]);
 
   const goToPrev = useCallback(() => {
-    if (length <= 1) return;
+    if (pageCount <= 1) return;
     setIsFading(true);
     setTimeout(() => {
-      setActiveIndex((prev) => (prev - 1 + length) % length);
+      setActivePage((prev) => (prev - 1 + pageCount) % pageCount);
       setIsFading(false);
     }, 300);
-  }, [length]);
+  }, [pageCount]);
 
-  // Auto-scroll timer: advances to the next testimonial every 5.5 seconds, pauses when hovered
+  // Auto-scroll timer: advances to the next pair every 5.5 seconds, pauses when hovered
   useEffect(() => {
-    if (isPaused || length <= 1) return;
+    if (isPaused || pageCount <= 1) return;
 
     const timer = setInterval(() => {
       goToNext();
     }, 5500);
 
     return () => clearInterval(timer);
-  }, [isPaused, length, goToNext]);
+  }, [isPaused, pageCount, goToNext]);
 
   if (!testimonials || length === 0) return null;
 
-  const current = testimonials[activeIndex];
+  const currentPair = testimonials.slice(activePage * 2, activePage * 2 + 2);
 
   return (
     <section
@@ -70,7 +71,7 @@ export function TestimonialsSliderClient({
           <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
             What our clients say:
           </h2>
-          {length > 1 && (
+          {pageCount > 1 && (
             <div className="hidden items-center gap-2 font-mono text-[11px] tracking-wider text-black/40 uppercase sm:flex">
               <span
                 className={`inline-block h-1.5 w-1.5 rounded-full ${
@@ -82,48 +83,52 @@ export function TestimonialsSliderClient({
           )}
         </div>
 
-        {/* Testimonial Content with smooth fade transition */}
+        {/* Testimonial Content with smooth fade transition: 2 side by side */}
         <div
-          className={`min-h-[260px] transition-all duration-300 md:min-h-[220px] ${
+          className={`grid min-h-[260px] grid-cols-1 gap-10 transition-all duration-300 md:min-h-[220px] md:grid-cols-2 md:gap-16 ${
             isFading ? "translate-y-1 opacity-0" : "translate-y-0 opacity-100"
           }`}
         >
-          <p className="mb-2 text-xl font-normal tracking-[-0.5px] text-black sm:text-2xl">
-            Project : {current.role || "Residential Architecture"}
-          </p>
-          <p className="mb-6 font-mono text-sm tracking-wider text-black/60 uppercase">
-            Location : Solihull &amp; Warwickshire
-          </p>
+          {currentPair.map((item, idx) => (
+            <div key={`${activePage}-${idx}`}>
+              <p className="mb-2 text-xl font-normal tracking-[-0.5px] text-black sm:text-2xl">
+                Project : {item.role || "Residential Architecture"}
+              </p>
+              <p className="mb-6 font-mono text-sm tracking-wider text-black/60 uppercase">
+                Location : Solihull &amp; Warwickshire
+              </p>
 
-          <div className="text-reg max-w-4xl space-y-4 leading-relaxed font-light text-black/80">
-            <p className="text-lg leading-relaxed md:text-xl">
-              &ldquo;{current.quote}&rdquo;
-            </p>
-          </div>
+              <div className="text-reg max-w-4xl space-y-4 leading-relaxed font-light text-black/80">
+                <p className="text-lg leading-relaxed md:text-xl">
+                  &ldquo;{item.quote}&rdquo;
+                </p>
+              </div>
 
-          <p className="mt-6 text-base font-normal tracking-[-0.5px] text-black sm:text-lg">
-            {current.author}
-          </p>
+              <p className="mt-6 text-base font-normal tracking-[-0.5px] text-black sm:text-lg">
+                {item.author}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* Prev / Next Controls & Progress Indicators */}
         <div className="mt-8 flex items-center justify-between border-t border-black/10 pt-8">
           {/* Progress dots / bars */}
           <div className="flex items-center gap-2">
-            {testimonials.map((_, idx) => (
+            {Array.from({ length: pageCount }).map((_, idx) => (
               <button
                 key={idx}
                 type="button"
                 onClick={() => {
                   setIsFading(true);
                   setTimeout(() => {
-                    setActiveIndex(idx);
+                    setActivePage(idx);
                     setIsFading(false);
                   }, 250);
                 }}
-                aria-label={`Go to testimonial ${idx + 1}`}
+                aria-label={`Go to testimonials ${idx * 2 + 1}`}
                 className={`h-1.5 cursor-pointer rounded-full transition-all duration-300 ${
-                  idx === activeIndex
+                  idx === activePage
                     ? "w-8 bg-black"
                     : "w-2 bg-black/20 hover:bg-black/40"
                 }`}
@@ -142,7 +147,7 @@ export function TestimonialsSliderClient({
             </button>
 
             <span className="font-mono text-xs text-black/40">
-              {activeIndex + 1} / {testimonials.length}
+              {activePage + 1} / {pageCount}
             </span>
 
             <button
