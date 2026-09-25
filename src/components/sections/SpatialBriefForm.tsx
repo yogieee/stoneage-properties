@@ -89,7 +89,7 @@ export function SpatialBriefForm({
           <div className="flex items-end gap-4">
             <span className="flex items-end gap-1">
               <LogoSpinner size="w-8 h-8 sm:w-9 sm:h-9" className="text-ink" />
-              <span className="font-display text-lg font-bold sm:text-xl">
+              <span className="font-display text-lg font-bold uppercase sm:text-xl">
                 Stoneage
               </span>
             </span>
