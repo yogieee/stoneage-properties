@@ -10,7 +10,10 @@ import type { SiteSettings } from "@/sanity/queries";
 const FALLBACK_PHONE = "0121 537 8229";
 const FALLBACK_EMAIL = "enquiries@stoneageproperties.com";
 const FALLBACK_OFFICES = [
-  { name: "Solihull HQ", address: "64 Stratford Rd, Shirley, Solihull, B90 3LP" },
+  {
+    name: "Solihull HQ",
+    address: "64 Stratford Rd, Shirley, Solihull, B90 3LP",
+  },
 ];
 const FALLBACK_SOCIALS = [
   {
@@ -108,7 +111,7 @@ export function SiteNav({ onOpenContact, siteSettings }: SiteNavProps) {
         <div className="flex items-center">
           <Link
             href="/"
-            className="text-xxl nx2-spaced inline-flex items-center leading-none font-normal text-[#1C1B19] transition-opacity select-none hover:opacity-80"
+            className="text-xxl nx2-spaced inline-flex items-center leading-none font-thin text-[#1C1B19] uppercase transition-opacity select-none hover:opacity-80"
             aria-label="Stoneage Properties Home"
           >
             Stoneage
@@ -158,7 +161,7 @@ export function SiteNav({ onOpenContact, siteSettings }: SiteNavProps) {
                     onClick={(e) => handleLinkClick(e, item)}
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
-                    className={`text-xxl font-normal whitespace-nowrap text-black transition-opacity duration-300 ${
+                    className={`liquid-glass-pill text-xxl inline-block rounded-full px-5 py-2 font-normal whitespace-nowrap text-black transition-opacity duration-300 ${
                       isOtherHovered ? "opacity-20" : "opacity-100"
                     } hover:opacity-100`}
                   >
@@ -196,7 +199,10 @@ export function SiteNav({ onOpenContact, siteSettings }: SiteNavProps) {
                     aria-label={social.platform}
                     className="flex items-center gap-1.5 transition-colors hover:text-black"
                   >
-                    <SocialIcon platform={social.platform} className="h-3.5 w-3.5" />
+                    <SocialIcon
+                      platform={social.platform}
+                      className="h-3.5 w-3.5"
+                    />
                     {social.platform}
                   </a>
                 </span>

@@ -29,7 +29,7 @@ export function StackingStonesLogo({
 
   return (
     <svg
-      viewBox="66 30 159 320"
+      viewBox="66 30 182 320"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={`${size} ${className} block shrink-0 overflow-visible`}
@@ -55,17 +55,17 @@ export function StackingStonesLogo({
           transformOrigin: "95.5px 190px",
           transition: barTransition,
           transform: isStacked
-            ? "translate(50px, -29px) rotate(90deg) scaleX(1.03) scaleY(0.47)"
+            ? "translate(61px, -29px) rotate(90deg) scaleX(1.03) scaleY(0.47)"
             : "translate(0px, 0px) rotate(0deg) scaleX(1) scaleY(1)",
         }}
       />
 
-      {/* 2nd: MEDIUM TALL (bbox x 126-165, y 142-340; center 145.5, 241) */}
+      {/* 2nd: MEDIUM TALL (bbox x 137-176, y 142-340; center 156.5, 241) */}
       <path
-        d="M126 142 L165 162 L165 340 L126 340 Z"
+        d="M137 142 L176 162 L176 340 L137 340 Z"
         fill="currentColor"
         style={{
-          transformOrigin: "145.5px 241px",
+          transformOrigin: "156.5px 241px",
           transition: barTransition,
           transform: isStacked
             ? "translate(0px, 0px) rotate(90deg) scaleX(1.03) scaleY(0.71)"
@@ -73,15 +73,15 @@ export function StackingStonesLogo({
         }}
       />
 
-      {/* 3rd: SHORTER (bbox x 176-215, y 242-340; center 195.5, 291) */}
+      {/* 3rd: SHORTER (bbox x 198-237, y 242-340; center 217.5, 291) */}
       <path
-        d="M176 242 L215 262 L215 340 L176 340 Z"
+        d="M198 242 L237 262 L237 340 L198 340 Z"
         fill="currentColor"
         style={{
-          transformOrigin: "195.5px 291px",
+          transformOrigin: "217.5px 291px",
           transition: barTransition,
           transform: isStacked
-            ? "translate(-50px, 30px) rotate(90deg) scaleX(1.03) scaleY(1.43)"
+            ? "translate(-61px, 30px) rotate(90deg) scaleX(1.03) scaleY(1.43)"
             : "translate(0px, 0px) rotate(0deg) scaleX(1) scaleY(1)",
         }}
       />
