@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getSiteSettings } from "@/sanity/queries";
 import { StackingStonesLogo } from "@/components/decorative/StackingStonesLogo";
 import { SocialIcon } from "@/components/decorative/SocialIcon";
+import { TrustpilotWidget } from "@/components/decorative/TrustpilotWidget";
 
 const FALLBACK_EMAIL = "enquiries@stoneageproperties.com";
 const FALLBACK_PHONE = { label: "Solihull HQ", number: "0121 537 8229" };
@@ -31,10 +32,6 @@ const FALLBACK_SOCIALS = [
   {
     platform: "YouTube",
     url: "https://www.youtube.com/channel/UCaXNV-S7WE2LfIQOr9NlGeQ",
-  },
-  {
-    platform: "Trustpilot",
-    url: "https://uk.trustpilot.com/review/stoneageproperties.com",
   },
 ];
 
@@ -111,6 +108,10 @@ export async function SiteFooter() {
                   {social.platform}
                 </a>
               ))}
+            </div>
+
+            <div className="flex justify-start pt-2">
+              <TrustpilotWidget />
             </div>
           </div>
 
