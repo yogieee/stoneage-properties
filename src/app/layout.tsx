@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { SmoothScrollProvider } from "@/components/motion/SmoothScrollProvider";
 import { getSiteSettings } from "@/sanity/queries";
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/seo";
 import "./globals.css";
 
-const display = Inter({
+const display = Montserrat({
   variable: "--font-display-family",
   subsets: ["latin"],
   display: "swap",
   weight: ["300", "400", "500", "600"],
 });
 
-const body = Inter({
+const body = Montserrat({
   variable: "--font-body-family",
   subsets: ["latin"],
   display: "swap",

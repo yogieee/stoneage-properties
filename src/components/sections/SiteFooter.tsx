@@ -59,7 +59,7 @@ export async function SiteFooter() {
           <div className="space-y-6 md:col-span-6 lg:col-span-5">
             <div className="flex items-end gap-1.5 pb-2">
               <StackingStonesLogo size="w-8 h-8" className="text-black" />
-              <span className="text-2xl leading-none font-normal tracking-[-1px] uppercase">
+              <span className="text-2xl leading-none font-semibold tracking-[-1px] uppercase">
                 Stoneage
               </span>
             </div>

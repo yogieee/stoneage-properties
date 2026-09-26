@@ -111,7 +111,7 @@ export function SiteNav({ onOpenContact, siteSettings }: SiteNavProps) {
         <div className="flex items-center">
           <Link
             href="/"
-            className="text-xxl nx2-spaced inline-flex items-center leading-none font-thin text-[#1C1B19] uppercase transition-opacity select-none hover:opacity-80"
+            className="text-xxl p-spaced inline-flex items-center leading-none font-semibold text-[#1C1B19] uppercase transition-opacity select-none hover:opacity-80"
             aria-label="Stoneage Properties Home"
           >
             Stoneage

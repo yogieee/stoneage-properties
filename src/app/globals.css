@@ -48,6 +48,10 @@
   letter-spacing: -1px;
 }
 
+.p-spaced {
+  letter-spacing: 2.5px;
+}
+
 @media (min-width: 64em) {
   .text-xxl {
     font-size: 46px;
