@@ -234,10 +234,10 @@ export function MediaRail({ socials }: MediaRailProps) {
     <>
       {/* Desktop / Tablet Media Rail: Vertically centered on right edge */}
       <div
-        className="pointer-events-auto fixed top-1/2 right-0 z-30 hidden w-12 -translate-y-1/2 flex-col items-center justify-center mix-blend-difference sm:flex md:w-14 lg:w-16"
+        className="pointer-events-auto fixed top-1/2 right-0 z-30 hidden w-12 -translate-y-1/2 flex-col items-center justify-center mix-blend-difference sm:flex"
         aria-label="Social media and chat"
       >
-        <div className="flex flex-col items-center gap-3 py-2 sm:gap-4">
+        <div className="flex flex-col items-center gap-0 py-2">
           {/* Social icons: larger hit areas with responsive icon sizing */}
           {activeSocials.map((social) => (
             <a
@@ -247,9 +247,9 @@ export function MediaRail({ socials }: MediaRailProps) {
               rel="noopener noreferrer"
               aria-label={social.platform}
               title={social.platform}
-              className="liquid-glass-pill hidden h-12 w-12 items-center justify-center rounded-full text-white opacity-90 transition-all duration-300 hover:isolate hover:opacity-100 lg:flex lg:h-14 lg:w-14"
+              className="liquid-glass-pill hidden h-12 w-12 items-center justify-center rounded-full text-white opacity-90 transition-all duration-300 hover:isolate hover:opacity-100 lg:flex"
             >
-              <SocialIcon platform={social.platform} className="h-7 w-7 lg:h-8 lg:w-8" />
+              <SocialIcon platform={social.platform} className="h-6 w-6" />
             </a>
           ))}
 
@@ -265,14 +265,14 @@ export function MediaRail({ socials }: MediaRailProps) {
             }}
             aria-label={open ? "Close chat" : "Open chat"}
             title={open ? "Close chat" : "Open chat"}
-            className="liquid-glass-pill flex h-12 w-12 cursor-pointer items-center justify-center rounded-full text-white opacity-95 transition-all duration-300 hover:isolate hover:opacity-100 focus:outline-none lg:h-14 lg:w-14"
+            className="liquid-glass-pill flex h-12 w-12 cursor-pointer items-center justify-center rounded-full text-white opacity-95 transition-all duration-300 hover:isolate hover:opacity-100 focus:outline-none"
           >
             {open ? (
               <span className="flex items-center justify-center font-mono text-3xl leading-none font-medium select-none sm:text-4xl">
                 &times;
               </span>
             ) : (
-              <ChatBubbleIcon className="h-7 w-7 lg:h-8 lg:w-8" />
+              <ChatBubbleIcon className="h-6 w-6" />
             )}
           </button>
         </div>
@@ -304,7 +304,7 @@ export function MediaRail({ socials }: MediaRailProps) {
               &times;
             </span>
           ) : (
-            <ChatBubbleIcon className="h-9 w-9" />
+            <ChatBubbleIcon className="h-8 w-8" />
           )}
         </button>
       </div>

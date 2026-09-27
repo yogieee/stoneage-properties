@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FeaturedProjectsGrid } from "@/components/sections/FeaturedProjectsGrid";
+import { ProjectsGrid } from "@/components/sections/ProjectsGrid";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <div className="pt-20 sm:pt-24">
-      <FeaturedProjectsGrid />
+      <ProjectsGrid />
       <SpatialBriefSection />
     </div>
   );
