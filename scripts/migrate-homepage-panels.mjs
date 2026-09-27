@@ -96,7 +96,7 @@ async function run() {
     ],
     methodology: {
       eyebrow: "Our Methodology",
-      heading: "Conceive. Engineer. Craft.",
+      heading: "Vision. Plan. Deliver.",
       body: [
         "Every residence we shape begins as an organic conversation between landscape, light, and human rhythm. We reject off-the-shelf templates in favour of pure architectural integrity, selecting native stone, structural timber, and artisanal masonry suited to lasting generations.",
         "By uniting RIBA-chartered architects and master building contractors under one single studio stewardship, Stoneage eliminates the traditional friction between visionary blueprint and onsite physical execution.",
@@ -143,9 +143,7 @@ async function run() {
   console.log("Patched siteSettings.socials (if missing)");
 
   // 3. Remove the no-longer-rendered expertiseArea documents
-  const expertiseIds = await client.fetch(
-    `*[_type == "expertiseArea"]._id`,
-  );
+  const expertiseIds = await client.fetch(`*[_type == "expertiseArea"]._id`);
   if (expertiseIds.length) {
     await client.delete({ query: `*[_type == "expertiseArea"]` });
     console.log(`Deleted ${expertiseIds.length} expertiseArea document(s)`);

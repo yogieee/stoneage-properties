@@ -8,7 +8,7 @@ const FALLBACK_PANELS = [
     eyebrow: "Portfolio",
     title: "Selected Projects",
     href: "/projects",
-    src: "/images/hero/projects-panel.png",
+    src: "/images/client/client-aerial-bungalow-renovation.jpeg",
     alt: "Stoneage Crafted Architecture Projects",
     grayscale: false,
   },
@@ -16,7 +16,7 @@ const FALLBACK_PANELS = [
     eyebrow: "Craft",
     title: "Master Craftsmanship",
     href: "/craftsmanship",
-    src: "/images/hero/build-stone-masonry.png",
+    src: "/images/client/client-stone-cladding-detail.jpeg",
     alt: "Stoneage Specialist Building & Master Craftsmanship",
     grayscale: true,
   },
@@ -24,7 +24,7 @@ const FALLBACK_PANELS = [
     eyebrow: "Execution",
     title: "Specialist Build",
     href: "/build",
-    src: "/images/hero/build-hero.png",
+    src: "/images/client/client-twilight-exterior.png",
     alt: "Stoneage Master Craft Construction",
     grayscale: true,
   },
@@ -32,7 +32,7 @@ const FALLBACK_PANELS = [
     eyebrow: "The Practice",
     title: "Our Studio & Heritage",
     href: "/ourstudio",
-    src: "/images/hero/studio-hero.png",
+    src: "/images/client/client-heritage-display-wall.jpeg",
     alt: "Stoneage Solihull Practice",
     grayscale: false,
   },
@@ -40,21 +40,21 @@ const FALLBACK_PANELS = [
 
 const FALLBACK_METHODOLOGY = {
   eyebrow: "Our Methodology",
-  heading: "Conceive. Engineer. Craft.",
+  heading: "Vision. Plan. Deliver.",
   body: [
-    "Every residence we shape begins as an organic conversation between landscape, light, and human rhythm. We reject off-the-shelf templates in favour of pure architectural integrity, selecting native stone, structural timber, and artisanal masonry suited to lasting generations.",
-    "By uniting RIBA-chartered architects and master building contractors under one single studio stewardship, Stoneage eliminates the traditional friction between visionary blueprint and onsite physical execution.",
+    "Every residence we shape begins as a careful balance of vision, practicality, and investment. By uniting RIBA-chartered architects and master craftsmen under a single point of stewardship, Stoneage removes the traditional barriers between architectural innovation and construction delivery.",
+    "This integrated approach ensures a seamless transition from concept to completion, creating distinctive homes defined by exceptional design, meticulous craftsmanship, and enduring quality.",
   ],
 };
 
 const FALLBACK_STATEMENT = {
   eyebrow: "Bespoke Residences",
-  heading: "Quiet Luxury & Enduring Form",
+  heading: "Designed With Intent. Built With Integrity.",
   body: [
-    "We craft private residential sanctuaries defined by spatial calm, tactile natural materials, and precision engineering. Our portfolio spans monolithic country estates, sensitive heritage transformations, and forward-thinking contemporary extensions.",
-    "Headquartered in Solihull, Stoneage Properties advises discerning homeowners throughout the region on complex planning, conservation zoning, and turnkey construction management.",
+    "We craft bespoke residential spaces defined by timeless design, quality materials, and exceptional attention to detail. Our portfolio includes new builds, extensions, loft conversions, renovations, HMOs, and residential developments across the West Midlands.",
+    "Based in Solihull, Stoneage Building Contractors provides a fully managed service, guiding homeowners through every stage of their project. From planning and design coordination to construction and final handover, we deliver beautifully crafted homes with confidence, clarity, and precision.",
   ],
-  ctaLabel: "Discuss your architectural commission",
+  ctaLabel: "Discuss your ideas with our team",
   ctaHref: "/contact",
 };
 

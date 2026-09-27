@@ -146,7 +146,7 @@ export default function OurStudioPage() {
 
           <div className="text-reg max-w-3xl space-y-5 leading-relaxed text-black/80 md:col-span-8">
             <p className="text-lg font-medium tracking-[-0.5px] text-black sm:text-xl">
-              Conceive. Engineer. Craft.
+              Vision. Plan. Deliver.
             </p>
             <p>
               Stoneage Properties is a boutique collective of chartered
@@ -213,9 +213,9 @@ export default function OurStudioPage() {
             <p>
               We aspire for recognition as the premier residential design and
               build practice across the West Midlands and the Cotswolds.
-              Whatever the brief—whether a generational new build
-              estate, a sensitive listed barn conversion, or a monolithic
-              structural extension—we never offer a mere drawing service.
+              Whatever the brief—whether a generational new build estate, a
+              sensitive listed barn conversion, or a monolithic structural
+              extension—we never offer a mere drawing service.
             </p>
             <p>
               High-quality design drives every physical execution. We understand

@@ -97,9 +97,6 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                   <h2 className="max-w-[200px] truncate text-base font-normal tracking-[-1px] text-black sm:max-w-md sm:text-2xl">
                     {slide.title || slide.tag}
                   </h2>
-                  <span className="shrink-0 font-mono text-[11px] tracking-wider text-black/50 uppercase sm:text-sm">
-                    ST0{idx + 1}
-                  </span>
                 </div>
               );
             })}

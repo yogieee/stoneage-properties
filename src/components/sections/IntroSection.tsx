@@ -7,28 +7,28 @@ export function IntroSection() {
       <div className="w-full">
         {/* Fabric Title */}
         <h1 className="text-xxl mb-8 max-w-5xl font-normal text-black md:mb-12">
-          Specialist Building &amp; Master Craftsmanship
-          <br className="hidden sm:inline" /> Shaping Private Residential
-          Sanctuaries
+          Specialist Building Contractors
+          <br className="hidden sm:inline" /> Shaping Private Residential Spaces
         </h1>
 
         {/* Fabric Two-Column Narrative (.layout-2-4) */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="text-reg space-y-4 text-black/80 md:col-span-6">
             <p>
-              Stoneage Properties is a specialist building contractor rooted in
-              generational craft. Based in Solihull, we deliver ambitious
-              private homes on site from groundworks and structural build
-              through to the final finish.
+              At Stoneage, we are a specialist building contractors with years
+              of experience in the Construction industry. Based in Solihull, we
+              deliver ambitious turnkey projects from groundworks and through to
+              the final finish and aftercare.
             </p>
           </div>
           <div className="text-reg space-y-4 text-black/80 md:col-span-6">
             <p>
-              We work hand-in-hand with your architect, taking their drawing
-              and holding it to account on site through masonry, joinery, and
-              project management under one roof. The result is construction
-              that lasts: tactile materials, considered daylight, and homes
-              built uniquely around the rhythms of your life.
+              We work closely with your architect and structural engineer to
+              transform technical drawings into exceptional homes. From planning
+              and project management through to construction and final handover,
+              our experienced team manages every stage under one roof. The
+              result is a beautifully crafted home built with quality materials,
+              expert workmanship, and designed around the way your family lives.
             </p>
           </div>
         </div>

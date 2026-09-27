@@ -157,7 +157,7 @@ export default function CraftsmanshipPage() {
         <div className="mt-16 grid grid-cols-1 items-end gap-6 sm:grid-cols-12 sm:gap-8">
           <div className="relative aspect-[4/5] w-full overflow-hidden bg-black/5 sm:col-span-4">
             <Image
-              src="/images/hero/barn.png"
+              src="/images/client/client-structural-extension.jpeg"
               alt="Specialist Structural Craftsmanship"
               fill
               className="object-cover transition-transform duration-700 hover:scale-105"

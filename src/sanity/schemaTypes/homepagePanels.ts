@@ -55,7 +55,7 @@ export const homepagePanels = defineType({
       name: "methodology",
       title: "Methodology statement",
       description:
-        'The "Our Methodology / Conceive. Engineer. Craft." statement between the first two panel rows.',
+        'The "Our Methodology / Vision. Plan. Deliver." statement between the first two panel rows.',
       type: "object",
       fields: [
         defineField({ name: "eyebrow", title: "Eyebrow", type: "string" }),
