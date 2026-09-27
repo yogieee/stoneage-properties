@@ -69,7 +69,7 @@ export async function ContinuousServicesTicker() {
 
   return (
     <section
-      className="w-full overflow-hidden border-t border-[#1C1B19]/10 bg-[#F7F5F0] pt-12 pb-16 text-[#1C1B19] sm:pt-16 sm:pb-20 md:pt-20 md:pb-24"
+      className="w-full overflow-hidden border-t border-[#1C1B19]/10 bg-[#F7F5F0] py-16 text-[#1C1B19] md:py-24"
       aria-label="Available Services"
     >
       {/* Editorial Header */}
@@ -118,7 +118,7 @@ export async function ContinuousServicesTicker() {
               </div>
 
               {/* Title & Tagline */}
-              <div className="border-t border-black/10 pt-2.5">
+              <div className="border-t border-[#1C1B19]/10 pt-2.5">
                 <div className="flex items-baseline justify-between gap-2">
                   <h3 className="text-lg font-normal tracking-[-0.5px] text-black transition-opacity group-hover/card:opacity-70 sm:text-xl">
                     {item.name}

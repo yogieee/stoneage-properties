@@ -39,7 +39,7 @@ export default async function ServicesIndexPage() {
           </div>
 
           {/* Overview Bar (height: 72px, border-b) */}
-          <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-black/10">
+          <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-[#1C1B19]/10">
             <div className="flex items-baseline gap-2 sm:gap-3">
               <h2 className="text-base font-normal tracking-[-1px] text-black sm:text-2xl">
                 Services &amp; Capabilities
@@ -58,7 +58,7 @@ export default async function ServicesIndexPage() {
       </section>
 
       {/* 2. Section: Overview Narrative (Fabric layout-2-4) */}
-      <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+      <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="md:col-span-4">
             <h1 className="text-xxl leading-none font-normal tracking-[-1.5px] text-black">
@@ -91,8 +91,8 @@ export default async function ServicesIndexPage() {
       </section>
 
       {/* 3. Section: Curated Services Grid (Fabric 2-Column Grid) */}
-      <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
-        <div className="mb-12 border-b border-black/10 pb-6">
+      <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+        <div className="mb-12 border-b border-[#1C1B19]/10 pb-6">
           <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
             Our Specialisms
           </h2>
@@ -130,7 +130,7 @@ export default async function ServicesIndexPage() {
                     <div className="h-full w-full bg-black/5" />
                   )}
                 </div>
-                <div className="border-t border-black/10 pt-3">
+                <div className="border-t border-[#1C1B19]/10 pt-3">
                   <div className="flex items-baseline justify-between">
                     <h3 className="text-xl font-normal tracking-[-1px] text-black transition-opacity group-hover:opacity-75 sm:text-2xl">
                       {service.name}
@@ -151,7 +151,7 @@ export default async function ServicesIndexPage() {
 
       {/* 4. Section: Explore Navigation */}
       <section className="w-full px-3 py-16 sm:px-6 md:px-12 md:py-20">
-        <div className="mb-10 flex items-baseline justify-between border-b border-black/10 pb-4">
+        <div className="mb-10 flex items-baseline justify-between border-b border-[#1C1B19]/10 pb-4">
           <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
             Explore
           </h2>
@@ -170,7 +170,7 @@ export default async function ServicesIndexPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Craftsmanship
               </span>
@@ -189,7 +189,7 @@ export default async function ServicesIndexPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Build
               </span>
@@ -208,7 +208,7 @@ export default async function ServicesIndexPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Studio
               </span>

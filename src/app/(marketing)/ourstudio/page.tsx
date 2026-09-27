@@ -111,7 +111,7 @@ export default function OurStudioPage() {
           </div>
 
           {/* Overview Bar (height: 72px, border-b) */}
-          <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-black/10">
+          <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-[#1C1B19]/10">
             <div className="flex items-baseline gap-2 sm:gap-3">
               <h2 className="text-base font-normal tracking-[-1px] text-black sm:text-2xl">
                 The Studio &amp; Practice
@@ -132,7 +132,7 @@ export default function OurStudioPage() {
       {/* 2. Section: The Studio / Ethos (layout-2-4) */}
       <section
         id="ethos"
-        className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24"
+        className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24"
       >
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="md:col-span-4">
@@ -196,7 +196,7 @@ export default function OurStudioPage() {
       {/* 3. Section: Approach (layout-2-4) */}
       <section
         id="approach"
-        className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24"
+        className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24"
       >
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="md:col-span-4">
@@ -239,9 +239,9 @@ export default function OurStudioPage() {
       {/* 4. Section: Assurance (Grid 3-col matching Fabric layout-3) */}
       <section
         id="assurance"
-        className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24"
+        className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24"
       >
-        <div className="mb-12 border-b border-black/10 pb-6">
+        <div className="mb-12 border-b border-[#1C1B19]/10 pb-6">
           <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
             Assurance
           </h2>
@@ -252,7 +252,7 @@ export default function OurStudioPage() {
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {ASSURANCE_ITEMS.map((item) => (
-            <div key={item.title} className="border-t border-black/10 pt-4">
+            <div key={item.title} className="border-t border-[#1C1B19]/10 pt-4">
               <h3 className="font-display mb-2 text-xl font-medium tracking-tight text-black">
                 {item.title}
               </h3>
@@ -267,9 +267,9 @@ export default function OurStudioPage() {
       {/* 5. Section: Turnkey Process (01 - 05 Grid matching Fabric) */}
       <section
         id="process"
-        className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24"
+        className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24"
       >
-        <div className="mb-12 border-b border-black/10 pb-6">
+        <div className="mb-12 border-b border-[#1C1B19]/10 pb-6">
           <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
             Process
           </h2>
@@ -305,7 +305,7 @@ export default function OurStudioPage() {
 
       {/* 6. Explore Navigation Bar */}
       <section className="w-full px-3 py-16 sm:px-6 md:px-12 md:py-20">
-        <div className="mb-10 flex items-baseline justify-between border-b border-black/10 pb-4">
+        <div className="mb-10 flex items-baseline justify-between border-b border-[#1C1B19]/10 pb-4">
           <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
             Explore
           </h2>
@@ -324,7 +324,7 @@ export default function OurStudioPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Projects
               </span>
@@ -343,7 +343,7 @@ export default function OurStudioPage() {
                 className="object-cover contrast-110 grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Craftsmanship
               </span>
@@ -362,7 +362,7 @@ export default function OurStudioPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Build
               </span>
@@ -381,7 +381,7 @@ export default function OurStudioPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Journal
               </span>

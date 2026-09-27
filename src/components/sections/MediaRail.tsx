@@ -308,7 +308,7 @@ export function MediaRail({ socials }: MediaRailProps) {
           className="fixed right-4 bottom-20 z-50 flex h-[min(30rem,calc(100dvh-7rem))] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded border border-[#1C1B19]/10 bg-[#FAF8F5] text-[#1C1B19] shadow-2xl sm:top-1/2 sm:right-16 sm:bottom-auto sm:h-[min(32rem,calc(100dvh-5rem))] sm:w-96 sm:-translate-y-1/2 md:right-18"
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-black/10 bg-black px-4 py-3 text-white">
+          <div className="flex items-center justify-between border-b border-[#1C1B19]/10 bg-black px-4 py-3 text-white">
             <span className="font-mono text-xs tracking-widest uppercase">
               Ask Stoneage
             </span>
@@ -332,7 +332,7 @@ export function MediaRail({ socials }: MediaRailProps) {
           >
             {messages.length === 0 && (
               <div className="space-y-3">
-                <div className="max-w-[90%] rounded border border-black/10 bg-black/5 px-3 py-2 text-sm leading-relaxed font-light text-black">
+                <div className="max-w-[90%] rounded border border-[#1C1B19]/10 bg-black/5 px-3 py-2 text-sm leading-relaxed font-light text-black">
                   {pageContext?.greeting ??
                     "Ask about our services, process, or timelines — or share your project and we'll point you to a Project Brief."}
                 </div>
@@ -359,14 +359,14 @@ export function MediaRail({ socials }: MediaRailProps) {
                 className={`max-w-[85%] rounded px-3 py-2 text-sm leading-relaxed whitespace-pre-line ${
                   m.role === "user"
                     ? "ml-auto bg-black text-white"
-                    : "border border-black/10 bg-black/5 font-light text-black"
+                    : "border border-[#1C1B19]/10 bg-black/5 font-light text-black"
                 }`}
               >
                 {m.content}
               </div>
             ))}
             {sending && (
-              <div className="max-w-[85%] rounded border border-black/10 bg-black/5 px-3 py-2 font-mono text-xs text-black/60">
+              <div className="max-w-[85%] rounded border border-[#1C1B19]/10 bg-black/5 px-3 py-2 font-mono text-xs text-black/60">
                 Thinking&hellip;
               </div>
             )}
@@ -375,7 +375,7 @@ export function MediaRail({ socials }: MediaRailProps) {
 
           {/* Quick-reply options for the latest assistant message */}
           {quickOptions.length > 0 && !sending && (
-            <div className="flex flex-wrap gap-2 border-t border-black/10 bg-white px-4 py-3">
+            <div className="flex flex-wrap gap-2 border-t border-[#1C1B19]/10 bg-white px-4 py-3">
               {quickOptions.map((option) => (
                 <button
                   key={option}
@@ -392,7 +392,7 @@ export function MediaRail({ socials }: MediaRailProps) {
           {/* Input */}
           <form
             onSubmit={handleSubmit}
-            className="flex items-center gap-2 border-t border-black/10 bg-white p-3"
+            className="flex items-center gap-2 border-t border-[#1C1B19]/10 bg-white p-3"
           >
             <input
               type="text"

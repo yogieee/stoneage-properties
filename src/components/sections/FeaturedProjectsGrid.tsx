@@ -31,7 +31,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           }`}
         />
       </div>
-      <div className="flex items-baseline justify-between border-t border-black/10 pt-3">
+      <div className="flex items-baseline justify-between border-t border-[#1C1B19]/10 pt-3">
         <div>
           <h3 className="text-xl font-normal tracking-[-1px] text-black transition-opacity group-hover:opacity-75 sm:text-2xl">
             {project.title}
@@ -59,7 +59,7 @@ export async function FeaturedProjectsGrid() {
     >
       <div className="w-full">
         {/* Fabric Header */}
-        <div className="mb-12 flex flex-col justify-between gap-4 border-b border-black/10 pb-6 sm:flex-row sm:items-end">
+        <div className="mb-12 flex flex-col justify-between gap-4 border-b border-[#1C1B19]/10 pb-6 sm:flex-row sm:items-end">
           <div>
             <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
               Selected Projects

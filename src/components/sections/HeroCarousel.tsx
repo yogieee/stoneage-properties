@@ -80,7 +80,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         </div>
 
         {/* Fabric Overview Bar (height: 72px, padding: 17px 0) */}
-        <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-black/10">
+        <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-[#1C1B19]/10">
           {/* Project Title & Code with smooth synchronized crossfade */}
           <div className="relative flex h-10 min-w-0 flex-1 items-center overflow-hidden">
             {slides.map((slide, idx) => {

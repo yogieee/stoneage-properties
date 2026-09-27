@@ -150,7 +150,7 @@ export function SiteNav({ onOpenContact, siteSettings }: SiteNavProps) {
           role="navigation"
           className="no-scrollbar flex w-full flex-1 items-center justify-center overflow-y-auto py-8"
         >
-          <ul className="flex w-full flex-col items-center justify-center gap-5 px-2 sm:gap-6 md:flex-row md:flex-nowrap md:justify-center md:gap-8 md:px-0 lg:gap-10">
+          <ul className="flex w-full flex-col items-center justify-center gap-5 px-2 sm:gap-6 md:flex-row md:flex-wrap md:justify-center md:gap-3 md:px-0 lg:gap-5 xl:gap-8">
             {navLinks.map((item, index) => {
               const isOtherHovered =
                 hoveredIndex !== null && hoveredIndex !== index;
@@ -161,7 +161,7 @@ export function SiteNav({ onOpenContact, siteSettings }: SiteNavProps) {
                     onClick={(e) => handleLinkClick(e, item)}
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
-                    className={`liquid-glass-pill text-xxl inline-block rounded-full px-5 py-2 font-normal whitespace-nowrap text-black transition-opacity duration-300 ${
+                    className={`liquid-glass-pill inline-block rounded-full px-5 py-2 text-4xl font-normal whitespace-nowrap text-black transition-opacity duration-300 sm:text-5xl md:px-4 md:py-2 md:text-2xl lg:px-6 lg:text-3xl xl:text-4xl ${
                       isOtherHovered ? "opacity-20" : "opacity-100"
                     } hover:opacity-100`}
                   >
@@ -174,7 +174,7 @@ export function SiteNav({ onOpenContact, siteSettings }: SiteNavProps) {
         </nav>
 
         {/* Fabric Menu Footer with Contact & Offices */}
-        <div className="grid w-full grid-cols-1 gap-6 border-t border-black/10 pt-6 text-sm md:grid-cols-12">
+        <div className="grid w-full grid-cols-1 gap-6 border-t border-[#1C1B19]/10 pt-6 text-sm md:grid-cols-12">
           <div className="space-y-2 text-black/80 md:col-span-6">
             <p className="font-normal text-black">
               Phone:{" "}

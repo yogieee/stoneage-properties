@@ -112,7 +112,7 @@ export function TestimonialsSliderClient({
         </div>
 
         {/* Prev / Next Controls & Progress Indicators */}
-        <div className="mt-8 flex items-center justify-between border-t border-black/10 pt-8">
+        <div className="mt-8 flex items-center justify-between border-t border-[#1C1B19]/10 pt-8">
           {/* Progress dots / bars */}
           <div className="flex items-center gap-2">
             {Array.from({ length: pageCount }).map((_, idx) => (

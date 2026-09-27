@@ -146,7 +146,7 @@ export default async function JournalArticlePage({
       />
 
       {/* 1. Header with Breadcrumb, Title & Editorial Details */}
-      <section className="w-full border-b border-black/10 px-3 pt-24 pb-12 sm:px-6 sm:pt-28 md:px-12 md:pb-16">
+      <section className="w-full border-b border-[#1C1B19]/10 px-3 pt-24 pb-12 sm:px-6 sm:pt-28 md:px-12 md:pb-16">
         <div className="mb-6">
           <Link
             href="/journal"
@@ -185,8 +185,8 @@ export default async function JournalArticlePage({
           </div>
 
           {/* Architectural Note Card */}
-          <div className="border border-black/10 bg-white p-6 md:col-span-4">
-            <div className="mb-4 flex items-center justify-between border-b border-black/10 pb-3">
+          <div className="border border-[#1C1B19]/10 bg-white p-6 md:col-span-4">
+            <div className="mb-4 flex items-center justify-between border-b border-[#1C1B19]/10 pb-3">
               <span className="font-mono text-[10px] tracking-widest text-black/50 uppercase">
                 A Note From Stoneage
               </span>
@@ -219,7 +219,7 @@ export default async function JournalArticlePage({
       )}
 
       {/* 3. Editorial Essay Body */}
-      <section className="w-full border-b border-black/10 px-3 py-12 sm:px-6 sm:py-16 md:px-12 md:py-20">
+      <section className="w-full border-b border-[#1C1B19]/10 px-3 py-12 sm:px-6 sm:py-16 md:px-12 md:py-20">
         <div className="text-reg mx-auto max-w-3xl leading-relaxed text-black/85">
           {Array.isArray(article.body) && article.body.length > 0 ? (
             <ArticleBody value={article.body} />
@@ -233,8 +233,8 @@ export default async function JournalArticlePage({
 
       {/* 4. More from the Journal Grid */}
       {moreArticles.length > 0 && (
-        <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
-          <div className="mb-12 flex flex-col justify-between gap-4 border-b border-black/10 pb-6 sm:flex-row sm:items-end">
+        <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+          <div className="mb-12 flex flex-col justify-between gap-4 border-b border-[#1C1B19]/10 pb-6 sm:flex-row sm:items-end">
             <div>
               <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
                 More from the Journal
@@ -264,7 +264,7 @@ export default async function JournalArticlePage({
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                 </div>
-                <div className="border-t border-black/10 pt-2.5">
+                <div className="border-t border-[#1C1B19]/10 pt-2.5">
                   <div className="mb-1 flex items-center justify-between font-mono text-xs tracking-wider text-black/50 uppercase">
                     <span>Insight</span>
                     <span className="font-mono text-sm transition-transform duration-300 group-hover:translate-x-1">

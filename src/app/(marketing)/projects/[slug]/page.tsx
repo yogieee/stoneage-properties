@@ -92,7 +92,7 @@ export default async function ProjectDetailPage({
   };
 
   return (
-    <div className="pt-16 sm:pt-24">
+    <div className="pt-20 sm:pt-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}

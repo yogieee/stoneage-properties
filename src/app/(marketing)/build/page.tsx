@@ -35,7 +35,7 @@ export default function BuildPage() {
           </div>
 
           {/* Fabric Overview Bar (height: 72px, border-b) */}
-          <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-black/10">
+          <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-[#1C1B19]/10">
             <div className="flex items-baseline gap-2 sm:gap-3">
               <h2 className="text-base font-normal tracking-[-1px] text-black sm:text-2xl">
                 Specialist Build &amp; Delivery
@@ -54,7 +54,7 @@ export default function BuildPage() {
       </section>
 
       {/* 2. Section: Build (Fabric layout-2-4) */}
-      <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+      <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="md:col-span-4">
             <h1 className="text-xxl leading-none font-normal tracking-[-1.5px] text-black">
@@ -119,7 +119,7 @@ export default function BuildPage() {
       </section>
 
       {/* 3. Section: Delivery (Fabric layout-2-4) */}
-      <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+      <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="md:col-span-4">
             <h2 className="text-xxl leading-none font-normal tracking-[-1.5px] text-black">
@@ -174,7 +174,7 @@ export default function BuildPage() {
 
       {/* 4. Quick Links Grid (Projects, Design, Studio, Journal) matching Fabric */}
       <section className="w-full px-3 py-16 sm:px-6 md:px-12 md:py-20">
-        <div className="mb-10 flex items-baseline justify-between border-b border-black/10 pb-4">
+        <div className="mb-10 flex items-baseline justify-between border-b border-[#1C1B19]/10 pb-4">
           <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
             Explore
           </h2>
@@ -193,7 +193,7 @@ export default function BuildPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Projects
               </span>
@@ -212,7 +212,7 @@ export default function BuildPage() {
                 className="object-cover contrast-110 grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Craftsmanship
               </span>
@@ -231,7 +231,7 @@ export default function BuildPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Studio
               </span>
@@ -250,7 +250,7 @@ export default function BuildPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Journal
               </span>

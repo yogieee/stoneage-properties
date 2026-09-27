@@ -33,7 +33,7 @@ export async function SpatialBriefSection({
     >
       <div className="w-full">
         {/* Fabric Standard Section Header matching Projects, Journal, Testimonials & Services */}
-        <div className="mb-12 border-b border-black/10 pb-6">
+        <div className="mb-12 border-b border-[#1C1B19]/10 pb-6">
           <div className="flex flex-col gap-2">
             <span className="font-mono text-xs tracking-wider text-black/50 uppercase">
               {eyebrow}
@@ -51,7 +51,7 @@ export async function SpatialBriefSection({
               {intro}
             </p>
 
-            <div className="space-y-3 border-t border-black/10 pt-6 font-mono text-xs text-black/60">
+            <div className="space-y-3 border-t border-[#1C1B19]/10 pt-6 font-mono text-xs text-black/60">
               <p className="font-medium text-black">
                 Stoneage Properties Specialist Contractors
               </p>

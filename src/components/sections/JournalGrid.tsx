@@ -13,7 +13,7 @@ export async function JournalGrid() {
     >
       <div className="w-full">
         {/* Fabric Header */}
-        <div className="mb-12 flex flex-col justify-between gap-4 border-b border-black/10 pb-6 sm:flex-row sm:items-end">
+        <div className="mb-12 flex flex-col justify-between gap-4 border-b border-[#1C1B19]/10 pb-6 sm:flex-row sm:items-end">
           <div>
             <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
               Journal &amp; Insights
@@ -45,7 +45,7 @@ export async function JournalGrid() {
                 />
               </div>
 
-              <div className="border-t border-black/10 pt-3">
+              <div className="border-t border-[#1C1B19]/10 pt-3">
                 <div className="mb-1 flex items-center justify-between font-mono text-xs tracking-wider text-black/50 uppercase">
                   <span>Insight &middot; 0{index + 1}</span>
                   <span className="transition-transform group-hover:translate-x-1">

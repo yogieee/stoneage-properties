@@ -54,7 +54,7 @@ export async function SiteFooter() {
     >
       <div className="w-full">
         {/* Fabric 2-column primary layout */}
-        <div className="grid grid-cols-1 gap-10 border-b border-black/10 pb-16 md:grid-cols-12">
+        <div className="grid grid-cols-1 gap-10 border-b border-[#1C1B19]/10 pb-16 md:grid-cols-12">
           {/* Left Column: Phone, Email, Button, Socials */}
           <div className="space-y-6 md:col-span-6 lg:col-span-5">
             <div className="flex items-end gap-1.5 pb-2">
@@ -158,7 +158,7 @@ export async function SiteFooter() {
                   </div>
                 </div>
 
-                <div className="h-24 w-full overflow-hidden border border-black/10 sm:h-80 sm:w-[85%]">
+                <div className="h-48 w-full overflow-hidden border border-[#1C1B19]/10 sm:h-80">
                   <iframe
                     src={`https://www.google.com/maps?q=${encodeURIComponent(office.address)}&output=embed`}
                     title={`Map showing ${office.name}, ${office.address}`}

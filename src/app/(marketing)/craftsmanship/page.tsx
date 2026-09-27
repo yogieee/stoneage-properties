@@ -93,7 +93,7 @@ export default function CraftsmanshipPage() {
           </div>
 
           {/* Overview Bar (height: 72px, border-b) */}
-          <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-black/10">
+          <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-[#1C1B19]/10">
             <div className="flex items-baseline gap-2 sm:gap-3">
               <h2 className="text-base font-normal tracking-[-1px] text-black sm:text-2xl">
                 Specialist Building &amp; Master Craftsmanship
@@ -112,7 +112,7 @@ export default function CraftsmanshipPage() {
       </section>
 
       {/* 2. Section: Craftsmanship Narrative (Fabric layout-2-4) */}
-      <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+      <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="md:col-span-4">
             <h1 className="text-xxl leading-none font-normal tracking-[-1.5px] text-black">
@@ -183,8 +183,8 @@ export default function CraftsmanshipPage() {
       </section>
 
       {/* 3. Section: Craft Principles (4-Column Architectural Pillars) */}
-      <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
-        <div className="mb-12 border-b border-black/10 pb-6">
+      <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+        <div className="mb-12 border-b border-[#1C1B19]/10 pb-6">
           <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
             Craft Principles
           </h2>
@@ -220,7 +220,7 @@ export default function CraftsmanshipPage() {
       </section>
 
       {/* 4. Section: Craft Process (layout-2-4) */}
-      <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+      <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="md:col-span-4">
             <h2 className="text-xxl leading-none font-normal tracking-[-1.5px] text-black">
@@ -236,7 +236,7 @@ export default function CraftsmanshipPage() {
             {CRAFT_STAGES.map((item) => (
               <div
                 key={item.stage}
-                className="flex flex-col justify-between gap-4 border-t border-black/10 pt-4 sm:flex-row sm:items-baseline"
+                className="flex flex-col justify-between gap-4 border-t border-[#1C1B19]/10 pt-4 sm:flex-row sm:items-baseline"
               >
                 <div className="sm:w-1/3">
                   <span className="mb-1 block font-mono text-xs tracking-wider text-black/50 uppercase">
@@ -257,7 +257,7 @@ export default function CraftsmanshipPage() {
 
       {/* 5. Section: Explore Navigation */}
       <section className="w-full px-3 py-16 sm:px-6 md:px-12 md:py-20">
-        <div className="mb-10 flex items-baseline justify-between border-b border-black/10 pb-4">
+        <div className="mb-10 flex items-baseline justify-between border-b border-[#1C1B19]/10 pb-4">
           <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
             Explore
           </h2>
@@ -276,7 +276,7 @@ export default function CraftsmanshipPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Projects
               </span>
@@ -295,7 +295,7 @@ export default function CraftsmanshipPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Build
               </span>
@@ -314,7 +314,7 @@ export default function CraftsmanshipPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Studio
               </span>
@@ -333,7 +333,7 @@ export default function CraftsmanshipPage() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Journal
               </span>

@@ -82,7 +82,7 @@ export async function QuickLinksPanels() {
   const [projectsPanel, craftPanel, buildPanel, studioPanel] = panels;
 
   return (
-    <section className="w-full bg-[#F7F5F0] px-3 pt-16 pb-12 text-[#1C1B19] sm:px-6 sm:pt-20 sm:pb-16 md:px-12 md:pt-24 md:pb-20">
+    <section className="w-full bg-[#F7F5F0] px-3 py-16 text-[#1C1B19] sm:px-6 md:px-12 md:py-24">
       {/* Row 1: Projects (wider/taller) & Craft (asymmetrical pairing) */}
       <div className="mb-16 grid grid-cols-1 items-end gap-6 md:mb-24 md:grid-cols-12 md:gap-8">
         <div className="md:col-span-7">
@@ -223,7 +223,7 @@ export async function QuickLinksPanels() {
       </div>
 
       {/* Luxury residential architects statement */}
-      <div className="w-full border-t border-black/10 pt-12">
+      <div className="w-full border-t border-[#1C1B19]/10 pt-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="md:col-span-5">
             <span className="mb-2 block font-mono text-xs tracking-widest text-black/50 uppercase">

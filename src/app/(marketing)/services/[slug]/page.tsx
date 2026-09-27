@@ -149,7 +149,7 @@ export default async function ServiceDetailPage({
       />
 
       {/* Back link */}
-      <div className="px-3 pt-6 sm:px-6 md:px-12">
+      <div className="px-3 pt-[84px] sm:px-6 md:px-12">
         <Link
           href="/services"
           className="group inline-flex items-center gap-2 font-mono text-xs tracking-wider text-black/50 uppercase transition-colors hover:text-black"
@@ -163,7 +163,7 @@ export default async function ServiceDetailPage({
 
       {/* 1. Hero matching Build / Design / Studio framing */}
       <section className="relative h-[80vh] w-full bg-[#F7F5F0] px-3 pt-6 text-[#1C1B19] select-none sm:px-6 md:h-[90vh] md:px-12">
-        <div className="relative flex h-full w-full flex-col justify-between pb-[72px]">
+        <div className="relative flex h-full w-full flex-col justify-between pt-[72px] pb-[72px] md:pt-[84px]">
           <div className="relative h-full w-full overflow-hidden bg-black">
             {service.heroImage ? (
               <Image
@@ -179,7 +179,7 @@ export default async function ServiceDetailPage({
             )}
           </div>
 
-          <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-black/10">
+          <div className="absolute bottom-0 left-0 flex h-[72px] w-full items-center justify-between gap-3 border-b border-[#1C1B19]/10">
             <div className="flex items-baseline gap-2 sm:gap-3">
               <h1 className="text-base font-normal tracking-[-1px] text-black sm:text-2xl">
                 {service.name}
@@ -198,7 +198,7 @@ export default async function ServiceDetailPage({
       </section>
 
       {/* 2. Section: Overview (layout-2-4) */}
-      <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+      <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="md:col-span-4">
             <h2 className="text-xxl leading-none font-normal tracking-[-1.5px] text-black">
@@ -218,7 +218,7 @@ export default async function ServiceDetailPage({
         </div>
 
         {/* Warranty & Note strip */}
-        <div className="mt-16 grid grid-cols-1 gap-8 border-t border-black/10 pt-10 sm:grid-cols-2">
+        <div className="mt-16 grid grid-cols-1 gap-8 border-t border-[#1C1B19]/10 pt-10 sm:grid-cols-2">
           {assuranceItems.map((item) => (
             <div key={item.title}>
               <h3 className="font-display mb-2 text-xl font-medium tracking-tight text-black">
@@ -238,7 +238,7 @@ export default async function ServiceDetailPage({
           {phone && (
             <a
               href={`tel:${phone.replace(/\s+/g, "")}`}
-              className="inline-flex items-center gap-2 border border-black/10 px-6 py-3 font-mono text-xs tracking-wider text-black uppercase transition-colors hover:border-black"
+              className="inline-flex items-center gap-2 border border-[#1C1B19]/10 px-6 py-3 font-mono text-xs tracking-wider text-black uppercase transition-colors hover:border-black"
             >
               Call {phone}
             </a>
@@ -248,7 +248,7 @@ export default async function ServiceDetailPage({
 
       {/* 3. Section: How It Works (layout-2-4) */}
       {service.process && service.process.length > 0 && (
-        <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+        <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
             <div className="md:col-span-4">
               <h2 className="text-xxl leading-none font-normal tracking-[-1.5px] text-black">
@@ -263,7 +263,7 @@ export default async function ServiceDetailPage({
               {service.process.map((step, index) => (
                 <div
                   key={step.title}
-                  className="flex flex-col justify-between gap-4 border-t border-black/10 pt-4 sm:flex-row sm:items-baseline"
+                  className="flex flex-col justify-between gap-4 border-t border-[#1C1B19]/10 pt-4 sm:flex-row sm:items-baseline"
                 >
                   <div className="sm:w-1/3">
                     <span className="mb-1 block font-mono text-xs tracking-wider text-black/50 uppercase">
@@ -283,8 +283,8 @@ export default async function ServiceDetailPage({
 
       {/* 4. Section: What's Included (grid matching Assurance) */}
       {service.features && service.features.length > 0 && (
-        <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
-          <div className="mb-12 border-b border-black/10 pb-6">
+        <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+          <div className="mb-12 border-b border-[#1C1B19]/10 pb-6">
             <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
               What&rsquo;s Included
             </h2>
@@ -295,7 +295,7 @@ export default async function ServiceDetailPage({
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {service.features.map((feature, index) => (
-              <div key={feature} className="border-t border-black/10 pt-4">
+              <div key={feature} className="border-t border-[#1C1B19]/10 pt-4">
                 <span className="mb-2 block font-mono text-xs tracking-wider text-black/50 uppercase">
                   {String(index + 1).padStart(2, "0")}
                 </span>
@@ -308,8 +308,8 @@ export default async function ServiceDetailPage({
 
       {/* 5. Section: FAQ */}
       {service.faqs && service.faqs.length > 0 && (
-        <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
-          <div className="mb-12 border-b border-black/10 pb-6">
+        <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+          <div className="mb-12 border-b border-[#1C1B19]/10 pb-6">
             <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
               Frequently Asked Questions
             </h2>
@@ -322,8 +322,8 @@ export default async function ServiceDetailPage({
 
       {/* 6. Section: Explore Related Work (falls back to other services) */}
       {(relatedProjects.length > 0 || otherServices.length > 0) && (
-        <section className="w-full border-b border-black/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
-          <div className="mb-12 flex items-end justify-between gap-4 border-b border-black/10 pb-6">
+        <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+          <div className="mb-12 flex items-end justify-between gap-4 border-b border-[#1C1B19]/10 pb-6">
             <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
               {relatedProjects.length > 0 ? "Explore Related Work" : "Explore Other Services"}
             </h2>
@@ -350,7 +350,7 @@ export default async function ServiceDetailPage({
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                   </div>
-                  <div className="flex items-start justify-between gap-3 border-t border-black/10 pt-3">
+                  <div className="flex items-start justify-between gap-3 border-t border-[#1C1B19]/10 pt-3">
                     <div>
                       <span className="mb-1 block font-mono text-[10px] tracking-wider text-black/50 uppercase">
                         {item.location}
@@ -386,7 +386,7 @@ export default async function ServiceDetailPage({
                       <div className="h-full w-full bg-black/5" />
                     )}
                   </div>
-                  <div className="flex items-start justify-between gap-3 border-t border-black/10 pt-3">
+                  <div className="flex items-start justify-between gap-3 border-t border-[#1C1B19]/10 pt-3">
                     <div>
                       <h3 className="text-lg font-normal tracking-[-0.5px] text-black transition-opacity group-hover:opacity-75">
                         {item.name}
@@ -408,7 +408,7 @@ export default async function ServiceDetailPage({
 
       {/* 7. Section: Explore Navigation */}
       <section className="w-full px-3 py-16 sm:px-6 md:px-12 md:py-20">
-        <div className="mb-10 flex items-baseline justify-between border-b border-black/10 pb-4">
+        <div className="mb-10 flex items-baseline justify-between border-b border-[#1C1B19]/10 pb-4">
           <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">Explore</h2>
           <span className="font-mono text-xs tracking-wider text-black/50 uppercase">
             Navigation &rarr;
@@ -425,7 +425,7 @@ export default async function ServiceDetailPage({
                 className="object-cover contrast-110 grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">
                 Craftsmanship
               </span>
@@ -444,7 +444,7 @@ export default async function ServiceDetailPage({
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">Build</span>
               <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
                 &rarr;
@@ -461,7 +461,7 @@ export default async function ServiceDetailPage({
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">Studio</span>
               <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
                 &rarr;
@@ -478,7 +478,7 @@ export default async function ServiceDetailPage({
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-black/10 pt-2">
+            <div className="flex items-center justify-between border-t border-[#1C1B19]/10 pt-2">
               <span className="text-lg font-normal tracking-[-0.5px]">Projects</span>
               <span className="font-mono text-base transition-transform duration-300 group-hover:translate-x-1">
                 &rarr;
