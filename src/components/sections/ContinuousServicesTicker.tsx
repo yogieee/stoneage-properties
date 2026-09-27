@@ -1,140 +1,130 @@
-import Image from "next/image";
-import Link from "next/link";
-import { getServices } from "@/sanity/queries";
+import { getServices, type Service } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
+import {
+  DisciplinesSplitSection,
+  type DisciplineItem,
+} from "./DisciplinesSplitSection";
 
-// Fallback services in case CMS returns an empty array
-const FALLBACK_SERVICES = [
+// Enriched fallback architectural disciplines
+const FALLBACK_SERVICES: DisciplineItem[] = [
   {
     slug: "bespoke-new-builds",
     name: "Bespoke New Builds",
-    tagline: "Generational architecture built from the bedrock up",
+    tagline:
+      "Generational architecture built from the bedrock up. We craft private residences with monolithic stone, mass timber, and precision structural warranties.",
     image: "/images/hero/exterior.png",
+    features: [
+      "RIBA Stages 0–7",
+      "10-Year Structural Warranty",
+      "JCT Administration",
+    ],
   },
   {
     slug: "full-home-renovations",
     name: "Full Home Renovations",
-    tagline: "Complete internal remodelling & structural transformations",
+    tagline:
+      "Complete internal remodelling, structural transformations, and heritage restoration crafted around modern spatial proportion.",
     image: "/images/hero/rennovation.png",
+    features: [
+      "Interior Architecture",
+      "Structural Alterations",
+      "Bespoke Joinery",
+    ],
   },
   {
     slug: "structural-extensions",
     name: "Structural Extensions",
-    tagline: "Monolithic extensions bridging past and present",
+    tagline:
+      "Glazed pavilions, timber extensions, and monolithic modern additions that seamlessly bridge indoor spaces with private landscapes.",
     image: "/images/hero/extension.png",
+    features: [
+      "Zinc & Cedar Detailing",
+      "Flush-Threshold Glazing",
+      "Lightwell Engineering",
+    ],
   },
   {
     slug: "barn-conversions",
     name: "Historic Barn Conversions",
-    tagline: "Conserving rural timber & stone heritage with modern volume",
+    tagline:
+      "Conserving rural timber & stone heritage while creating light-filled contemporary living volumes compliant with modern building standards.",
     image: "/images/hero/barn.png",
+    features: [
+      "Conservation Zoning",
+      "Heritage Stone Masonry",
+      "Underpinning & Insulation",
+    ],
   },
   {
     slug: "architectural-design",
     name: "Architectural Design & BIM",
-    tagline: "Full RIBA Work Stages 0–7 & 3D Revit documentation",
+    tagline:
+      "Precision 3D Revit documentation, planning consent submissions, and comprehensive architectural appraisals from concept to handover.",
     image: "/images/hero/Refurbishments.png",
+    features: [
+      "3D BIM Modeling",
+      "Planning Applications",
+      "Building Regulations",
+    ],
   },
   {
     slug: "basement-developments",
     name: "Subterranean & Basement Architecture",
-    tagline: "Discreet lightwells, wellness suites & structural underpinning",
+    tagline:
+      "Discreet lightwells, wellness suites, and subterranean living environments delivered with specialist waterproofing and acoustic control.",
     image: "/images/hero/basement.png",
+    features: [
+      "Waterproofing Systems",
+      "Acoustic Engineering",
+      "Lightwell Integration",
+    ],
   },
   {
     slug: "loft-conversions",
     name: "Bespoke Loft Conversions",
-    tagline: "Dormers & roofscapes maximizing vertical light",
+    tagline:
+      "Architectural dormers, bespoke roofscapes, and vertical light maximization designed to complement existing building profiles.",
     image: "/images/hero/loft.png",
+    features: [
+      "Roof Re-engineering",
+      "Bespoke Staircases",
+      "Zinc & Slate Cladding",
+    ],
   },
 ];
 
 export async function ContinuousServicesTicker() {
-  const sanityServices = await getServices();
+  let sanityServices: Service[] = [];
+  try {
+    sanityServices = await getServices();
+  } catch (err) {
+    console.error("Failed to load services from Sanity:", err);
+  }
 
-  const services =
+  const disciplines: DisciplineItem[] =
     sanityServices.length > 0
-      ? sanityServices.map((service, idx) => ({
-          slug: service.slug,
-          name: service.name,
-          tagline: service.summary || "Bespoke Architectural Excellence",
-          image: service.heroImage
-            ? urlFor(service.heroImage).width(800).height(500).url()
-            : FALLBACK_SERVICES[idx % FALLBACK_SERVICES.length].image,
-        }))
+      ? sanityServices.map((service, idx) => {
+          const fallback = FALLBACK_SERVICES[idx % FALLBACK_SERVICES.length];
+          let image = fallback.image;
+          if (service.heroImage?.asset?._ref) {
+            try {
+              image = urlFor(service.heroImage).width(1200).height(800).url();
+            } catch {
+              // fallback remains
+            }
+          }
+          return {
+            slug: service.slug,
+            name: service.name,
+            tagline: service.summary || fallback.tagline,
+            image,
+            features:
+              service.features && service.features.length > 0
+                ? service.features.slice(0, 3)
+                : fallback.features,
+          };
+        })
       : FALLBACK_SERVICES;
 
-  // Duplicate items twice to ensure seamless infinite looping without gaps
-  const tickerItems = [...services, ...services];
-
-  return (
-    <section
-      className="w-full overflow-hidden border-t border-[#1C1B19]/10 bg-[#F7F5F0] py-16 text-[#1C1B19] md:py-24"
-      aria-label="Available Services"
-    >
-      {/* Editorial Header */}
-      <div className="mb-8 w-full px-3 sm:px-6 md:mb-12 md:px-12">
-        <div className="flex flex-col justify-between gap-4 border-b border-[#1C1B19]/10 pb-6 sm:flex-row sm:items-end">
-          <div className="min-w-0 flex-1">
-            <span className="mb-2 block font-mono text-xs tracking-widest text-[#1C1B19]/50 uppercase">
-              Services &amp; Capabilities
-            </span>
-            <h2 className="lg:text-xxl truncate text-xl font-normal tracking-[-1.5px] whitespace-nowrap text-[#1C1B19] sm:text-2xl md:text-3xl">
-              Your next project with us could be...
-            </h2>
-          </div>
-          <Link
-            href="/services"
-            className="flex shrink-0 items-center gap-2 text-base font-normal tracking-[-0.5px] whitespace-nowrap text-[#1C1B19] transition-opacity hover:opacity-70"
-          >
-            <span>View All Services</span>
-            <span className="font-mono">&rarr;</span>
-          </Link>
-        </div>
-      </div>
-
-      {/* Infinite Smooth Ticker Carousel (hover to pause) */}
-      <div className="group relative w-full overflow-hidden">
-        {/* Subtle edge fade overlays */}
-        <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-8 bg-gradient-to-r from-[#F7F5F0] to-transparent sm:w-16" />
-        <div className="pointer-events-none absolute top-0 right-0 z-10 h-full w-8 bg-gradient-to-l from-[#F7F5F0] to-transparent sm:w-16" />
-
-        <div className="flex w-max animate-[marquee_45s_linear_infinite] group-hover:[animation-play-state:paused]">
-          {tickerItems.map((item, index) => (
-            <Link
-              key={`${item.slug}-${index}`}
-              href={`/services/${item.slug}`}
-              className="group/card mx-3 block w-[280px] shrink-0 text-black sm:mx-4 sm:w-[340px] md:w-[380px]"
-            >
-              {/* Card Image */}
-              <div className="relative mb-3 aspect-[16/10] w-full overflow-hidden bg-black/5">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  sizes="(max-width: 768px) 280px, 380px"
-                  className="object-cover transition-transform duration-700 ease-out group-hover/card:scale-105"
-                />
-              </div>
-
-              {/* Title & Tagline */}
-              <div className="border-t border-[#1C1B19]/10 pt-2.5">
-                <div className="flex items-baseline justify-between gap-2">
-                  <h3 className="text-lg font-normal tracking-[-0.5px] text-black transition-opacity group-hover/card:opacity-70 sm:text-xl">
-                    {item.name}
-                  </h3>
-                  <span className="font-mono text-sm transition-transform duration-300 group-hover/card:translate-x-1">
-                    &rarr;
-                  </span>
-                </div>
-                <p className="mt-1 line-clamp-1 font-mono text-xs tracking-wider text-black/50 uppercase">
-                  {item.tagline}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return <DisciplinesSplitSection disciplines={disciplines} />;
 }

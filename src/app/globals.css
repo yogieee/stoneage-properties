@@ -207,7 +207,7 @@
 }
 
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
   background-color: #f7f5f0;
   color: #1c1b19;
 }
@@ -216,7 +216,7 @@ body {
   background-color: #f7f5f0;
   color: #1c1b19;
   font-family: var(--font-body);
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -238,5 +238,76 @@ body {
   }
   100% {
     transform: translateX(-50%);
+  }
+}
+
+/* =========================================================================
+   Journal Scroll Effect (Exact Alejandro HA Services Style)
+   ========================================================================= */
+@media screen and (min-width: 992px) {
+  .journal-section-sticky {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .journal-wrapper,
+  .journal-sticky {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .journal-list {
+    will-change: transform;
+    width: 100%;
+    position: relative;
+  }
+  .journal-item {
+    flex-flow: column;
+    flex: none;
+    width: 100%;
+    display: flex;
+  }
+  .journal-visual {
+    flex: none;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .journal-image-wrap {
+    z-index: 5;
+    width: 71%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 29%;
+    overflow: hidden;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .journal-section-sticky,
+  .journal-wrapper,
+  .journal-sticky,
+  .journal-list {
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: visible;
+  }
+  .journal-item {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .journal-visual {
+    width: 100%;
+    height: auto !important;
+    position: relative;
+    overflow: visible;
+  }
+  .journal-image-wrap {
+    display: none !important;
   }
 }
