@@ -91,8 +91,16 @@ function ChatBubbleIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
+const TRUSTPILOT_SOCIAL: SocialItem = {
+  platform: "Trustpilot",
+  url: "https://uk.trustpilot.com/review/stoneageproperties.com",
+};
+
 export function MediaRail({ socials }: MediaRailProps) {
-  const activeSocials = socials?.length ? socials : FALLBACK_SOCIALS;
+  const baseSocials = socials?.length ? socials : FALLBACK_SOCIALS;
+  const activeSocials = baseSocials.some((s) => s.platform === "Trustpilot")
+    ? baseSocials
+    : [...baseSocials, TRUSTPILOT_SOCIAL];
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);

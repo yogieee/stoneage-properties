@@ -12,7 +12,7 @@ const FALLBACK_SERVICES: DisciplineItem[] = [
     name: "Bespoke New Builds",
     tagline:
       "Generational architecture built from the bedrock up. We craft private residences with monolithic stone, mass timber, and precision structural warranties.",
-    image: "/images/hero/exterior.png",
+    image: "/images/client/client-new-build-detail.jpeg",
     features: [
       "RIBA Stages 0–7",
       "10-Year Structural Warranty",
@@ -24,7 +24,7 @@ const FALLBACK_SERVICES: DisciplineItem[] = [
     name: "Full Home Renovations",
     tagline:
       "Complete internal remodelling, structural transformations, and heritage restoration crafted around modern spatial proportion.",
-    image: "/images/hero/rennovation.png",
+    image: "/images/client/client-living-room-renovation.jpeg",
     features: [
       "Interior Architecture",
       "Structural Alterations",
@@ -36,7 +36,7 @@ const FALLBACK_SERVICES: DisciplineItem[] = [
     name: "Structural Extensions",
     tagline:
       "Glazed pavilions, timber extensions, and monolithic modern additions that seamlessly bridge indoor spaces with private landscapes.",
-    image: "/images/hero/extension.png",
+    image: "/images/client/client-extension-aerial.jpeg",
     features: [
       "Zinc & Cedar Detailing",
       "Flush-Threshold Glazing",
@@ -84,7 +84,7 @@ const FALLBACK_SERVICES: DisciplineItem[] = [
     name: "Bespoke Loft Conversions",
     tagline:
       "Architectural dormers, bespoke roofscapes, and vertical light maximization designed to complement existing building profiles.",
-    image: "/images/hero/loft.png",
+    image: "/images/client/client-loft-bedroom.jpeg",
     features: [
       "Roof Re-engineering",
       "Bespoke Staircases",

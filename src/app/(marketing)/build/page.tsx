@@ -25,7 +25,7 @@ export default function BuildPage() {
           {/* Framed Image Holder */}
           <div className="relative h-full w-full overflow-hidden bg-black">
             <Image
-              src="/images/hero/build-hero.png"
+              src="/images/client/client-twilight-exterior.png"
               alt="Stoneage Specialist Residential Build"
               fill
               priority
@@ -93,7 +93,7 @@ export default function BuildPage() {
         <div className="mt-16 grid grid-cols-1 items-end gap-6 sm:grid-cols-12 sm:gap-8">
           <div className="relative aspect-[4/5] w-full overflow-hidden bg-black/5 sm:col-span-4">
             <Image
-              src="/images/hero/build-stone-masonry.png"
+              src="/images/client/client-stone-cladding-detail.jpeg"
               alt="Stone Masonry & Structural Framing"
               fill
               className="object-cover contrast-110 grayscale transition-transform duration-700 hover:scale-105 hover:grayscale-0"
@@ -101,7 +101,7 @@ export default function BuildPage() {
           </div>
           <div className="relative aspect-[3/4] w-full overflow-hidden bg-black/5 sm:col-span-5">
             <Image
-              src="/images/hero/build-timber-detail.png"
+              src="/images/client/client-herringbone-timber-floor.jpeg"
               alt="Craftsmanship & Timber Detailing"
               fill
               className="object-cover transition-transform duration-700 hover:scale-105"
@@ -109,7 +109,7 @@ export default function BuildPage() {
           </div>
           <div className="relative aspect-[4/3] w-full overflow-hidden bg-black/5 sm:col-span-3">
             <Image
-              src="/images/hero/build-site-execution.png"
+              src="/images/client/client-site-aerial-progress.jpeg"
               alt="Site Execution"
               fill
               className="object-cover contrast-110 grayscale transition-transform duration-700 hover:scale-105 hover:grayscale-0"
@@ -155,7 +155,7 @@ export default function BuildPage() {
         <div className="mt-16 grid grid-cols-1 items-start gap-6 sm:grid-cols-12 sm:gap-8">
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5 sm:col-span-7">
             <Image
-              src="/images/hero/oldtonew.png"
+              src="/images/client/client-aerial-bungalow-renovation.jpeg"
               alt="Completed Architectural Renovation"
               fill
               className="object-cover transition-transform duration-700 hover:scale-105"
@@ -163,7 +163,7 @@ export default function BuildPage() {
           </div>
           <div className="relative aspect-[4/5] w-full overflow-hidden bg-black/5 sm:col-span-5">
             <Image
-              src="/images/hero/build-delivery-interior.png"
+              src="/images/client/client-kitchen-interior.jpeg"
               alt="Refined Interior Delivery"
               fill
               className="object-cover contrast-105 grayscale transition-transform duration-700 hover:scale-105 hover:grayscale-0"
@@ -206,7 +206,7 @@ export default function BuildPage() {
           <Link href="/craftsmanship" className="group block">
             <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
               <Image
-                src="/images/hero/build-stone-masonry.png"
+                src="/images/client/client-stone-cladding-detail.jpeg"
                 alt="Specialist Building & Master Craftsmanship"
                 fill
                 className="object-cover contrast-110 grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"

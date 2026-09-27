@@ -419,7 +419,7 @@ export default async function ServiceDetailPage({
           <Link href="/craftsmanship" className="group block">
             <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
               <Image
-                src="/images/hero/build-stone-masonry.png"
+                src="/images/client/client-stone-cladding-detail.jpeg"
                 alt="Specialist Building & Master Craftsmanship"
                 fill
                 className="object-cover contrast-110 grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
@@ -438,7 +438,7 @@ export default async function ServiceDetailPage({
           <Link href="/build" className="group block">
             <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
               <Image
-                src="/images/hero/build-hero.png"
+                src="/images/client/client-twilight-exterior.png"
                 alt="Build & Delivery"
                 fill
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"

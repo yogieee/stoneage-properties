@@ -29,21 +29,21 @@ const PRINCIPLES = [
     title: "Artisan Detailing",
     description:
       "Bespoke joinery, dressed stone, and hand-finished ironmongery are resolved on the bench by trusted artisans before a single piece reaches site, so every junction is considered long before it is fixed in place.",
-    image: "/images/hero/build-timber-detail.png",
+    image: "/images/client/client-herringbone-timber-floor.jpeg",
   },
   {
     num: "03",
     title: "Structural Mastery",
     description:
       "Load-bearing masonry, complex roof geometries, and heritage repair are executed by specialist trades who understand how a building actually stands, not just how it is drawn.",
-    image: "/images/hero/build-stone-masonry.png",
+    image: "/images/client/client-stone-cladding-detail.jpeg",
   },
   {
     num: "04",
     title: "On-Site Stewardship",
     description:
       "Our master craftsmen remain on site from first fix to final polish, holding tolerances that drawings alone cannot guarantee and safeguarding the integrity of every finish through handover.",
-    image: "/images/hero/build-site-execution.png",
+    image: "/images/client/client-site-aerial-progress.jpeg",
   },
 ];
 
@@ -83,7 +83,7 @@ export default function CraftsmanshipPage() {
           {/* Framed Image Holder */}
           <div className="relative h-full w-full overflow-hidden bg-black">
             <Image
-              src="/images/hero/build-stone-masonry.png"
+              src="/images/client/client-stone-cladding-detail.jpeg"
               alt="Stoneage Specialist Building & Master Craftsmanship"
               fill
               priority
@@ -165,7 +165,7 @@ export default function CraftsmanshipPage() {
           </div>
           <div className="relative aspect-[3/4] w-full overflow-hidden bg-black/5 sm:col-span-5">
             <Image
-              src="/images/hero/rennovation.png"
+              src="/images/client/client-tv-feature-wall.jpeg"
               alt="Master Craftsmanship & Material Detailing"
               fill
               className="object-cover contrast-110 grayscale transition-transform duration-700 hover:scale-105 hover:grayscale-0"
@@ -173,7 +173,7 @@ export default function CraftsmanshipPage() {
           </div>
           <div className="relative aspect-[4/3] w-full overflow-hidden bg-black/5 sm:col-span-3">
             <Image
-              src="/images/hero/build-timber-detail.png"
+              src="/images/client/client-herringbone-timber-floor.jpeg"
               alt="Bespoke Joinery & Timber Craft"
               fill
               className="object-cover transition-transform duration-700 hover:scale-105"
@@ -289,7 +289,7 @@ export default function CraftsmanshipPage() {
           <Link href="/build" className="group block">
             <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black">
               <Image
-                src="/images/hero/build-hero.png"
+                src="/images/client/client-twilight-exterior.png"
                 alt="Build & Delivery"
                 fill
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
