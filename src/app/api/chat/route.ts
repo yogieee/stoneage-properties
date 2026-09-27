@@ -105,12 +105,17 @@ const OFFER_OPTIONS_TOOL: Anthropic.Tool = {
   },
 };
 
-// Haiku sometimes ends its turn with no text after a bare "ok" tool result,
-// so the result itself tells it to carry on and answer the visitor.
+// The model sometimes ends its turn with no text after a bare "ok" tool
+// result, so the result itself tells it to carry on and answer the visitor.
+// This continuation text is appended to (not a replacement for) whatever
+// text the model already sent alongside the tool call, so it must read as a
+// plain standalone visitor-facing message — never a note about the tool
+// call or its own reasoning, which would otherwise leak straight into the
+// chat bubble.
 const TOOL_RESULT_TEXT =
-  "Lead details recorded. Now reply to the visitor in plain conversational text.";
+  "Lead details recorded. Now reply to the visitor in plain conversational text only — no notes about this tool call or your own reasoning, just what you'd actually say to them next.";
 const OFFER_OPTIONS_RESULT_TEXT =
-  "Options noted, the visitor will see them as buttons. Now write your short reply text (don't repeat the options in it).";
+  "Options noted, the visitor will see them as buttons attached to the question you already asked in your last message. Do not ask that question again or repeat it in different words — if you already asked it, write nothing further unless you have a genuinely separate, additional sentence to add. Never repeat the options themselves, and never include parenthetical notes, reasoning, or comments about the tool call itself.";
 
 const FALLBACK_REPLY =
   "Sorry, I hit a snag there. Please try again, or reach out directly via the Project Brief form and the team will follow up.";
@@ -416,8 +421,15 @@ export async function POST(request: NextRequest) {
 
     const plainMessages = [...conversationMessages];
 
+    const extractRawText = (r: Anthropic.Message) =>
+      r.content
+        .filter((block) => block.type === "text")
+        .map((block) => block.text)
+        .join("\n")
+        .trim();
+
     let response = await anthropic.messages.create({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-sonnet-5",
       max_tokens: 400,
       system: systemPrompt,
       tools: [CAPTURE_LEAD_TOOL, OFFER_OPTIONS_TOOL],
@@ -426,11 +438,18 @@ export async function POST(request: NextRequest) {
 
     // Tool-use loop: the model may call capture_lead and/or offer_options one
     // or more times as it qualifies the lead before producing its actual
-    // reply to the visitor. The latest offer_options call wins.
+    // reply to the visitor. The latest offer_options call wins. The model is
+    // told to put its question text in the SAME turn as an offer_options
+    // call, so we must keep every turn's text (not just the final one) or
+    // that question gets silently dropped and only a disconnected follow-up
+    // continuation reaches the visitor.
     let loopGuard = 0;
     let quickOptions: string[] | undefined;
+    const textParts: string[] = [];
     while (response.stop_reason === "tool_use" && loopGuard < 3) {
       loopGuard += 1;
+      const textPart = extractRawText(response);
+      if (textPart) textParts.push(textPart);
       const toolUseBlocks = response.content.filter(
         (block): block is Anthropic.ToolUseBlock => block.type === "tool_use",
       );
@@ -473,7 +492,7 @@ export async function POST(request: NextRequest) {
       );
 
       response = await anthropic.messages.create({
-        model: "claude-haiku-4-5-20251001",
+        model: "claude-sonnet-5",
         max_tokens: 400,
         system: systemPrompt,
         tools: [CAPTURE_LEAD_TOOL, OFFER_OPTIONS_TOOL],
@@ -481,15 +500,11 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const extractText = (r: Anthropic.Message) =>
-      sanitizeReply(
-        r.content
-          .filter((block) => block.type === "text")
-          .map((block) => block.text)
-          .join("\n"),
-      );
+    const extractText = (r: Anthropic.Message) => sanitizeReply(extractRawText(r));
 
-    let rawReply = extractText(response);
+    const finalTextPart = extractRawText(response);
+    if (finalTextPart) textParts.push(finalTextPart);
+    let rawReply = sanitizeReply(textParts.join("\n"));
 
     {
       const { cleanedText, options } = extractLeakedToolCalls(rawReply);
@@ -503,7 +518,7 @@ export async function POST(request: NextRequest) {
     if (!rawReply) {
       try {
         const retry = await anthropic.messages.create({
-          model: "claude-haiku-4-5-20251001",
+          model: "claude-sonnet-5",
           max_tokens: 400,
           system: systemPrompt,
           messages: plainMessages,

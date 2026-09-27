@@ -99,6 +99,7 @@ export function MediaRail({ socials }: MediaRailProps) {
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [quickOptions, setQuickOptions] = useState<string[]>([]);
   const [pageContext, setPageContext] = useState<PageContext | null>(null);
   const conversationIdRef = useRef<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -172,6 +173,7 @@ export function MediaRail({ socials }: MediaRailProps) {
 
     setError(null);
     setInput("");
+    setQuickOptions([]);
     setMessages((prev) => [...prev, { role: "user", content: trimmed }]);
     setSending(true);
 
@@ -192,7 +194,8 @@ export function MediaRail({ socials }: MediaRailProps) {
         throw new Error(data?.error ?? "Could not reach the assistant.");
       }
 
-      const data: { conversationId: string; reply: string } = await res.json();
+      const data: { conversationId: string; reply: string; options?: string[] } =
+        await res.json();
       conversationIdRef.current = data.conversationId;
       window.sessionStorage.setItem(CONVERSATION_ID_KEY, data.conversationId);
 
@@ -200,6 +203,7 @@ export function MediaRail({ socials }: MediaRailProps) {
         ...prev,
         { role: "assistant", content: data.reply },
       ]);
+      setQuickOptions(data.options ?? []);
     } catch (err) {
       setError(
         err instanceof Error
@@ -368,6 +372,22 @@ export function MediaRail({ socials }: MediaRailProps) {
             )}
             {error && <p className="font-mono text-xs text-red-600">{error}</p>}
           </div>
+
+          {/* Quick-reply options for the latest assistant message */}
+          {quickOptions.length > 0 && !sending && (
+            <div className="flex flex-wrap gap-2 border-t border-black/10 bg-white px-4 py-3">
+              {quickOptions.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => sendMessage(option)}
+                  className="rounded border border-black/15 bg-white px-2.5 py-1 text-left font-mono text-[11px] tracking-wide text-black/70 transition-colors hover:border-black hover:text-black"
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Input */}
           <form
