@@ -60,20 +60,6 @@
   }
 }
 
-/* Extruded 3D wordmark — layered same-hue steps to fake raised block
-   letters (thickness) topped with a soft ambient contact shadow. */
-.text-3d {
-  color: #1c1b19;
-  text-shadow:
-    0.5px 0.5px 0 #2a2825,
-    1px 1px 0 #2a2825,
-    1.5px 1.5px 0 #38352f,
-    2px 2px 0 #38352f,
-    2.5px 2.5px 0 #454138,
-    3px 3px 4px rgba(28, 27, 25, 0.28),
-    4px 5px 10px rgba(28, 27, 25, 0.18);
-}
-
 .text-reg {
   font-size: 16px;
   line-height: 24px;
