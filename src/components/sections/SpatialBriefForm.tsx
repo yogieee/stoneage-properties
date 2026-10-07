@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 
 interface SpatialBriefFormProps {
@@ -324,7 +325,16 @@ export function SpatialBriefForm({
                     I agree that Stoneage Properties may contact me by email and
                     where a phone number is provided via WhatsApp regarding this
                     enquiry. We&apos;ll only message about your Project Brief
-                    and you can opt out anytime.
+                    and you can opt out anytime. See our{" "}
+                    <Link
+                      href="/privacy"
+                      target="_blank"
+                      className="underline underline-offset-2 hover:opacity-70"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Privacy Policy
+                    </Link>
+                    .
                   </span>
                 </label>
               </div>

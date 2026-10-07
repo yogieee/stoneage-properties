@@ -1,22 +1,23 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getJournalArticles } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Journal",
   description:
     "Thoughts, technical process studies, and construction case studies from Stoneage Properties on residential architecture, heritage conservation, and spatial craftsmanship.",
-  alternates: { canonical: "/journal" },
-  openGraph: {
-    title: "Journal | Stoneage Properties",
-    description:
-      "Thoughts, technical process studies, and construction case studies from Stoneage Properties.",
-    url: "/journal",
-  },
-};
+  path: "/journal",
+  keywords: [
+    "architecture journal",
+    "construction case studies",
+    "residential design insights",
+    "heritage conservation articles",
+    "Stoneage Properties blog",
+  ],
+});
 
 export default async function JournalPage() {
   const articles = await getJournalArticles();

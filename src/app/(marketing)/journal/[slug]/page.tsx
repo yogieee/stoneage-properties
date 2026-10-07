@@ -7,7 +7,7 @@ import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 import { getJournalArticle, getJournalArticles } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, SITE_NAME } from "@/lib/seo";
 
 function estimateReadingTime(body: unknown): string {
   if (!Array.isArray(body)) return "3 min read";
@@ -39,27 +39,22 @@ export async function generateMetadata({
   const article = await getJournalArticle(slug);
   if (!article) return {};
 
-  const images = article.image
-    ? [urlFor(article.image).width(1200).height(630).url()]
-    : undefined;
-
   return {
     title: article.title,
     description: article.excerpt,
     alternates: { canonical: `${SITE_URL}/journal/${article.slug}` },
     openGraph: {
       type: "article",
+      siteName: SITE_NAME,
       title: `${article.title} | Stoneage Properties Journal`,
       description: article.excerpt,
       url: `${SITE_URL}/journal/${article.slug}`,
-      images,
       publishedTime: article.publishedAt || undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: `${article.title} | Stoneage Properties Journal`,
       description: article.excerpt,
-      images,
     },
   };
 }

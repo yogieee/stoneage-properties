@@ -180,11 +180,19 @@ export async function SiteFooter() {
             <span>Solihull</span>
           </div>
 
-          <div className="text-left font-mono text-[11px] text-black/50 md:text-right">
+          <div className="flex flex-col items-start gap-2 text-left font-mono text-[11px] text-black/50 md:items-end md:text-right">
             <p>
               &copy; {new Date().getFullYear()} Stoneage Properties Ltd &middot;
               All Rights Reserved
             </p>
+            <div className="flex items-center gap-4">
+              <Link href="/privacy" className="hover:text-black hover:underline">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="hover:text-black hover:underline">
+                Terms of Use
+              </Link>
+            </div>
           </div>
         </div>
       </div>

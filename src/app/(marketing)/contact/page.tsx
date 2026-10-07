@@ -1,18 +1,20 @@
-import type { Metadata } from "next";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Contact",
   description:
     "Start a conversation with Stoneage Properties. Submit a project brief for your residential new build, renovation, or structural extension.",
-  alternates: { canonical: "/contact" },
-  openGraph: {
-    title: "Contact & Project Brief | Stoneage Properties",
-    description:
-      "Start a conversation with Stoneage Properties about your next residential project.",
-    url: "/contact",
-  },
-};
+  path: "/contact",
+  ogTitle: "Contact & Project Brief | Stoneage Properties",
+  keywords: [
+    "contact Stoneage Properties",
+    "architects near me",
+    "book a consultation",
+    "project brief submission",
+    "Solihull architects contact",
+  ],
+});
 
 export default function ContactPage() {
   return (

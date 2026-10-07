@@ -10,7 +10,7 @@ import {
   getSiteSettings,
 } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, SITE_NAME } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const services = await getServices();
@@ -27,25 +27,22 @@ export async function generateMetadata({
   if (!service) return {};
 
   const description = service.metaDescription || service.summary;
-  const images = service.heroImage
-    ? [urlFor(service.heroImage).width(1200).height(630).url()]
-    : undefined;
 
   return {
     title: service.name,
     description,
+    keywords: [service.name, "architectural services", "Stoneage Properties"],
     alternates: { canonical: `${SITE_URL}/services/${service.slug}` },
     openGraph: {
+      siteName: SITE_NAME,
       title: `${service.name} | Stoneage Properties`,
       description,
       url: `${SITE_URL}/services/${service.slug}`,
-      images,
     },
     twitter: {
       card: "summary_large_image",
       title: `${service.name} | Stoneage Properties`,
       description,
-      images,
     },
   };
 }

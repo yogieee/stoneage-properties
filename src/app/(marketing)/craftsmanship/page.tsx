@@ -1,20 +1,22 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Craftsmanship",
   description:
     "Specialist building and master craftsmanship at Stoneage Properties. Discover the artisans, materials, and hands-on execution behind our private residential sanctuaries.",
-  alternates: { canonical: "/craftsmanship" },
-  openGraph: {
-    title: "Craftsmanship | Stoneage Properties",
-    description:
-      "Specialist building and master craftsmanship shaping private residential sanctuaries.",
-    url: "/craftsmanship",
-  },
-};
+  path: "/craftsmanship",
+  keywords: [
+    "master craftsmanship",
+    "artisan joinery",
+    "bespoke stonework",
+    "heritage building repair",
+    "specialist building contractors",
+    "quality residential finishes",
+  ],
+});
 
 const PRINCIPLES = [
   {

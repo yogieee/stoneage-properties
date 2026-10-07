@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import { Reveal } from "@/components/motion/Reveal";
 import { Button, ButtonArrow, BUTTON_VARIANTS } from "@/components/ui/Button";
 import { Typography, TYPOGRAPHY_VARIANTS } from "@/components/ui/Typography";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 const COLOR_TOKENS = [
   { name: "ink", className: "bg-ink" },

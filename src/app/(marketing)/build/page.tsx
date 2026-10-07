@@ -1,20 +1,22 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Build",
   description:
     "Discover how build works with Stoneage Properties. Our master construction team provides complete control of the technical and construction stages from our Solihull HQ.",
-  alternates: { canonical: "/build" },
-  openGraph: {
-    title: "Build | Stoneage Properties",
-    description:
-      "Specialist residential construction, master craftsmanship, and seamless project delivery across the UK.",
-    url: "/build",
-  },
-};
+  path: "/build",
+  keywords: [
+    "residential construction Solihull",
+    "master construction contractors",
+    "new build construction",
+    "turnkey residential build",
+    "construction project delivery",
+    "building contractors West Midlands",
+  ],
+});
 
 export default function BuildPage() {
   return (
@@ -130,9 +132,8 @@ export default function BuildPage() {
           <div className="text-reg max-w-3xl space-y-5 leading-relaxed text-black/80 md:col-span-8">
             <p>
               Delivery, to us, means every step of the way exceeding
-              expectations, creating beautiful, faultless, comforting homes
-              and spaces for our clients to live in and enjoy for
-              generations.
+              expectations, creating beautiful, faultless, comforting homes and
+              spaces for our clients to live in and enjoy for generations.
             </p>
             <p>
               The difference between something good and great is obsessive

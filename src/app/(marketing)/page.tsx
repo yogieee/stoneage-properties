@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { IntroSection } from "@/components/sections/IntroSection";
 import { QuickLinksPanels } from "@/components/sections/QuickLinksPanels";
@@ -7,18 +6,27 @@ import { FeaturedProjectsGrid } from "@/components/sections/FeaturedProjectsGrid
 import { TestimonialsSlider } from "@/components/sections/TestimonialsSlider";
 import { JournalGrid } from "@/components/sections/JournalGrid";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: { absolute: "Stoneage - Specialised builders" },
-  description:
-    "Stoneage Properties is a design and build practice specialising in luxury residential architecture, bespoke new builds, full renovations, and structural extensions.",
-  alternates: { canonical: "/" },
-  openGraph: {
-    title: "Stoneage Properties | Design & Build Specialists",
+export const metadata = {
+  ...buildPageMetadata({
+    title: "Stoneage - Specialised builders",
     description:
-      "Bespoke domestic residential architecture and specialist construction in Solihull.",
-    url: "/",
-  },
+      "Stoneage Properties is a design and build practice specialising in luxury residential architecture, bespoke new builds, full renovations, and structural extensions.",
+    path: "/",
+    ogTitle: "Stoneage Properties | Design & Build Specialists",
+    keywords: [
+      "architects near me",
+      "residential architecture",
+      "house extension design",
+      "renovation architects",
+      "new build architects",
+      "Solihull architects",
+      "Solihull building contractors",
+      "design and build practice",
+    ],
+  }),
+  title: { absolute: "Stoneage - Specialised builders" },
 };
 
 /**

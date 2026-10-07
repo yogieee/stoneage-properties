@@ -54,7 +54,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
     <section className="relative h-[80vh] w-full bg-[#F7F5F0] px-3 text-[#1C1B19] select-none sm:px-6 md:h-[100vh] md:px-12">
       <div className="relative flex h-full w-full flex-col justify-between pt-[72px] pb-[72px] md:pt-[84px]">
         {/* Image Holder with exact Fabric padding & structure */}
-        <div className="relative h-full w-full overflow-hidden bg-black">
+        <div className="relative h-full w-full overflow-hidden bg-paper">
           {slides.map((slide, index) => {
             const isActive = index === activeIndex;
             return (
@@ -71,7 +71,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                   alt={slide.alt}
                   fill
                   priority={index === 0}
-                  className="object-cover"
+                  className="object-contain"
                   sizes="100vw"
                 />
               </div>

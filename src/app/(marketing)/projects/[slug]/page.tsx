@@ -7,7 +7,7 @@ import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 import { getProject, getProjects } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, SITE_NAME } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -25,25 +25,29 @@ export async function generateMetadata({
 
   const description =
     project.summary || `${project.category} project in ${project.location} by Stoneage Properties.`;
-  const images = project.image
-    ? [urlFor(project.image).width(1200).height(630).url()]
-    : undefined;
+  const keywords = [
+    project.category,
+    project.location,
+    "residential architecture",
+    "Stoneage Properties project",
+  ].filter((value): value is string => Boolean(value));
 
   return {
     title: project.title,
     description,
+    keywords,
     alternates: { canonical: `${SITE_URL}/projects/${project.slug}` },
     openGraph: {
+      type: "article",
+      siteName: SITE_NAME,
       title: `${project.title} | Stoneage Properties`,
       description,
       url: `${SITE_URL}/projects/${project.slug}`,
-      images,
     },
     twitter: {
       card: "summary_large_image",
       title: `${project.title} | Stoneage Properties`,
       description,
-      images,
     },
   };
 }

@@ -13,8 +13,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/`, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE_URL}/services`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${SITE_URL}/projects`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${SITE_URL}/ourstudio`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/build`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/craftsmanship`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/journal`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/contact`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/privacy`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${SITE_URL}/terms`, changeFrequency: "yearly", priority: 0.3 },
   ];
 
   const serviceRoutes: MetadataRoute.Sitemap = services.map((service) => ({
