@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { slugOptions, requireUrlSafeSlug } from "../lib/slug";
 
 export const service = defineType({
   name: "service",
@@ -15,8 +16,8 @@ export const service = defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
-      options: { source: "name" },
-      validation: (rule) => rule.required(),
+      options: slugOptions("name"),
+      validation: requireUrlSafeSlug,
     }),
     defineField({
       name: "summary",
