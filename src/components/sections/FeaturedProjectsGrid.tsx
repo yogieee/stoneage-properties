@@ -9,73 +9,76 @@ import {
   type ProjectItem,
 } from "./ProjectsHorizontalScroll";
 
+// Only rendered if the Sanity fetch fails outright or returns fewer than 4
+// projects — kept in sync with real, current project slugs (not fictional
+// placeholders) so this path never links to a 404 if it ever triggers.
 const FALLBACK_PRIMARY_PROJECTS: ProjectItem[] = [
   {
-    slug: "festal-house-remodelling",
-    title: "Festal House Remodelling",
-    location: "Knowle, Solihull",
-    category: "Full Renovation & Remodelling",
+    slug: "new-build",
+    title: "Basement & New Build",
+    location: "Hall Green, Birmingham",
+    category: "New Dwelling",
     imageUrl: "/images/projects/project-1.webp",
     summary:
-      "A complete structural renovation and contemporary interior reconfiguration. We balanced tactile natural stone, bespoke dark oak cabinetry, and expansive glass apertures to create enduring spatial warmth.",
+      "Luxury new-build featuring a basement wellness suite with a swim spa, sauna, and shower facilities. Open-plan ground floor living, four en-suite bedrooms across two floors, a striking tinted glass curtain wall, and a bespoke single-spine staircase overlooking the courtyard.",
   },
   {
-    slug: "meadow-contemporary-residence",
-    title: "Meadow Contemporary Residence",
-    location: "Rugby, Warwickshire",
-    category: "New Build — JCT Contract & 10yr Warranty",
+    slug: "rear-landscape",
+    title: "Landscape",
+    location: "Solihull",
+    category: "Landscape",
     imageUrl: "/images/projects/project-2.webp",
     summary:
-      "A monolithic private residence crafted from local sandstone and structural mass timber. Backed by rigorous JCT contract administration and a 10-year structural warranty.",
+      "Thoughtfully landscaped to unlock the garden's full potential, creating a spacious and elegant setting for modern outdoor living.",
   },
   {
-    slug: "bracken-kitchen-living-extension",
-    title: "Bracken Kitchen & Living Extension",
-    location: "Solihull & London",
-    category: "Single & Double Storey Extension",
+    slug: "dormer-loft",
+    title: "Dormer Loft",
+    location: "Walsall",
+    category: "Loft Conversion",
     imageUrl: "/images/projects/project-3.jpg",
     summary:
-      "Open-plan culinary living space opening out onto private landscaped gardens. Featuring structural steel framing, flush-threshold zinc sliding doors, and seamless indoor-outdoor transitions.",
+      "An extensive remodelling, side and front extensions added to a bungalow in the Four Oaks Estate in Sutton Coldfield.",
   },
   {
-    slug: "grange-change-of-use-conversion",
-    title: "Grange Change of Use Conversion",
-    location: "Radcliffe on Trent, Nottingham",
-    category: "Commercial to Residential Conversion",
+    slug: "residential-extension",
+    title: "Extension & Remodelling",
+    location: "Solihull",
+    category: "Residential Extension",
     imageUrl: "/images/projects/project-4.webp",
     summary:
-      "Transforming a historic brick utility building into an airy, high-ceilinged modern family home. Preserved heritage brickwork paired with high-performance acoustic and thermal envelopes.",
+      "A complete turnkey transformation comprising a front extension, garage conversion, rear double-storey extension, full remodelling, open-plan kitchen, media room, three bathrooms, and bespoke landscaping.",
   },
 ];
 
 const FALLBACK_REMAINING_PROJECTS: ProjectItem[] = [
   {
-    slug: "bracken-kitchen-living-extension",
-    title: "The Pavilion & Glazed Extension",
-    location: "Solihull, West Midlands",
-    category: "Bespoke Glazed Extensions",
+    slug: "extension-kitchen-remodelling",
+    title: "Extension & Open Plan Kitchen",
+    location: "Harborne",
+    category: "Residential Extension",
     imageUrl: "/images/exten.png",
   },
   {
-    slug: "festal-house-remodelling",
-    title: "Lapworth Heritage Barn Renewal",
-    location: "Lapworth, Warwickshire",
-    category: "Barn Conversion & Masonry",
+    slug: "kitchen-renovation",
+    title: "Kitchen Remodelling",
+    location: "Solihull",
+    category: "Kitchen Renovation",
+    imageUrl: "/images/kitchen.png",
+  },
+  {
+    slug: "extension-remodelling",
+    title: "Extension & Remodelling",
+    location: "Solihull",
+    category: "Residential Extension",
     imageUrl: "/images/corridor.png",
   },
   {
-    slug: "meadow-contemporary-residence",
-    title: "Warwickshire Country Residence",
-    location: "Warwickshire",
-    category: "Contemporary New Build",
+    slug: "change-of-use-conversion",
+    title: "Commercial to Residential Conversion",
+    location: "Birmingham",
+    category: "Commercial to Residential Conversion",
     imageUrl: "/images/newbuild.png",
-  },
-  {
-    slug: "grange-change-of-use-conversion",
-    title: "Bespoke Open-Plan Living & Joinery",
-    location: "Solihull HQ",
-    category: "Interior Architecture & Kitchens",
-    imageUrl: "/images/kitchen.png",
   },
 ];
 

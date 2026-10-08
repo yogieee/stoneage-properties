@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Typography } from "@/components/ui/Typography";
 import { ArticleBody } from "@/components/ui/ArticleBody";
 import { LogoSpinner } from "@/components/decorative/LogoSpinner";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
@@ -96,7 +95,7 @@ export default async function ProjectDetailPage({
   };
 
   return (
-    <div className="pt-20 sm:pt-24">
+    <div className="min-h-screen bg-[#F7F5F0] text-[#1C1B19]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
@@ -106,150 +105,165 @@ export default async function ProjectDetailPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      {/* Breadcrumb */}
-      <div className="px-6 pt-8 sm:px-12">
-        <Link
-          href="/projects"
-          className="group text-ink-subtle hover:text-ink inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase transition-colors"
-        >
-          <span className="transition-transform duration-300 group-hover:-translate-x-1">
-            &larr;
-          </span>
-          Projects
-        </Link>
-      </div>
-
-      {/* Header */}
-      <div className="px-6 pt-8 pb-16 sm:px-12">
-        <div className="mx-auto flex max-w-5xl flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
-          <div className="max-w-2xl">
-            <span className="text-ink-subtle mb-4 block font-mono text-xs tracking-widest uppercase">
-              {project.category}
+      {/* 1. Header with Breadcrumb, Title & Project Details */}
+      <section className="w-full border-b border-[#1C1B19]/10 px-3 pt-24 pb-12 sm:px-6 sm:pt-28 md:px-12 md:pb-16">
+        <div className="mb-6">
+          <Link
+            href="/projects"
+            className="group inline-flex items-center gap-2 font-mono text-xs tracking-wider text-black/50 uppercase transition-colors hover:text-black"
+          >
+            <span className="font-mono transition-transform duration-300 group-hover:-translate-x-1">
+              &larr;
             </span>
-            <Typography variant="display-lg" as="h1">
+            <span>Back to Projects</span>
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-12 md:gap-12">
+          <div className="md:col-span-8">
+            <div className="mb-4 flex flex-wrap items-center gap-3 font-mono text-xs tracking-wider text-black/50 uppercase">
+              <span>{project.category}</span>
+              <span>&middot;</span>
+              <span>{project.location}</span>
+            </div>
+
+            <h1 className="text-xxl mb-6 leading-tight font-normal tracking-[-1.5px] text-black">
               {project.title}
-            </Typography>
+            </h1>
+
+            {project.summary && (
+              <p className="text-lg leading-relaxed font-normal tracking-[-0.5px] text-black/75 sm:text-xl">
+                {project.summary}
+              </p>
+            )}
           </div>
 
-          <dl className="border-line shrink-0 gap-x-8 gap-y-3 border-t pt-4 font-mono text-sm sm:border-t-0 sm:border-l sm:pt-0 sm:pl-8">
-            <div className="flex justify-between gap-6 sm:block">
-              <dt className="text-ink-subtle text-xs tracking-widest uppercase">
-                Location
-              </dt>
-              <dd className="text-ink mt-1">{project.location}</dd>
+          {/* Project Details Card */}
+          <div className="border border-[#1C1B19]/10 bg-white p-6 md:col-span-4">
+            <div className="mb-4 flex items-center justify-between border-b border-[#1C1B19]/10 pb-3">
+              <span className="font-mono text-[10px] tracking-widest text-black/50 uppercase">
+                Project Details
+              </span>
+              <LogoSpinner size="w-3.5 h-3.5" className="text-black" />
             </div>
-          </dl>
+            <dl className="space-y-3 font-mono text-sm">
+              <div>
+                <dt className="text-xs tracking-widest text-black/50 uppercase">
+                  Location
+                </dt>
+                <dd className="mt-1 text-black">{project.location}</dd>
+              </div>
+              <div>
+                <dt className="text-xs tracking-widest text-black/50 uppercase">
+                  Category
+                </dt>
+                <dd className="mt-1 text-black">{project.category}</dd>
+              </div>
+            </dl>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Cover image */}
-      <div className="px-6 sm:px-12 lg:px-16">
-        <div className="border-line bg-paper-dim relative mx-auto aspect-[16/10] w-full max-w-5xl overflow-hidden rounded-xl border shadow-md sm:aspect-[16/9]">
+      {/* 2. Full-Width Framed Cover Image */}
+      <section className="w-full px-3 py-8 sm:px-6 md:px-12">
+        <div className="relative aspect-[16/9] w-full overflow-hidden bg-black/5">
           <Image
-            src={urlFor(project.image).width(2000).height(1125).url()}
+            src={urlFor(project.image).width(2400).height(1350).url()}
             alt={project.title}
             fill
             priority
             className="object-cover"
+            sizes="100vw"
           />
         </div>
-      </div>
+      </section>
 
-      {/* Body */}
-      <div className="mx-auto max-w-3xl px-6 py-16 sm:px-12 sm:py-24">
-        {project.summary && (
-          <Typography variant="body-lg" className="mb-10">
-            {project.summary}
-          </Typography>
-        )}
-
-        {Array.isArray(project.body) && project.body.length > 0 && (
-          <ArticleBody value={project.body} />
-        )}
-      </div>
-
-      {/* Gallery */}
-      {project.gallery && project.gallery.length > 0 && (
-        <div className="px-6 pb-24 sm:px-12">
-          <div className="mx-auto max-w-5xl">
-            <span className="text-ink-subtle mb-8 block font-mono text-xs tracking-widest uppercase">
-              Gallery
-            </span>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {project.gallery.map((image, index) => (
-                <div
-                  key={index}
-                  className="border-line relative aspect-[4/3] w-full overflow-hidden rounded-lg border shadow-sm"
-                >
-                  <Image
-                    src={urlFor(image).width(1200).height(900).url()}
-                    alt={`${project.title} — image ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* More projects */}
-      {moreProjects.length > 0 && (
-        <section className="border-line bg-paper-dim border-t px-6 py-20 sm:px-12 sm:py-28">
-          <div className="mx-auto max-w-5xl">
-            <div className="mb-12 flex items-end justify-between gap-4">
-              <Typography variant="display-sm" as="h2">
-                More Projects
-              </Typography>
-              <Link
-                href="/projects"
-                className="group text-ink-muted hover:text-ink hidden shrink-0 items-center gap-2 font-mono text-xs tracking-wider uppercase transition-colors sm:inline-flex"
-              >
-                View All
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  &rarr;
-                </span>
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
-              {moreProjects.map((item) => (
-                <Link
-                  key={item.slug}
-                  href={`/projects/${item.slug}`}
-                  className="group block"
-                >
-                  <div className="border-line bg-paper-card relative aspect-[4/3] w-full overflow-hidden rounded-lg border shadow-sm transition-all group-hover:shadow-md">
-                    <Image
-                      src={urlFor(item.image).width(700).height(525).url()}
-                      alt={item.title}
-                      fill
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="mt-4 flex items-start justify-between gap-3">
-                    <div>
-                      <span className="text-ink-subtle mb-1 block font-mono text-[10px] uppercase">
-                        {item.location}
-                      </span>
-                      <h3 className="font-display text-ink group-hover:text-ink-muted text-lg leading-snug font-medium transition-colors">
-                        {item.title}
-                      </h3>
-                    </div>
-                    <LogoSpinner
-                      spin="hover"
-                      size="h-4 w-4"
-                      className="text-ink-subtle mt-1 shrink-0 group-hover:text-ink"
-                    />
-                  </div>
-                </Link>
-              ))}
-            </div>
+      {/* 3. Editorial Body */}
+      {Array.isArray(project.body) && project.body.length > 0 && (
+        <section className="w-full border-b border-[#1C1B19]/10 px-3 py-12 sm:px-6 sm:py-16 md:px-12 md:py-20">
+          <div className="text-reg mx-auto max-w-3xl leading-relaxed text-black/85">
+            <ArticleBody value={project.body} />
           </div>
         </section>
       )}
 
+      {/* 4. Gallery */}
+      {project.gallery && project.gallery.length > 0 && (
+        <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+          <div className="mb-12 border-b border-[#1C1B19]/10 pb-6">
+            <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
+              Gallery
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {project.gallery.map((image, index) => (
+              <div
+                key={index}
+                className="relative aspect-[4/3] w-full overflow-hidden bg-black/5"
+              >
+                <Image
+                  src={urlFor(image).width(1200).height(900).url()}
+                  alt={`${project.title} — image ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 5. More Projects Grid */}
+      {moreProjects.length > 0 && (
+        <section className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24">
+          <div className="mb-12 flex flex-col justify-between gap-4 border-b border-[#1C1B19]/10 pb-6 sm:flex-row sm:items-end">
+            <div>
+              <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
+                More Projects
+              </h2>
+            </div>
+            <Link
+              href="/projects"
+              className="flex items-center gap-2 text-base font-normal tracking-[-0.5px] text-black transition-opacity hover:opacity-70"
+            >
+              <span>View All Projects</span>
+              <span className="font-mono">&rarr;</span>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+            {moreProjects.map((item) => (
+              <Link
+                key={item.slug}
+                href={`/projects/${item.slug}`}
+                className="group block"
+              >
+                <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden bg-black/5">
+                  <Image
+                    src={urlFor(item.image).width(800).height(600).url()}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                </div>
+                <div className="border-t border-[#1C1B19]/10 pt-2.5">
+                  <div className="mb-1 flex items-center justify-between font-mono text-xs tracking-wider text-black/50 uppercase">
+                    <span>{item.location}</span>
+                    <span className="font-mono text-sm transition-transform duration-300 group-hover:translate-x-1">
+                      &rarr;
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-normal tracking-[-0.5px] text-black transition-opacity group-hover:opacity-70">
+                    {item.title}
+                  </h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 6. Standardized Project Brief Consultation */}
       <SpatialBriefSection />
     </div>
   );

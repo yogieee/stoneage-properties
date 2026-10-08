@@ -82,7 +82,6 @@ export function SpatialBriefForm({
         {/* Paper Form Header */}
         <div className="border-line mb-8 flex flex-wrap items-end justify-between gap-x-4 gap-y-3 border-b pb-6 sm:pb-8">
           <div className="flex items-end gap-3">
-            <span className="text-ink-subtle font-mono text-xs">01</span>
             <h3 className="text-ink font-mono text-base font-semibold tracking-wider uppercase sm:text-lg">
               PROJECT BRIEF INTAKE
             </h3>

@@ -71,7 +71,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                   alt={slide.alt}
                   fill
                   priority={index === 0}
-                  className="object-contain"
+                  className="object-contain md:object-cover"
                   sizes="100vw"
                 />
               </div>
