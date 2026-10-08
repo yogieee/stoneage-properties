@@ -94,7 +94,7 @@ export async function SiteFooter() {
               </Link>
             </div>
 
-            <div className="flex items-center gap-5 pt-4 text-sm">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-4 text-sm">
               {socials.map((social) => (
                 <a
                   key={social.platform}
@@ -102,9 +102,9 @@ export async function SiteFooter() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={social.platform}
-                  className="flex items-center gap-1.5 hover:underline"
+                  className="flex shrink-0 items-center gap-1.5 hover:underline"
                 >
-                  <SocialIcon platform={social.platform} className="h-4 w-4" />
+                  <SocialIcon platform={social.platform} className="h-4 w-4 shrink-0" />
                   {social.platform}
                 </a>
               ))}

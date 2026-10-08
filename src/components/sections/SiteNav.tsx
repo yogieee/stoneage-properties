@@ -188,24 +188,22 @@ export function SiteNav({ onOpenContact, siteSettings }: SiteNavProps) {
                 {email}
               </a>
             </p>
-            <div className="flex items-center gap-4 pt-2 text-xs tracking-wider text-black/60 uppercase">
-              {socials.map((social, index) => (
-                <span key={social.platform} className="flex items-center gap-4">
-                  {index > 0 && <span>/</span>}
-                  <a
-                    href={social.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={social.platform}
-                    className="flex items-center gap-1.5 transition-colors hover:text-black"
-                  >
-                    <SocialIcon
-                      platform={social.platform}
-                      className="h-3.5 w-3.5"
-                    />
-                    {social.platform}
-                  </a>
-                </span>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2 text-xs tracking-wider text-black/60 uppercase">
+              {socials.map((social) => (
+                <a
+                  key={social.platform}
+                  href={social.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={social.platform}
+                  className="flex shrink-0 items-center gap-1.5 transition-colors hover:text-black"
+                >
+                  <SocialIcon
+                    platform={social.platform}
+                    className="h-3.5 w-3.5 shrink-0"
+                  />
+                  {social.platform}
+                </a>
               ))}
             </div>
           </div>
