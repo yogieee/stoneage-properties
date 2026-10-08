@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { SpatialBriefSection } from "@/components/sections/SpatialBriefSection";
 import { buildPageMetadata } from "@/lib/seo";
+import { getTeam } from "@/sanity/queries";
+import { urlFor } from "@/sanity/image";
 
 export const metadata = buildPageMetadata({
   title: "Our Studio",
@@ -89,7 +91,12 @@ const ASSURANCE_ITEMS = [
   },
 ];
 
-export default function OurStudioPage() {
+export default async function OurStudioPage() {
+  const team = await getTeam();
+  const founder =
+    team.find((member) => /founder|director/i.test(member.role)) ?? team[0];
+  const restOfTeam = team.filter((member) => member !== founder);
+
   return (
     <div className="min-h-screen bg-[#F7F5F0] text-[#1C1B19]">
       {/* 1. Hero matching exact landing page framing & dimensions */}
@@ -266,68 +273,105 @@ export default function OurStudioPage() {
         </div>
       </section>
 
-      {/* 4.5 Section: Founder & Director */}
-      <section
-        id="founder"
-        className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24"
-      >
-        <div className="mb-12 border-b border-[#1C1B19]/10 pb-6">
-          <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
-            Founder &amp; Director
-          </h2>
-          <p className="text-reg mt-2 text-black/70">
-            The person behind Stoneage Properties
-          </p>
-        </div>
+      {/* 4.5 Section: Founder & Director (fetched from Sanity's teamMember documents) */}
+      {founder && (
+        <section
+          id="founder"
+          className="w-full border-b border-[#1C1B19]/10 px-3 py-16 sm:px-6 md:px-12 md:py-24"
+        >
+          <div className="mb-12 border-b border-[#1C1B19]/10 pb-6">
+            <h2 className="text-xxl font-normal tracking-[-1.5px] text-black">
+              Founder &amp; Director
+            </h2>
+            <p className="text-reg mt-2 text-black/70">
+              The person behind Stoneage Properties
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-12 sm:gap-12">
-          <div className="sm:col-span-5">
-            <div className="relative aspect-4/5 w-full overflow-hidden bg-black">
-              {/* eslint-disable-next-line @next/next/no-img-element -- local SVG placeholder, next/image disallows unoptimized SVG by default */}
-              <img
-                src="/images/team/founder-placeholder.svg"
-                alt="Thejas Gowda, Founder and Director of Stoneage Properties"
-                className="h-full w-full object-cover"
-              />
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-12 sm:gap-12">
+            <div className="sm:col-span-5">
+              <div className="relative aspect-4/5 w-full overflow-hidden bg-black">
+                {founder.photo ? (
+                  <Image
+                    src={urlFor(founder.photo).width(960).height(1200).url()}
+                    alt={`${founder.name}, ${founder.role} of Stoneage Properties`}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element -- local SVG placeholder, next/image disallows unoptimized SVG by default
+                  <img
+                    src="/images/team/founder-placeholder.svg"
+                    alt={`${founder.name}, ${founder.role} of Stoneage Properties`}
+                    className="h-full w-full object-cover"
+                  />
+                )}
+              </div>
+              <div className="mt-4 border-t border-[#1C1B19]/10 pt-3">
+                <p className="text-lg font-medium tracking-[-0.5px] text-black">
+                  {founder.name}
+                </p>
+                <p className="font-mono text-xs tracking-wider text-black/50 uppercase">
+                  {founder.role}
+                </p>
+              </div>
             </div>
-            <div className="mt-4 border-t border-[#1C1B19]/10 pt-3">
-              <p className="text-lg font-medium tracking-[-0.5px] text-black">
-                Thejas Gowda
-              </p>
-              <p className="font-mono text-xs tracking-wider text-black/50 uppercase">
-                Founder &amp; Director
-              </p>
+
+            <div className="text-reg max-w-3xl space-y-5 leading-relaxed text-black/80 sm:col-span-7">
+              {founder.bio.split("\n\n").map((paragraph, index) => (
+                <p
+                  key={index}
+                  className={
+                    index === 0
+                      ? "text-lg font-medium tracking-[-0.5px] text-black sm:text-xl"
+                      : undefined
+                  }
+                >
+                  {paragraph}
+                </p>
+              ))}
             </div>
           </div>
 
-          <div className="text-reg max-w-3xl space-y-5 leading-relaxed text-black/80 sm:col-span-7">
-            <p className="text-lg font-medium tracking-[-0.5px] text-black sm:text-xl">
-              Hardworking. Passionate about every detail. Quality delivery.
-            </p>
-            <p>
-              Thejas founded Stoneage Properties because he believes a home is
-              only as good as the hands and judgement behind it. You will
-              usually find him on site before the trades arrive, going over
-              every drawing himself before it reaches a client, and staying
-              close to a project long after most directors would have stepped
-              back.
-            </p>
-            <p>
-              He genuinely loves the craft of building, not just the business of
-              it. That is why quality is never something he trades off against
-              programme or budget. It stays the standard every project is held
-              to, from the first site visit through to the day the keys are
-              handed over.
-            </p>
-            <p>
-              More than anything, Thejas judges his own success by how happy his
-              clients are. He takes real pride in homeowners who come back to
-              build with him again, and in the fact that most new enquiries at
-              Stoneage Properties now come from people they recommended us to.
-            </p>
-          </div>
-        </div>
-      </section>
+          {/* Supporting team, same Sanity teamMember stack */}
+          {restOfTeam.length > 0 && (
+            <div className="mt-16 grid grid-cols-1 gap-10 border-t border-[#1C1B19]/10 pt-12 sm:grid-cols-2 md:grid-cols-3">
+              {restOfTeam.map((member) => (
+                <div key={member.name} className="flex gap-4">
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden border border-[#1C1B19]/10 bg-black">
+                    {member.photo ? (
+                      <Image
+                        src={urlFor(member.photo).width(160).height(160).url()}
+                        alt={`${member.name}, ${member.role}`}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element -- local SVG placeholder, next/image disallows unoptimized SVG by default
+                      <img
+                        src="/images/team/founder-placeholder.svg"
+                        alt={`${member.name}, ${member.role}`}
+                        className="h-full w-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-base font-medium tracking-[-0.5px] text-black">
+                      {member.name}
+                    </p>
+                    <p className="mb-2 font-mono text-[11px] tracking-wider text-black/50 uppercase">
+                      {member.role}
+                    </p>
+                    <p className="text-sm leading-relaxed font-light text-black/70">
+                      {member.bio}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
 
       {/* 5. Section: Turnkey Process (01 - 05 Grid matching Fabric) */}
       <section
