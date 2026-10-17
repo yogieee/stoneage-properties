@@ -27,9 +27,9 @@ export async function POST(request: NextRequest) {
   const { name, email, phone, projectTypes, location, timeline, message, contactConsent } =
     body;
 
-  if (!name?.trim() || !email?.trim()) {
+  if (!name?.trim() || !email?.trim() || !phone?.trim()) {
     return NextResponse.json(
-      { error: "Name and email are required." },
+      { error: "Name, email and phone are required." },
       { status: 400 },
     );
   }

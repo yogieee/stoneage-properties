@@ -15,9 +15,10 @@ async function getContactLine(): Promise<string> {
   const settings = await getSiteSettings();
   const phone = settings?.phones?.[0]?.number;
   const email = settings?.email;
-  const parts = [phone && `calling ${phone}`, email && `emailing ${email}`].filter(
-    Boolean,
-  );
+  const parts = [
+    phone && `calling ${phone}`,
+    email && `emailing ${email}`,
+  ].filter(Boolean);
   return parts.length > 0 ? parts.join(" or ") : "contacting the team directly";
 }
 
@@ -104,7 +105,7 @@ export async function buildPageContext(
     label: "Home",
     systemContext: `The visitor is on the homepage. Help them understand what Stoneage Properties does, identify the right service for them, and work the conversation toward a Project Brief submission, or ${contactLine}.`,
     greeting:
-      "Welcome to Stoneage Properties. Ask me about our services, our process, or a project you have in mind.",
+      "Welcome to Stoneage. Ask me about our services, our process, or a project you have in mind.",
     suggestions: [
       "What services do you offer?",
       "How does the process work?",

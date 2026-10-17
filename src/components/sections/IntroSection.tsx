@@ -15,20 +15,23 @@ export function IntroSection() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
           <div className="text-reg space-y-4 text-black/80 md:col-span-6">
             <p>
-              At Stoneage, we are a specialist building contractors with years
-              of experience in the Construction industry. Based in Solihull, we
-              deliver ambitious turnkey projects from groundworks and through to
-              the final finish and aftercare.
+              At Stoneage, we are a specialists in residential and commercial
+              projects with years of experience in the Construction industry.
+              Based in Solihull, we deliver ambitious turnkey projects from
+              groundworks and through to the final finish and aftercare
+              throughout West Midlands.
             </p>
           </div>
           <div className="text-reg space-y-4 text-black/80 md:col-span-6">
             <p>
-              We work closely with your architect and structural engineer to
-              transform technical drawings into exceptional homes. From planning
-              and project management through to construction and final handover,
-              our experienced team manages every stage under one roof. The
-              result is a beautifully crafted home built with quality materials,
-              expert workmanship, and designed around the way your family lives.
+              From architects and structural engineers to Building Control and
+              the Water Authority, we bring together the entire professional
+              team to deliver a seamless turnkey experience. At the heart of our
+              approach is a commitment to making every project enjoyable and
+              stress-free for our clients. Through careful planning, expert
+              project management, and exceptional craftsmanship, we create
+              distinctive homes built to stand the test of time with outstanding
+              quality and workmanship.
             </p>
           </div>
         </div>

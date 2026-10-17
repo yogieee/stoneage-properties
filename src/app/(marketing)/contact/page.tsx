@@ -22,7 +22,7 @@ export default function ContactPage() {
       <SpatialBriefSection
         eyebrow="Contact & Project Brief"
         heading="Start a conversation about your project."
-        intro="Whether you are planning a contemporary new home, a complete internal remodelling, or a structural extension, we would welcome the opportunity to review your brief."
+        intro="Whether you are planning a New Build Homes, Extension or internal remodelling, we would welcome the opportunity to review your ideas and explore how our specialist team can help shape it."
       />
     </div>
   );

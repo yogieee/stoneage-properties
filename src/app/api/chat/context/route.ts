@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
       systemContext:
         "Help the visitor understand Stoneage Properties' services and work the conversation toward a Project Brief submission.",
       greeting:
-        "Welcome to Stoneage Properties. Ask me about our services, our process, or a project you have in mind.",
+        "Welcome to Stoneage. Ask me about our services, our process, or a project you have in mind.",
       suggestions: [
         "What services do you offer?",
         "How does the process work?",

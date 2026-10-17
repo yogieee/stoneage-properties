@@ -178,12 +178,13 @@ export function SpatialBriefForm({
                   htmlFor="brief-phone"
                   className="text-ink-muted block font-mono text-sm tracking-wider uppercase"
                 >
-                  Phone (optional)
+                  Phone
                 </label>
                 <input
                   id="brief-phone"
                   name="phone"
                   type="tel"
+                  required
                   placeholder="+44 7000 000000"
                   className="border-line font-body focus:border-ink placeholder:text-ink-subtle/50 w-full border-b bg-transparent py-1.5 text-base transition-colors focus:outline-none sm:text-lg"
                 />
@@ -204,7 +205,7 @@ export function SpatialBriefForm({
                     "Residential",
                     "Commercial",
                     "Renovation & Remodel",
-                    "Structural Extension",
+                    "Kitchen / Interiors",
                   ].map((type) => {
                     const checked = projectTypes.includes(type);
                     return (
@@ -301,7 +302,7 @@ export function SpatialBriefForm({
                     name="message"
                     rows={4}
                     defaultValue={defaultMessage}
-                    placeholder="Share initial dimensions, requirements, planning permissions, or architectural aspirations..."
+                    placeholder="Share your initial vision, requirements, planning details or architectural aspirations..."
                     className="font-body placeholder:text-ink-subtle/40 w-full resize-none bg-transparent text-base leading-relaxed focus:outline-none sm:text-lg"
                   />
                 </div>

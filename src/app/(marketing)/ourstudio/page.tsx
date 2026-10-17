@@ -158,21 +158,20 @@ export default async function OurStudioPage() {
               Vision. Plan. Deliver.
             </p>
             <p>
-              Stoneage Properties is a boutique collective of chartered
-              architects, interior designers, structural engineers, and master
-              construction artisans. Operating from our Solihull headquarters,
-              we shape buildings rooted in permanence, spatial quiet, and
-              natural light.
+              Stoneage is a boutique collective of interior designers,
+              structural engineers and master construction artisans. Operating
+              from our headquarters in Solihull, we shape buildings rooted in
+              permanence, spatial quiet, and natural light.
             </p>
             <p>
-              We purposefully operate as a close-knit practice. Our boutique
-              scale sustains our ethos: every client receives direct,
-              senior-director stewardship, and every drawing, material junction,
-              and joint receives uncompromising attention.
+              We are a friendly team and purposefully operate as a close-knit
+              practice. Our operating style sustains our ethos, every client
+              receives uncompromising attention to technical drawing and
+              material detail.
             </p>
             <p>
               Architects and builders working separately is where most projects
-              lose their way — decisions made on a drawing board get
+              lose their way, decisions made on a drawing board get
               reinterpreted, or quietly dropped, once they reach a site. Under
               one roof, that gap doesn&apos;t exist: the people who conceived
               the design are the same people accountable for how it&apos;s
@@ -220,23 +219,29 @@ export default async function OurStudioPage() {
 
           <div className="text-reg max-w-3xl space-y-5 leading-relaxed text-black/80 md:col-span-8">
             <p>
-              We aspire for recognition as the premier residential design and
-              build practice across the West Midlands and the Cotswolds.
-              Whatever the brief—whether a generational new build estate, a
-              sensitive listed barn conversion, or a monolithic structural
-              extension—we never offer a mere drawing service.
-            </p>
-            <p>
-              High-quality design drives every physical execution. We understand
-              that undertaking a significant architectural project can feel
-              daunting; through our unified approach, we shoulder complete
-              technical responsibility and on-site governance.
-            </p>
-            <p>
               Early integration of structural engineering with architectural
-              concept removes the risk of the completed building departing from
-              the original aesthetic intent. See our{" "}
-              <Link href="/ourstudio#process" className="fabric-underline">
+              design ensures the finished building remains true to the original
+              vision, eliminating compromises between aesthetics and
+              practicality. Discover our turnkey process below and see how this
+              is achieved at every stage.
+            </p>
+            <p>
+              With in-house expertise spanning every aspect of construction, we
+              deliver a genuinely tailored, hassle-free service, providing
+              clients with a seamless turnkey experience from concept to
+              completion.
+            </p>
+            <p>
+              Through this integrated approach, we strive to be the trusted
+              turnkey residential construction partner across the West Midlands.
+              From basement new builds and major remodelling projects to complex
+              structural alterations, we bring the expertise, capability, and
+              proven experience needed to deliver exceptional results,
+              regardless of complexity. See our{" "}
+              <Link
+                href="/ourstudio#process"
+                className="fabric-underline font-bold"
+              >
                 turnkey process
               </Link>{" "}
               below for how that plays out stage by stage.
@@ -284,13 +289,13 @@ export default async function OurStudioPage() {
               Founder &amp; Director
             </h2>
             <p className="text-reg mt-2 text-black/70">
-              The person behind Stoneage Properties
+              The face behind Stoneage
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-12 sm:gap-12">
             <div className="sm:col-span-5">
-              <div className="relative aspect-4/5 w-full overflow-hidden bg-black">
+              <div className="relative aspect-4/5 w-full max-w-md overflow-hidden bg-black">
                 {founder.photo ? (
                   <Image
                     src={urlFor(founder.photo).width(960).height(1200).url()}

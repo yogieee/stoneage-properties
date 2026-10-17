@@ -53,7 +53,7 @@ export async function SpatialBriefSection({
 
             <div className="space-y-3 border-t border-[#1C1B19]/10 pt-6 font-mono text-xs text-black/60">
               <p className="font-medium text-black">
-                Stoneage Properties Specialist Contractors
+                Stoneage Building Contractors Limited
               </p>
               <p>
                 {office.name}: {office.address}

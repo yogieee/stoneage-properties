@@ -147,13 +147,17 @@ export function DisciplinesSplitSection({
                 [Stoneage Capabilities]
               </span>
               <h2 className="text-3xl leading-[1.08] font-normal tracking-[-1.5px] text-[#1C1B19] sm:text-4xl lg:text-5xl">
-                Specialist Disciplines &amp; Typologies
+                Specialist Disciplines
               </h2>
               <p className="mt-4 text-sm leading-relaxed font-light text-[#1C1B19]/75 sm:text-base">
-                From ground-up generational new builds to sensitive heritage
-                transformations, our practice operates with unified RIBA
-                stewardship, JCT contract rigor, and on-site master craft
-                execution.
+                From ground-up new builds to the transformation of existing
+                spaces, we deliver comprehensive construction solutions tailored
+                to every project.
+              </p>
+              <p className="mt-4 text-sm leading-relaxed font-light text-[#1C1B19]/75 sm:text-base">
+                Backed by years of industry experience and a highly skilled
+                in-house team, we have the capability to execute projects of any
+                scale with precision, quality, and confidence.
               </p>
             </div>
 
