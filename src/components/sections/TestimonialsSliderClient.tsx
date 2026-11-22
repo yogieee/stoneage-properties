@@ -85,12 +85,12 @@ export function TestimonialsSliderClient({
 
         {/* Testimonial Content with smooth fade transition: 2 side by side */}
         <div
-          className={`grid min-h-[260px] grid-cols-1 gap-10 transition-all duration-300 md:min-h-[220px] md:grid-cols-2 md:gap-16 ${
+          className={`grid h-95 grid-cols-1 gap-10 transition-all duration-300 sm:h-85 md:h-75 md:grid-cols-2 md:gap-16 ${
             isFading ? "translate-y-1 opacity-0" : "translate-y-0 opacity-100"
           }`}
         >
           {currentPair.map((item, idx) => (
-            <div key={`${activePage}-${idx}`}>
+            <div key={`${activePage}-${idx}`} className="flex h-full flex-col">
               <p className="mb-2 text-xl font-normal tracking-[-0.5px] text-black sm:text-2xl">
                 Project : {item.role || "Residential Architecture"}
               </p>
@@ -98,8 +98,8 @@ export function TestimonialsSliderClient({
                 Location : Solihull &amp; Warwickshire
               </p>
 
-              <div className="text-reg max-w-4xl space-y-4 leading-relaxed font-light text-black/80">
-                <p className="text-lg leading-relaxed md:text-xl">
+              <div className="text-reg max-w-4xl flex-1 space-y-4 overflow-hidden leading-relaxed font-light text-black/80">
+                <p className="line-clamp-5 text-lg leading-relaxed md:text-xl">
                   &ldquo;{item.quote}&rdquo;
                 </p>
               </div>
