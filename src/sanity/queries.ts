@@ -131,7 +131,7 @@ export async function getServices(): Promise<Service[]> {
   return client.fetch(
     `*[_type == "service"] | order(order asc) ${SERVICE_PROJECTION}`,
     {},
-    { next: { tags: ["service"], revalidate: 60 } },
+    { next: { tags: ["service"], revalidate: 3600 } },
   );
 }
 
@@ -139,7 +139,7 @@ export async function getService(slug: string): Promise<Service | null> {
   return client.fetch(
     `*[_type == "service" && slug.current == $slug][0] ${SERVICE_PROJECTION}`,
     { slug },
-    { next: { tags: ["service"], revalidate: 60 } },
+    { next: { tags: ["service"], revalidate: 3600 } },
   );
 }
 
@@ -147,7 +147,7 @@ export async function getTeam(): Promise<TeamMember[]> {
   return client.fetch(
     `*[_type == "teamMember"] | order(order asc) { name, role, bio, photo }`,
     {},
-    { next: { tags: ["teamMember"], revalidate: 60 } },
+    { next: { tags: ["teamMember"], revalidate: 3600 } },
   );
 }
 
@@ -155,7 +155,7 @@ export async function getProjects(): Promise<Project[]> {
   return client.fetch(
     `*[_type == "project"] | order(order asc) ${PROJECT_PROJECTION}`,
     {},
-    { next: { tags: ["project"], revalidate: 60 } },
+    { next: { tags: ["project"], revalidate: 3600 } },
   );
 }
 
@@ -163,7 +163,7 @@ export async function getFeaturedProjects(): Promise<Project[]> {
   return client.fetch(
     `*[_type == "project" && featured == true] | order(order asc) ${PROJECT_PROJECTION}`,
     {},
-    { next: { tags: ["project"], revalidate: 60 } },
+    { next: { tags: ["project"], revalidate: 3600 } },
   );
 }
 
@@ -171,7 +171,7 @@ export async function getProject(slug: string): Promise<Project | null> {
   return client.fetch(
     `*[_type == "project" && slug.current == $slug][0] ${PROJECT_PROJECTION}`,
     { slug },
-    { next: { tags: ["project"], revalidate: 60 } },
+    { next: { tags: ["project"], revalidate: 3600 } },
   );
 }
 
@@ -179,7 +179,7 @@ export async function getProjectsByService(slug: string): Promise<Project[]> {
   return client.fetch(
     `*[_type == "project" && $slug in services[]->slug.current] | order(order asc) ${PROJECT_PROJECTION}`,
     { slug },
-    { next: { tags: ["project"], revalidate: 60 } },
+    { next: { tags: ["project"], revalidate: 3600 } },
   );
 }
 
@@ -187,7 +187,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
   return client.fetch(
     `*[_type == "testimonial"] | order(order asc) { quote, author, role, image }`,
     {},
-    { next: { tags: ["testimonial"], revalidate: 60 } },
+    { next: { tags: ["testimonial"], revalidate: 3600 } },
   );
 }
 
@@ -195,7 +195,7 @@ export async function getJournalArticles(): Promise<JournalArticle[]> {
   return client.fetch(
     `*[_type == "journalArticle"] | order(order asc) ${JOURNAL_PROJECTION}`,
     {},
-    { next: { tags: ["journalArticle"], revalidate: 60 } },
+    { next: { tags: ["journalArticle"], revalidate: 3600 } },
   );
 }
 
@@ -205,7 +205,7 @@ export async function getJournalArticle(
   return client.fetch(
     `*[_type == "journalArticle" && slug.current == $slug][0] ${JOURNAL_PROJECTION}`,
     { slug },
-    { next: { tags: ["journalArticle"], revalidate: 60 } },
+    { next: { tags: ["journalArticle"], revalidate: 3600 } },
   );
 }
 
@@ -213,7 +213,7 @@ export async function getHeroSlides(): Promise<HeroSlide[]> {
   return client.fetch(
     `*[_type == "heroSlide"] | order(order asc) { image, alt, tag, title, caption }`,
     {},
-    { next: { tags: ["heroSlide"], revalidate: 60 } },
+    { next: { tags: ["heroSlide"], revalidate: 3600 } },
   );
 }
 
@@ -221,7 +221,7 @@ export async function getHomepagePanels(): Promise<HomepagePanels | null> {
   return client.fetch(
     `*[_type == "homepagePanels"][0] { panels, methodology, statement }`,
     {},
-    { next: { tags: ["homepagePanels"], revalidate: 60 } },
+    { next: { tags: ["homepagePanels"], revalidate: 3600 } },
   );
 }
 
@@ -229,6 +229,6 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   return client.fetch(
     `*[_type == "siteSettings"][0] { email, phones, offices, socials }`,
     {},
-    { next: { tags: ["siteSettings"], revalidate: 60 } },
+    { next: { tags: ["siteSettings"], revalidate: 3600 } },
   );
 }
